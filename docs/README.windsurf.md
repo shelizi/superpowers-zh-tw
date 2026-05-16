@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Windsurf 安装指南
+# Superpowers 中文版 — Windsurf 安裝指南
 
 在 [Windsurf](https://codeium.com/windsurf) 中使用 superpowers-zh 的完整指南。
 
@@ -9,33 +9,33 @@ cd /your/project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `.windsurf/` 目录并将 skills 复制到 `.windsurf/skills/` 目录。
+安裝腳本會自動檢測 `.windsurf/` 目錄並將 skills 複製到 `.windsurf/skills/` 目錄。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
 cp -r superpowers-zh/skills /your/project/.windsurf/skills
 ```
 
-或全局安装：
+或全域安裝：
 
 ```bash
 cp -r superpowers-zh/skills ~/.windsurf/skills
 ```
 
-## Skill 加载优先级
+## Skill 載入優先級
 
-| 位置 | 优先级 | 说明 |
+| 位置 | 優先級 | 說明 |
 |------|--------|------|
-| `.windsurf/skills/` | 最高 | 项目级，仅当前项目 |
-| `~/.windsurf/skills/` | 中 | 用户级，所有项目共享 |
+| `.windsurf/skills/` | 最高 | 專案級，僅當前專案 |
+| `~/.windsurf/skills/` | 中 | 使用者級，所有專案共享 |
 
 ## 使用
 
-安装完成后重启 Windsurf，skills 会自动生效。
+安裝完成後重新啟動 Windsurf，skills 會自動生效。
 
-也可以在 `.windsurfrules` 文件中引用 skills 目录：
+也可以在 `.windsurfrules` 檔案中引用 skills 目錄：
 
 ```
 请参考 .windsurf/skills/ 目录中的 SKILL.md 文件作为工作方法论。
@@ -45,9 +45,9 @@ cp -r superpowers-zh/skills ~/.windsurf/skills
 
 ### Skills 未生效
 
-1. 确认 `.windsurf/skills/` 目录存在且包含 skill 文件夹
-2. 每个 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 文件
-3. 重启 Windsurf
+1. 確認 `.windsurf/skills/` 目錄存在且包含 skill 資料夾
+2. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
+3. 重新啟動 Windsurf
 
 ## 获取帮助
 

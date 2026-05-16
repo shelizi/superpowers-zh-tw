@@ -1,4 +1,4 @@
-# Superpowers 中文版 — DeerFlow 2.0 安装指南
+# Superpowers 中文版 — DeerFlow 2.0 安裝指南
 
 在 [DeerFlow 2.0](https://github.com/bytedance/deer-flow)（字节跳动开源 SuperAgent）中使用 superpowers-zh 的完整指南。
 
@@ -9,9 +9,9 @@ cd /your/deerflow-project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `deer_flow/` 目录并将 skills 复制到 `skills/custom/`。
+安裝腳本會自動檢測 `deer_flow/` 目錄並將 skills 複製到 `skills/custom/`。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
@@ -21,19 +21,19 @@ cp -r superpowers-zh/skills/* /your/deerflow-project/skills/custom/
 
 ## 工作原理
 
-DeerFlow 2.0 使用 **Custom Skills** 机制扩展 Agent 能力：
+DeerFlow 2.0 使用 **Custom Skills** 機制擴展 Agent 能力：
 
-- **目录**：`skills/custom/`
-- **格式**：每个 skill 是一个目录，包含 `SKILL.md` 文件（Markdown + YAML frontmatter）
-- **加载方式**：DeerFlow 自动扫描 `skills/custom/` 下的所有目录，通过 `description` 字段匹配 skill
+- **目錄**：`skills/custom/`
+- **格式**：每個 skill 是一個目錄，包含 `SKILL.md` 檔案（Markdown + YAML frontmatter）
+- **載入方式**：DeerFlow 自動掃描 `skills/custom/` 下的所有目錄，透過 `description` 欄位匹配 skill
 
-### Skills 格式兼容
+### Skills 格式相容
 
-superpowers-zh 的 SKILL.md 文件格式与 DeerFlow 自定义 skills 完全兼容。安装后，DeerFlow 会自动发现并加载所有 skills。
+superpowers-zh 的 SKILL.md 檔案格式與 DeerFlow 自訂 skills 完全相容。安裝後，DeerFlow 會自動發現並載入所有 skills。
 
-### 环境变量
+### 環境變數
 
-如果你的 DeerFlow 项目不在当前目录，可以手动指定安装路径：
+如果你的 DeerFlow 專案不在當前目錄，可以手動指定安裝路徑：
 
 ```bash
 export DEERFLOW_SKILLS_DIR=/path/to/deerflow/skills/custom
@@ -42,13 +42,13 @@ cp -r superpowers-zh/skills/* $DEERFLOW_SKILLS_DIR/
 
 ## 使用
 
-安装后，在 DeerFlow 对话中引用 skill 名称即可：
+安裝後，在 DeerFlow 對話中引用 skill 名稱即可：
 
-- 「使用头脑风暴来分析这个需求」
-- 「用测试驱动开发来实现这个功能」
-- 「按系统化调试流程排查这个 bug」
+- 「使用腦力激盪來分析這個需求」
+- 「用測試驅動開發來實作這個功能」
+- 「按系統化除錯流程排查這個 bug」
 
-DeerFlow 会根据 skill 的 `description` 自动匹配并加载。
+DeerFlow 會根據 skill 的 `description` 自動匹配並載入。
 
 ## 更新
 
@@ -57,7 +57,7 @@ cd /your/deerflow-project
 npx superpowers-zh
 ```
 
-重新运行安装命令即可更新到最新版本。
+重新執行安裝命令即可更新到最新版本。
 
 ## 获取帮助
 

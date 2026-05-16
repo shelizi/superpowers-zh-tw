@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Codex CLI 安装指南
+# Superpowers 中文版 — Codex CLI 安裝指南
 
 在 Codex 中使用 superpowers-zh 的完整指南。
 
@@ -10,29 +10,29 @@
 Fetch and follow instructions from https://raw.githubusercontent.com/jnMetaCode/superpowers-zh/refs/heads/main/.codex/INSTALL.md
 ```
 
-## 手动安装
+## 手動安裝
 
-### 前置条件
+### 前置條件
 
 - OpenAI Codex CLI
 - Git
 
-### 步骤
+### 步驟
 
-1. 克隆仓库：
+1. 複製儲存庫：
    ```bash
    git clone https://github.com/jnMetaCode/superpowers-zh.git ~/.codex/superpowers-zh
    ```
 
-2. 创建 skills 符号链接：
+2. 建立 skills 符號連結：
    ```bash
    mkdir -p ~/.agents/skills
    ln -s ~/.codex/superpowers-zh/skills ~/.agents/skills/superpowers
    ```
 
-3. 重启 Codex。
+3. 重新啟動 Codex。
 
-4. **子代理 skills（可选）：** `dispatching-parallel-agents` 和 `subagent-driven-development` 需要 Codex 的多代理功能。在 Codex 配置中添加：
+4. **子代理 skills（可選）：** `dispatching-parallel-agents` 和 `subagent-driven-development` 需要 Codex 的多代理功能。在 Codex 設定中新增：
    ```toml
    [features]
    multi_agent = true
@@ -40,7 +40,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/jnMetaCode/
 
 ### Windows
 
-使用 junction 代替符号链接（无需开发者模式）：
+使用 junction 代替符號連結（無需開發者模式）：
 
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
@@ -49,20 +49,20 @@ cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE
 
 ## 工作原理
 
-Codex 原生支持 skill 发现——启动时扫描 `~/.agents/skills/` 目录，解析 SKILL.md 的 frontmatter，按需加载 skills。通过一个符号链接即可注册所有 skills：
+Codex 原生支援 skill 發現——啟動時掃描 `~/.agents/skills/` 目錄，解析 SKILL.md 的 frontmatter，按需載入 skills。透過一個符號連結即可註冊所有 skills：
 
 ```
 ~/.agents/skills/superpowers/ → ~/.codex/superpowers-zh/skills/
 ```
 
-`using-superpowers` skill 会自动被发现并强制执行 skill 使用纪律——无需额外配置。
+`using-superpowers` skill 會自動被發現並強制執行 skill 使用紀律——無需額外設定。
 
 ## 使用
 
-Skills 自动发现。Codex 在以下情况激活 skills：
-- 你提到 skill 名称（如 "use brainstorming"）
-- 任务匹配 skill 的描述
-- `using-superpowers` skill 指示 Codex 使用某个 skill
+Skills 自動發現。Codex 在以下情況啟動 skills：
+- 你提到 skill 名稱（如 "use brainstorming"）
+- 任務匹配 skill 的描述
+- `using-superpowers` skill 指示 Codex 使用某個 skill
 
 ## 更新
 
@@ -70,9 +70,9 @@ Skills 自动发现。Codex 在以下情况激活 skills：
 cd ~/.codex/superpowers-zh && git pull
 ```
 
-Skills 通过符号链接即时更新。
+Skills 透過符號連結即時更新。
 
-## 卸载
+## 解除安裝
 
 ```bash
 rm ~/.agents/skills/superpowers
@@ -83,7 +83,7 @@ rm ~/.agents/skills/superpowers
 Remove-Item "$env:USERPROFILE\.agents\skills\superpowers"
 ```
 
-可选：删除克隆的仓库 `rm -rf ~/.codex/superpowers-zh`
+可選：刪除複製的儲存庫 `rm -rf ~/.codex/superpowers-zh`
 
 ## 获取帮助
 

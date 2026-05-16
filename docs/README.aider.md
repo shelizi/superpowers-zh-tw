@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Aider 安装指南
+# Superpowers 中文版 — Aider 安裝指南
 
 在 [Aider](https://aider.chat) 中使用 superpowers-zh 的完整指南。
 
@@ -9,35 +9,35 @@ cd /your/project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `.aider.conf.yml` 文件并将 skills 复制到 `.aider/skills/` 目录。
+安裝腳本會自動檢測 `.aider.conf.yml` 檔案並將 skills 複製到 `.aider/skills/` 目錄。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
 cp -r superpowers-zh/skills /your/project/.aider/skills
 ```
 
-## 通过 CONVENTIONS.md 引用
+## 透過 CONVENTIONS.md 引用
 
-Aider 原生支持 `CONVENTIONS.md` 文件。在其中引用 skills：
+Aider 原生支援 `CONVENTIONS.md` 檔案。在其中引用 skills：
 
 ```markdown
 # 项目约定
 
 ## 工作方法论
 
-本项目使用 superpowers-zh skills 作为工作方法论。
-Skills 位于 `.aider/skills/` 目录，每个子目录的 SKILL.md 定义一个工作流。
+本專案使用 superpowers-zh skills 作為工作方法論。
+Skills 位於 `.aider/skills/` 目錄，每個子目錄的 SKILL.md 定義一個工作流。
 
-- 新功能开发：先使用 brainstorming skill
-- 编写代码：遵循 test-driven-development skill
-- 调试问题：使用 systematic-debugging skill
+- 新功能開發：先使用 brainstorming skill
+- 編寫程式碼：遵循 test-driven-development skill
+- 除錯問題：使用 systematic-debugging skill
 ```
 
-## 通过 .aider.conf.yml 配置
+## 透過 .aider.conf.yml 設定
 
-在 `.aider.conf.yml` 中添加 read 配置来加载 skills：
+在 `.aider.conf.yml` 中新增 read 設定來載入 skills：
 
 ```yaml
 read:
@@ -50,9 +50,9 @@ read:
 
 ### Skills 未生效
 
-1. 确认 `.aider/skills/` 目录存在且包含 skill 文件夹
-2. 确保在 `CONVENTIONS.md` 或 `.aider.conf.yml` 中引用了 skills
-3. Aider 会自动读取 `CONVENTIONS.md`，无需额外配置
+1. 確認 `.aider/skills/` 目錄存在且包含 skill 資料夾
+2. 確保在 `CONVENTIONS.md` 或 `.aider.conf.yml` 中引用了 skills
+3. Aider 會自動讀取 `CONVENTIONS.md`，無需額外設定
 
 ## 获取帮助
 

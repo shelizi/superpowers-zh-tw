@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Qwen Code 安装指南
+# Superpowers 中文版 — Qwen Code 安裝指南
 
 在 [Qwen Code](https://tongyi.aliyun.com/qianwen) (通义灵码) 中使用 superpowers-zh 的完整指南。
 
@@ -9,34 +9,34 @@ cd /your/project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `.qwen/` 目录并将 skills 复制到 `.qwen/skills/` 目录。
+安裝腳本會自動檢測 `.qwen/` 目錄並將 skills 複製到 `.qwen/skills/` 目錄。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
 cp -r superpowers-zh/skills /your/project/.qwen/skills
 ```
 
-或全局安装：
+或全域安裝：
 
 ```bash
 mkdir -p ~/.qwen/skills
 cp -r superpowers-zh/skills/* ~/.qwen/skills/
 ```
 
-## Skill 加载优先级
+## Skill 載入優先級
 
-| 位置 | 优先级 | 说明 |
+| 位置 | 優先級 | 說明 |
 |------|--------|------|
-| `.qwen/skills/` | 最高 | 项目级，仅当前项目 |
-| `~/.qwen/skills/` | 中 | 用户级，所有项目共享 |
+| `.qwen/skills/` | 最高 | 專案級，僅當前專案 |
+| `~/.qwen/skills/` | 中 | 使用者級，所有專案共享 |
 
 ## 使用
 
-安装完成后重启 Qwen Code，skills 会自动生效。
+安裝完成後重新啟動 Qwen Code，skills 會自動生效。
 
-在 Qwen Code 中可以通过以下方式调用 skills：
+在 Qwen Code 中可以透過以下方式呼叫 skills：
 
 ```
 请使用 brainstorming skill 来分析这个需求
@@ -50,9 +50,9 @@ cp -r superpowers-zh/skills/* ~/.qwen/skills/
 
 ### Skills 未生效
 
-1. 确认 `.qwen/skills/` 目录存在且包含 skill 文件夹
-2. 每个 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 文件
-3. 重启 Qwen Code 或刷新会话
+1. 確認 `.qwen/skills/` 目錄存在且包含 skill 資料夾
+2. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
+3. 重新啟動 Qwen Code 或重新整理會話
 
 ## 获取帮助
 

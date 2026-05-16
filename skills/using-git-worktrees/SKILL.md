@@ -1,21 +1,21 @@
 ---
 name: using-git-worktrees
-description: 当需要开始与当前工作区隔离的功能开发，或在执行实现计划之前使用——通过原生工具或 git worktree 回退机制确保隔离工作区存在
+description: 當需要開始與當前工作區隔離的功能開發，或在執行實作計畫之前使用——透過原生工具或 git worktree 回退機制確保隔離工作區存在
 ---
 
-# 使用 Git 工作树
+# 使用 Git 工作樹
 
 ## 概述
 
-确保工作发生在隔离的工作区中。优先使用你的平台的原生 worktree 工具。仅在没有原生工具可用时，再回退到手动 git worktree。
+確保工作發生在隔離的工作區中。優先使用你的平台的原生 worktree 工具。僅在沒有原生工具可用時，再回退到手動 git worktree。
 
-**核心原则：** 先检测现有隔离。然后用原生工具。再回退到 git。绝不与 harness 对抗。
+**核心原則：** 先檢測現有隔離。然後用原生工具。再回退到 git。絕不與 harness 對抗。
 
-**开始时宣布：** "我正在使用 using-git-worktrees 技能来建立一个隔离的工作区。"
+**開始時宣布：** "我正在使用 using-git-worktrees 技能來建立一個隔離的工作區。"
 
-## 步骤 0：检测现有隔离
+## 步驟 0：檢測現有隔離
 
-**创建任何东西之前，先检查你是否已经在一个隔离的工作区里。**
+**建立任何東西之前，先檢查你是否已經在一個隔離的工作區裡。**
 
 ```bash
 GIT_DIR=$(cd "$(git rev-parse --git-dir)" 2>/dev/null && pwd -P)
@@ -23,102 +23,102 @@ GIT_COMMON=$(cd "$(git rev-parse --git-common-dir)" 2>/dev/null && pwd -P)
 BRANCH=$(git branch --show-current)
 ```
 
-**Submodule 守卫：** 在 git submodule 内 `GIT_DIR != GIT_COMMON` 也为真。在判定"已经在 worktree 内"之前，先确认你不在 submodule 里：
+**Submodule 守衛：** 在 git submodule 內 `GIT_DIR != GIT_COMMON` 也為真。在判定"已經在 worktree 內"之前，先確認你不在 submodule 裡：
 
 ```bash
-# 如果这条命令返回路径，说明你在 submodule 里，不是 worktree —— 按普通仓库处理
+# 如果這條命令返回路徑，說明你在 submodule 裡，不是 worktree —— 按普通倉庫處理
 git rev-parse --show-superproject-working-tree 2>/dev/null
 ```
 
-**如果 `GIT_DIR != GIT_COMMON`（且不是 submodule）：** 你已经在一个 linked worktree 内。跳到步骤 3（项目设置）。**不要**再创建一个 worktree。
+**如果 `GIT_DIR != GIT_COMMON`（且不是 submodule）：** 你已經在一個 linked worktree 內。跳到步驟 3（專案設定）。**不要**再建立一個 worktree。
 
 按分支状态报告：
 
-- 在某个分支上："已经在隔离工作区 `<path>`，分支 `<name>`。"
-- 分离 HEAD："已经在隔离工作区 `<path>`（分离 HEAD，由外部管理）。完成时需要创建分支。"
+- 在某個分支上："已經在隔離工作區 `<path>`，分支 `<name>`。"
+- 分離 HEAD："已經在隔離工作區 `<path>`（分離 HEAD，由外部管理）。完成時需要建立分支。"
 
-**如果 `GIT_DIR == GIT_COMMON`（或在 submodule 内）：** 你在一个普通的仓库检出里。
+**如果 `GIT_DIR == GIT_COMMON`（或在 submodule 內）：** 你在一個普通的倉庫檢出裡。
 
-用户是否已经在你的 instructions 里表明过 worktree 偏好？如果没有，创建 worktree 之前先征求同意：
+使用者是否已經在你的 instructions 裡表明過 worktree 偏好？如果沒有，建立 worktree 之前先徵求同意：
 
-> "你希望我搭一个隔离的 worktree 吗？它能保护你当前分支不被改动。"
+> "你希望我搭一個隔離的 worktree 嗎？它能保護你當前分支不被改動。"
 
-如果用户已声明过偏好，直接遵循，不再询问。如果用户拒绝同意，原地工作并跳到步骤 3。
+如果使用者已聲明過偏好，直接遵循，不再詢問。如果使用者拒絕同意，原地工作並跳到步驟 3。
 
-## 步骤 1：创建隔离工作区
+## 步驟 1：建立隔離工作區
 
-**你有两种机制。按这个顺序尝试。**
+**你有兩種機制。按這個順序嘗試。**
 
-### 1a. 原生 Worktree 工具（首选）
+### 1a. 原生 Worktree 工具（首選）
 
-用户已经请求隔离工作区（步骤 0 已获同意）。你是否已经有创建 worktree 的方法？可能是名为 `EnterWorktree`、`WorktreeCreate` 的工具、`/worktree` 命令，或 `--worktree` 标志。如果有，用它，然后跳到步骤 3。
+使用者已經請求隔離工作區（步驟 0 已獲同意）。你是否已經有建立 worktree 的方法？可能是名為 `EnterWorktree`、`WorktreeCreate` 的工具、`/worktree` 命令，或 `--worktree` 標誌。如果有，用它，然後跳到步驟 3。
 
-原生工具自动处理目录放置、分支创建和清理。在你已经有原生工具的情况下使用 `git worktree add`，会创建你的 harness 看不到也无法管理的"幻影状态"。
+原生工具自動處理目錄放置、分支建立和清理。在你已經有原生工具的情況下使用 `git worktree add`，會建立你的 harness 看不到也無法管理的"幻影狀態"。
 
-只有在没有原生 worktree 工具可用时，才进入步骤 1b。
+只有在沒有原生 worktree 工具可用時，才進入步驟 1b。
 
 ### 1b. Git Worktree 回退
 
-**只在步骤 1a 不适用时使用** —— 你没有可用的原生 worktree 工具。手动用 git 创建 worktree。
+**只在步驟 1a 不適用時使用** —— 你沒有可用的原生 worktree 工具。手動用 git 建立 worktree。
 
-#### 目录选择
+#### 目錄選擇
 
-按以下优先级。明确的用户偏好始终优先于观察到的文件系统状态。
+按以下優先級。明確的使用者偏好始終優先於觀察到的檔案系統狀態。
 
-1. **检查你的 instructions 里是否声明过 worktree 目录偏好。** 如果用户已指定，不再询问直接用。
+1. **檢查你的 instructions 裡是否聲明過 worktree 目錄偏好。** 如果使用者已指定，不再詢問直接用。
 
-2. **检查是否存在项目本地的 worktree 目录：**
+2. **檢查是否存在專案本地的 worktree 目錄：**
 
    ```bash
-   ls -d .worktrees 2>/dev/null     # 首选（隐藏目录）
-   ls -d worktrees 2>/dev/null      # 备选
+   ls -d .worktrees 2>/dev/null     # 首選（隱藏目錄）
+   ls -d worktrees 2>/dev/null      # 備選
    ```
 
-   找到就用。如果两者都存在，`.worktrees` 优先。
+   找到就用。如果兩者都存在，`.worktrees` 優先。
 
-3. **检查是否存在全局目录：**
+3. **檢查是否存在全域目錄：**
 
    ```bash
    project=$(basename "$(git rev-parse --show-toplevel)")
    ls -d ~/.config/superpowers/worktrees/$project 2>/dev/null
    ```
 
-   找到就用（兼容老的全局路径）。
+   找到就用（相容老的全域路徑）。
 
-4. **如果没有其他可参考的信息**，默认用项目根目录下的 `.worktrees/`。
+4. **如果沒有其他可參考的資訊**，預設用專案根目錄下的 `.worktrees/`。
 
-#### 安全验证（仅项目本地目录）
+#### 安全驗證（僅專案本地目錄）
 
-**创建 worktree 前必须验证目录已被忽略：**
+**建立 worktree 前必須驗證目錄已被忽略：**
 
 ```bash
 git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
 ```
 
-**如果未被忽略：** 添加到 .gitignore，提交该改动，然后继续。
+**如果未被忽略：** 新增到 .gitignore，提交該變動，然後繼續。
 
-**为什么关键：** 防止 worktree 内容被意外提交到仓库。
+**為什麼關鍵：** 防止 worktree 內容被意外提交到倉庫。
 
-全局目录（`~/.config/superpowers/worktrees/`）无需验证。
+全域目錄（`~/.config/superpowers/worktrees/`）無需驗證。
 
-#### 创建工作树
+#### 建立工作樹
 
 ```bash
 project=$(basename "$(git rev-parse --show-toplevel)")
 
-# 根据选定位置确定路径
-# 项目本地：path="$LOCATION/$BRANCH_NAME"
-# 全局：path="~/.config/superpowers/worktrees/$project/$BRANCH_NAME"
+# 根據選定位置確定路徑
+# 專案本地：path="$LOCATION/$BRANCH_NAME"
+# 全域：path="~/.config/superpowers/worktrees/$project/$BRANCH_NAME"
 
 git worktree add "$path" -b "$BRANCH_NAME"
 cd "$path"
 ```
 
-**沙盒回退：** 如果 `git worktree add` 因权限错误（沙盒拒绝）失败，告诉用户沙盒阻止了 worktree 创建，你将在当前目录原地工作。然后原地运行 setup 和基线测试。
+**沙盒回退：** 如果 `git worktree add` 因權限錯誤（沙盒拒絕）失敗，告訴使用者沙盒阻止了 worktree 建立，你將在當前目錄原地工作。然後原地執行 setup 和基線測試。
 
-## 步骤 3：项目设置
+## 步驟 3：專案設定
 
-自动检测并运行相应的设置命令：
+自動檢測並執行相應的設定命令：
 
 ```bash
 # Node.js
@@ -135,101 +135,101 @@ if [ -f pyproject.toml ]; then poetry install; fi
 if [ -f go.mod ]; then go mod download; fi
 ```
 
-## 步骤 4：验证基线干净
+## 步驟 4：驗證基線乾淨
 
-运行测试确保工作区初始状态干净：
+執行測試確保工作區初始狀態乾淨：
 
 ```bash
-# 使用项目对应的命令
+# 使用專案對應的命令
 npm test / cargo test / pytest / go test ./...
 ```
 
-**如果测试失败：** 报告失败，询问是继续还是排查。
+**如果測試失敗：** 報告失敗，詢問是繼續還是排查。
 
-**如果测试通过：** 报告就绪。
+**如果測試通過：** 報告就緒。
 
-### 报告
+### 報告
 
 ```
-工作树已就绪：<full-path>
-测试通过（<N> 个测试，0 个失败）
-准备实现 <feature-name>
+工作樹已就緒：<full-path>
+測試通過（<N> 個測試，0 個失敗）
+準備實作 <feature-name>
 ```
 
-## 快速参考
+## 快速參考
 
-| 情况 | 操作 |
+| 情況 | 操作 |
 |------|------|
-| 已在 linked worktree 内 | 跳过创建（步骤 0） |
-| 在 submodule 内 | 按普通仓库处理（步骤 0 守卫） |
-| 有原生 worktree 工具 | 用它（步骤 1a） |
-| 没有原生工具 | git worktree 回退（步骤 1b） |
-| `.worktrees/` 存在 | 用它（验证已忽略） |
-| `worktrees/` 存在 | 用它（验证已忽略） |
-| 两者都存在 | 用 `.worktrees/` |
-| 都不存在 | 检查 instructions 文件，再默认 `.worktrees/` |
-| 全局路径存在 | 用它（向后兼容） |
-| 目录未被忽略 | 添加到 .gitignore + 提交 |
-| 创建时权限错误 | 沙盒回退，原地工作 |
-| 基线测试失败 | 报告失败 + 询问 |
-| 无 package.json/Cargo.toml | 跳过依赖安装 |
+| 已在 linked worktree 內 | 跳過建立（步驟 0） |
+| 在 submodule 內 | 按普通倉庫處理（步驟 0 守衛） |
+| 有原生 worktree 工具 | 用它（步驟 1a） |
+| 沒有原生工具 | git worktree 回退（步驟 1b） |
+| `.worktrees/` 存在 | 用它（驗證已忽略） |
+| `worktrees/` 存在 | 用它（驗證已忽略） |
+| 兩者都存在 | 用 `.worktrees/` |
+| 都不存在 | 檢查 instructions 檔案，再預設 `.worktrees/` |
+| 全域路徑存在 | 用它（向後相容） |
+| 目錄未被忽略 | 新增到 .gitignore + 提交 |
+| 建立時權限錯誤 | 沙盒回退，原地工作 |
+| 基線測試失敗 | 報告失敗 + 詢問 |
+| 無 package.json/Cargo.toml | 跳過相依性安裝 |
 
-## 常见错误
+## 常見錯誤
 
-### 与 harness 对抗
+### 與 harness 對抗
 
-- **问题：** 平台已经提供隔离的情况下还在用 `git worktree add`
-- **修复：** 步骤 0 检测现有隔离。步骤 1a 让位给原生工具。
+- **問題：** 平台已經提供隔離的情況下還在用 `git worktree add`
+- **修復：** 步驟 0 檢測現有隔離。步驟 1a 讓位給原生工具。
 
-### 跳过检测
+### 跳過檢測
 
-- **问题：** 在已有的 worktree 内嵌套创建另一个 worktree
-- **修复：** 创建任何东西之前都先跑步骤 0
+- **問題：** 在已有的 worktree 內嵌套建立另一個 worktree
+- **修復：** 建立任何東西之前都先跑步驟 0
 
-### 跳过忽略验证
+### 跳過忽略驗證
 
-- **问题：** worktree 内容被跟踪，污染 git status
-- **修复：** 创建项目本地 worktree 前始终使用 `git check-ignore`
+- **問題：** worktree 內容被追蹤，污染 git status
+- **修復：** 建立專案本地 worktree 前始終使用 `git check-ignore`
 
-### 假设目录位置
+### 假設目錄位置
 
-- **问题：** 造成不一致、违反项目约定
-- **修复：** 遵循优先级：现有目录 > 全局历史路径 > instructions 文件 > 默认
+- **問題：** 造成不一致、違反專案約定
+- **修復：** 遵循優先級：現有目錄 > 全域歷史路徑 > instructions 檔案 > 預設
 
-### 带着失败的测试继续
+### 帶著失敗的測試繼續
 
-- **问题：** 无法区分新 bug 和已有问题
-- **修复：** 报告失败，获得明确许可后再继续
+- **問題：** 無法區分新 bug 和已有問題
+- **修復：** 報告失敗，獲得明確許可後再繼續
 
-## 红线
+## 紅線
 
 **绝不：**
 
-- 步骤 0 已检测到现有隔离时还创建 worktree
-- 在已有原生 worktree 工具（如 `EnterWorktree`）的情况下还用 `git worktree add`。这是 #1 错误——有就用。
-- 跳过步骤 1a 直接跳到步骤 1b 的 git 命令
-- 不验证已忽略就创建项目本地 worktree
-- 跳过基线测试验证
-- 不询问就带着失败的测试继续
+- 步驟 0 已檢測到現有隔離時還建立 worktree
+- 在已有原生 worktree 工具（如 `EnterWorktree`）的情況下還用 `git worktree add`。這是 #1 錯誤——有就用。
+- 跳過步驟 1a 直接跳到步驟 1b 的 git 命令
+- 不驗證已忽略就建立專案本地 worktree
+- 跳過基線測試驗證
+- 不詢問就帶著失敗的測試繼續
 
 **始终：**
 
-- 先跑步骤 0 检测
-- 优先原生工具，其次 git 回退
-- 遵循目录优先级：现有目录 > 全局历史路径 > instructions 文件 > 默认
-- 项目本地目录验证已忽略
-- 自动检测并运行项目设置
-- 验证测试基线干净
+- 先跑步驟 0 檢測
+- 優先原生工具，其次 git 回退
+- 遵循目錄優先級：現有目錄 > 全域歷史路徑 > instructions 檔案 > 預設
+- 專案本地目錄驗證已忽略
+- 自動檢測並執行專案設定
+- 驗證測試基線乾淨
 
-## 集成
+## 整合
 
-**被以下技能调用：**
+**被以下技能呼叫：**
 
-- **brainstorming**（阶段 4）- 设计通过且需要实现时必需
-- **subagent-driven-development** - 执行任何任务前必需
-- **executing-plans** - 执行任何任务前必需
-- 任何需要隔离工作区的技能
+- **brainstorming**（階段 4）- 設計通過且需要實作時必需
+- **subagent-driven-development** - 執行任何任務前必需
+- **executing-plans** - 執行任何任務前必需
+- 任何需要隔離工作區的技能
 
 **配合使用：**
 
-- **finishing-a-development-branch** - 工作完成后清理时必需
+- **finishing-a-development-branch** - 工作完成後清理時必需
