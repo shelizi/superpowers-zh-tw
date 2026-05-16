@@ -2,7 +2,7 @@
 
 在 [DeerFlow 2.0](https://github.com/bytedance/deer-flow)（字节跳动开源 SuperAgent）中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
 ```bash
 cd /your/deerflow-project
@@ -59,7 +59,7 @@ npx superpowers-zh
 
 重新執行安裝命令即可更新到最新版本。
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- DeerFlow 文档：https://github.com/bytedance/deer-flow
+- DeerFlow 文件：https://github.com/bytedance/deer-flow

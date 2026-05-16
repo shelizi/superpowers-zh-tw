@@ -2,7 +2,7 @@
 
 在 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## 自動安裝
 
 ```bash
 cd /your/project
@@ -89,8 +89,8 @@ skill_view("using-superpowers", "references/hermes-tools.md")
 1. 確認檔案在專案根目錄（與 `.hermes/` 同級）
 2. 檔名可以是 `HERMES.md` 或 `.hermes.md`
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- Hermes Agent 文档：https://hermes-agent.nousresearch.com/docs/
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- Hermes Agent 文件：https://hermes-agent.nousresearch.com/docs/

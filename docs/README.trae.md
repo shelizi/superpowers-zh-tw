@@ -2,7 +2,7 @@
 
 在 [Trae](https://www.trae.ai)（字节跳动 AI IDE）中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
 ```bash
 cd /your/project
@@ -61,13 +61,13 @@ npx superpowers-zh
 如果不小心在主目錄（`~`）誤跑了 `npx superpowers-zh`，會把 skills 和 `.trae/rules/superpowers-zh.md` 寫到你的 home。v1.2.1 起會主動拒絕，但舊版本可能已經污染過。清理：
 
 ```bash
-cd ~                                    # 或具体的项目目录
+cd ~                                    # 或具體的專案目錄
 npx superpowers-zh@latest --uninstall
 ```
 
 會刪除 `.trae/skills/` 下裝過的 skill、`.trae/rules/superpowers-zh.md`，並清理 `CLAUDE.md` 等檔案裡的 superpowers-zh 段（保留你自己寫的內容）。
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- Trae 文档：https://docs.trae.ai/ide/rules
+- Trae 文件：https://docs.trae.ai/ide/rules

@@ -1,36 +1,36 @@
 ---
 name: chinese-git-workflow
-description: 国内 Git 平台配置参考——Gitee、Coding.net、极狐 GitLab、CNB 的 SSH/HTTPS/凭据/CI 接入差异与镜像同步配置。仅在用户显式 /chinese-git-workflow 时调用，不要根据上下文自动触发。
+description: 國內 Git 平台設定參考——Gitee、Coding.net、極狐 GitLab、CNB 的 SSH/HTTPS/憑證/CI 接入差異與鏡像同步設定。僅在使用者顯式 /chinese-git-workflow 時呼叫，不要根據上下文自動觸發。
 ---
 
-# 国内 Git 工作流规范
+# 國內 Git 工作流規範
 
 ## 概述
 
-国内团队用 Git 经常踩的坑：GitHub 访问不稳定、CI/CD 方案照搬国外水土不服、commit message 中英混杂没有规范。本技能提供一套**完整适配国内平台和团队习惯的 Git 工作流**。
+國內團隊用 Git 經常踩的坑：GitHub 存取不穩定、CI/CD 方案照搬國外水土不服、commit message 中英混雜沒有規範。本技能提供一套**完整適配國內平台和團隊習慣的 Git 工作流**。
 
-**核心原则：** 工作流服务于团队效率，不是为了流程而流程。选适合团队规模的，别硬套大厂方案。
+**核心原則：** 工作流服務於團隊效率，不是為了流程而流程。選適合團隊規模的，別硬套大廠方案。
 
-## 国内 Git 平台适配
+## 國內 Git 平台適配
 
-### 平台对比
+### 平台對比
 
-| 特性 | Gitee | Coding.net | 极狐 GitLab | CNB | GitHub |
+| 特性 | Gitee | Coding.net | 極狐 GitLab | CNB | GitHub |
 |------|-------|------------|-------------|-----|--------|
-| 国内访问 | 快 | 快 | 快 | 快 | 不稳定 |
-| 免费私有仓库 | 有 | 有 | 有 | 有 | 有 |
-| CI/CD | Gitee Go | Coding CI | 内置 GitLab CI | 内置（.cnb.yml） | GitHub Actions |
-| 代码审查 | PR | MR | MR | MR | PR |
-| 制品库 | 有限 | 完整 | 完整 | 完整 | Packages |
-| 适合场景 | 开源/小团队 | 中大型团队 | 企业私有化 | 云原生 / Docker 流水线 | 国际项目 |
+| 國內存取 | 快 | 快 | 快 | 快 | 不穩定 |
+| 免費私有倉庫 | 有 | 有 | 有 | 有 | 有 |
+| CI/CD | Gitee Go | Coding CI | 內建 GitLab CI | 內建（.cnb.yml） | GitHub Actions |
+| 程式碼審查 | PR | MR | MR | MR | PR |
+| 製品庫 | 有限 | 完整 | 完整 | 完整 | Packages |
+| 適合場景 | 開源/小團隊 | 中大型團隊 | 企業私有化 | 雲原生 / Docker 流水線 | 國際專案 |
 
-### Gitee 特有配置
+### Gitee 特有設定
 
 ```bash
-# 设置 Gitee 远程仓库
+# 設定 Gitee 遠端倉庫
 git remote add origin https://gitee.com/<org>/<repo>.git
 
-# Gitee 的 SSH 配置
+# Gitee 的 SSH 設定
 # ~/.ssh/config
 Host gitee.com
     HostName gitee.com
@@ -38,192 +38,192 @@ Host gitee.com
     IdentityFile ~/.ssh/gitee_rsa
     PreferredAuthentications publickey
 
-# 同时推送到 Gitee 和 GitHub（镜像同步）
+# 同時推送到 Gitee 和 GitHub（鏡像同步）
 git remote set-url --add --push origin https://gitee.com/<org>/<repo>.git
 git remote set-url --add --push origin https://github.com/<org>/<repo>.git
 ```
 
-### Coding.net 特有配置
+### Coding.net 特有設定
 
 ```bash
-# Coding 的仓库地址格式
+# Coding 的倉庫地址格式
 git remote add origin https://e.coding.net/<team>/<project>/<repo>.git
 
-# Coding 支持的 SSH 地址
+# Coding 支援的 SSH 地址
 git remote add origin git@e.coding.net:<team>/<project>/<repo>.git
 ```
 
-### 极狐 GitLab 特有配置
+### 極狐 GitLab 特有設定
 
 ```bash
-# 极狐 GitLab 私有化部署常见地址格式
+# 極狐 GitLab 私有化部署常見地址格式
 git remote add origin https://jihulab.com/<group>/<repo>.git
 
-# 或者企业内部部署
+# 或是企業內部部署
 git remote add origin https://gitlab.yourcompany.com/<group>/<repo>.git
 ```
 
-### CNB（Cloud Native Build）特有配置
+### CNB（Cloud Native Build）特有設定
 
 ```bash
-# CNB 仓库地址（仅支持 HTTPS，不提供 SSH 协议）
+# CNB 倉庫地址（僅支援 HTTPS，不提供 SSH 協議）
 git remote add origin https://cnb.cool/<org>/<repo>.git
 
-# HTTPS 认证：用户名固定为 cnb，密码为个人访问令牌（Access Token）
-# 在 CNB 平台 → 个人设置 → 访问令牌 中生成
+# HTTPS 認證：使用者名稱固定為 cnb，密碼為個人存取權杖（Access Token）
+# 在 CNB 平台 → 個人設定 → 存取權杖 中產生
 git config credential.helper store
 ```
 
-## 工作流选择
+## 工作流選擇
 
-### 方案一：主干开发（Trunk-Based Development）
+### 方案一：主幹開發（Trunk-Based Development）
 
-**适合：** 小团队（2-8 人）、迭代速度快、有完善的自动化测试。
+**適合：** 小團隊（2-8 人）、迭代速度快、有完善的自動化測試。
 
 ```
 main ──●──●──●──●──●──●──●──●──●──
         \   /  \   /       \   /
 feat/x  ●─●   ●─●    fix/y ●─●
-（短命分支，1-2 天内合回）
+（短命分支，1-2 天內合回）
 ```
 
-**规则：**
-- 主干（main）始终保持可发布状态
-- 功能分支生命周期不超过 2 天
-- 每天至少合并一次到主干
-- 用 Feature Flag 控制未完成功能的可见性
+**規則：**
+- 主幹（main）始終保持可發布狀態
+- 功能分支生命週期不超過 2 天
+- 每天至少合併一次到主幹
+- 用 Feature Flag 控制未完成功能的可見性
 
 ```bash
-# 从 main 拉分支
+# 從 main 拉分支
 git checkout -b feat/user-login main
 
-# 开发完成后，rebase 到最新 main
+# 開發完成後，rebase 到最新 main
 git fetch origin
 git rebase origin/main
 
-# 提交 PR/MR，合并后删除分支
+# 提交 PR/MR，合併後刪除分支
 ```
 
-### 方案二：Git Flow（经典分支模型）
+### 方案二：Git Flow（經典分支模型）
 
-**适合：** 中大团队、版本发布节奏固定（如双周迭代）、需要维护多个版本。
+**適合：** 中大團隊、版本發布節奏固定（如雙週迭代）、需要維護多個版本。
 
 ```
-main     ──●────────────────●────────────── 生产环境
+main     ──●────────────────●────────────── 生產環境
             \              / \
-release     ●──●──●──●──●    ●──●──●──●── 发布分支
+release     ●──●──●──●──●    ●──●──●──●── 發布分支
             \              /
-develop  ──●──●──●──●──●──●──●──●──●──●── 开发主线
+develop  ──●──●──●──●──●──●──●──●──●──●── 開發主線
              \   /  \       /
 feat/x       ●─●    ●─────●               功能分支
                       \   /
-                  fix/y ●─●                修复分支
+                  fix/y ●─●                修復分支
 ```
 
-**分支说明：**
-- `main` — 生产环境代码，只接受 release 和 hotfix 的合并
-- `develop` — 开发主线，功能分支从这里拉出，合回这里
-- `release/*` — 发布分支，从 develop 拉出，只修 bug 不加功能
+**分支說明：**
+- `main` — 生產環境程式碼，只接受 release 和 hotfix 的合併
+- `develop` — 開發主線，功能分支從這裡拉出，合回這裡
+- `release/*` — 發布分支，從 develop 拉出，只修 bug 不加功能
 - `feat/*` — 功能分支
-- `hotfix/*` — 紧急修复，从 main 拉出，同时合回 main 和 develop
+- `hotfix/*` — 緊急修復，從 main 拉出，同時合回 main 和 develop
 
-### 方案三：国内团队常用简化流程
+### 方案三：國內團隊常用簡化流程
 
-**适合：** 大多数国内中小团队的实际情况。
+**適合：** 大多數國內中小團隊的實際情況。
 
 ```
-main     ──●──────●──────●──── 生产环境（受保护）
+main     ──●──────●──────●──── 生產環境（受保護）
             \    / \    /
-dev      ──●──●─●──●──●─●──── 开发/测试环境
+dev      ──●──●─●──●──●─●──── 開發/測試環境
              \  /    \  /
 feat/x       ●●      ●●       功能分支
 ```
 
-**规则：**
-- `main` 分支受保护，只能通过 PR/MR 合并
-- `dev` 分支对应测试环境，自动部署
-- 功能分支从 `dev` 拉出，合回 `dev`
-- `dev` 测试通过后，合并到 `main` 进行发布
+**規則：**
+- `main` 分支受保護，只能透過 PR/MR 合併
+- `dev` 分支對應測試環境，自動部署
+- 功能分支從 `dev` 拉出，合回 `dev`
+- `dev` 測試通過後，合併到 `main` 進行發布
 
-## 分支命名规范
+## 分支命名規範
 
-### 国内团队常用命名
+### 國內團隊常用命名
 
 ```bash
 # 功能分支
 feat/user-login              # 新功能
-feat/JIRA-1234-order-refund  # 关联任务编号
+feat/JIRA-1234-order-refund  # 關聯任務編號
 
-# 修复分支
-fix/payment-callback         # Bug 修复
-fix/JIRA-5678-null-pointer   # 关联 Bug 编号
+# 修復分支
+fix/payment-callback         # Bug 修復
+fix/JIRA-5678-null-pointer   # 關聯 Bug 編號
 
-# 发布分支
-release/v2.1.0               # 版本发布
+# 發布分支
+release/v2.1.0               # 版本發布
 release/2024-03-sprint       # 按迭代命名
 
-# 紧急修复
-hotfix/v2.0.1                # 线上紧急修复
+# 緊急修復
+hotfix/v2.0.1                # 線上緊急修復
 hotfix/fix-login-crash       # 描述性命名
 
-# 个人分支（部分团队使用）
-dev/zhangsan/feat-login      # 个人开发分支
+# 個人分支（部分團隊使用）
+dev/zhangsan/feat-login      # 個人開發分支
 ```
 
-### 命名规则
+### 命名規則
 
-1. 全部小写，用 `-` 连接单词（不用下划线或驼峰）
-2. 前缀明确分支类型：`feat/`、`fix/`、`hotfix/`、`release/`
-3. 关联任务管理平台的编号（如有）：`feat/TAPD-12345-description`
-4. 长度适中，能看出分支目的即可
+1. 全部小寫，用 `-` 連接單詞（不用底線或駝峰）
+2. 前綴明確分支類型：`feat/`、`fix/`、`hotfix/`、`release/`
+3. 關聯任務管理平台的編號（如有）：`feat/TAPD-12345-description`
+4. 長度適中，能看出分支目的即可
 
-## 中文 Commit Message 规范
+## 中文 Commit Message 規範
 
-### 约定式提交（Conventional Commits）中文版
+### 約定式提交（Conventional Commits）中文版
 
 ```
-<类型>(<范围>): <简要描述>
+<類型>(<範圍>): <簡要描述>
                                     ← 空行
-<正文（可选）>
+<正文（可選）>
                                     ← 空行
-<脚注（可选）>
+<腳註（可選）>
 ```
 
-### 类型清单
+### 類型清單
 
-| 类型 | 说明 | emoji（可选） |
+| 類型 | 說明 | emoji（可選） |
 |------|------|--------------|
 | feat | 新增功能 | ✨ |
-| fix | 修复 Bug | 🐛 |
-| docs | 文档更新 | 📝 |
-| style | 代码格式（不影响逻辑） | 💄 |
-| refactor | 重构（不是新功能也不是修 Bug） | ♻️ |
-| perf | 性能优化 | ⚡ |
-| test | 测试相关 | ✅ |
-| build | 构建系统或外部依赖 | 📦 |
-| ci | CI/CD 配置 | 👷 |
-| chore | 其他杂项 | 🔧 |
-| revert | 回滚 | ⏪ |
+| fix | 修復 Bug | 🐛 |
+| docs | 文件更新 | 📝 |
+| style | 程式碼格式（不影響邏輯） | 💄 |
+| refactor | 重構（不是新功能也不是修 Bug） | ♻️ |
+| perf | 性能優化 | ⚡ |
+| test | 測試相關 | ✅ |
+| build | 建構系統或外部相依性 | 📦 |
+| ci | CI/CD 設定 | 👷 |
+| chore | 其他雜項 | 🔧 |
+| revert | 回滾 | ⏪ |
 
 ### 好的 commit message
 
 ```
-feat(购物车): 支持批量删除商品
+feat(購物車): 支援批次刪除商品
 
-- 新增全选/反选功能
-- 删除操作增加二次确认弹窗
-- 批量删除接口使用 POST /cart/batch-delete
+- 新增全選/反選功能
+- 刪除操作增加二次確認彈窗
+- 批次刪除介面使用 POST /cart/batch-delete
 
-关联需求：TAPD-12345
+關聯需求：TAPD-12345
 ```
 
 ```
-fix(支付): 修复微信支付在 iOS 16 上无法唤起的问题
+fix(支付): 修復微信支付在 iOS 16 上無法喚起的問題
 
-原因：微信 SDK 8.0.33 版本在 iOS 16 上 Universal Links 校验逻辑变更，
-导致 openURL 回调失败。
+原因：微信 SDK 8.0.33 版本在 iOS 16 上 Universal Links 校驗邏輯變更，
+導致 openURL 回呼失敗。
 
-方案：升级 SDK 至 8.0.38，并更新 Associated Domains 配置。
+方案：升級 SDK 至 8.0.38，並更新 Associated Domains 設定。
 
 Closes #567
 ```
@@ -231,27 +231,27 @@ Closes #567
 ### 不好的 commit message
 
 ```
-# 太笼统
+# 太籠統
 update code
 fix bug
-修改了一些东西
+修改了一些東西
 
-# 没有上下文
-fix: 修复问题
+# 沒有上下文
+fix: 修復問題
 feat: 新增功能
 
-# 中英混杂无规范
-fix：修复了一个bug，因为user login的时候会crash
+# 中英混雜無規範
+fix：修復了一個bug，因為user login的時候會crash
 ```
 
-## CI/CD 平台适配
+## CI/CD 平台適配
 
 ### Gitee Go
 
 ```yaml
 # .gitee/pipelines/pipeline.yml
-name: 构建与测试
-displayName: '构建与测试流水线'
+name: 建構與測試
+displayName: '建構與測試流水線'
 
 triggers:
   push:
@@ -261,13 +261,13 @@ triggers:
         - dev
 
 stages:
-  - name: 测试
+  - name: 測試
     jobs:
-      - name: 单元测试
+      - name: 單元測試
         steps:
           - step: npmbuild@1
             name: install_and_test
-            displayName: '安装依赖并执行测试'
+            displayName: '安裝相依性並執行測試'
             inputs:
               nodeVersion: 20
               commands:
@@ -278,30 +278,30 @@ stages:
 ### Coding CI
 
 ```groovy
-// Jenkinsfile（Coding CI 支持 Jenkinsfile 语法）
+// Jenkinsfile（Coding CI 支援 Jenkinsfile 語法）
 pipeline {
     agent any
 
     stages {
-        stage('安装依赖') {
+        stage('安裝相依性') {
             steps {
                 sh 'npm ci'
             }
         }
 
-        stage('单元测试') {
+        stage('單元測試') {
             steps {
                 sh 'npm test'
             }
         }
 
-        stage('构建') {
+        stage('建構') {
             steps {
                 sh 'npm run build'
             }
         }
 
-        stage('部署到测试环境') {
+        stage('部署到測試環境') {
             when {
                 branch 'dev'
             }
@@ -310,7 +310,7 @@ pipeline {
             }
         }
 
-        stage('部署到生产环境') {
+        stage('部署到生產環境') {
             when {
                 branch 'main'
             }
@@ -322,14 +322,14 @@ pipeline {
 
     post {
         failure {
-            // 企业微信/钉钉通知
+            // 企業微信/釘釘通知
             sh './scripts/notify-failure.sh'
         }
     }
 }
 ```
 
-### 极狐 GitLab CI
+### 極狐 GitLab CI
 
 ```yaml
 # .gitlab-ci.yml
@@ -340,10 +340,10 @@ stages:
 
 variables:
   NODE_IMAGE: node:20-alpine
-  # 使用国内镜像加速
+  # 使用國內鏡像加速
   NPM_REGISTRY: https://registry.npmmirror.com
 
-单元测试:
+單元測試:
   stage: test
   image: $NODE_IMAGE
   script:
@@ -352,7 +352,7 @@ variables:
     - npm test
   coverage: '/Lines\s*:\s*(\d+\.?\d*)%/'
 
-构建:
+建構:
   stage: build
   image: $NODE_IMAGE
   script:
@@ -363,7 +363,7 @@ variables:
     paths:
       - dist/
 
-部署测试环境:
+部署測試環境:
   stage: deploy
   script:
     - ./scripts/deploy-staging.sh
@@ -372,7 +372,7 @@ variables:
   environment:
     name: staging
 
-部署生产环境:
+部署生產環境:
   stage: deploy
   script:
     - ./scripts/deploy-production.sh
@@ -380,13 +380,13 @@ variables:
     - main
   environment:
     name: production
-  when: manual  # 生产环境手动触发
+  when: manual  # 生產環境手動觸發
 ```
 
 ### CNB（Cloud Native Build）
 
 ```yaml
-# .cnb.yml — branch-first 结构，直接指定 Docker 镜像跑流水线
+# .cnb.yml — branch-first 結構，直接指定 Docker 鏡像跑流水線
 main:
   push:
     - docker:
@@ -403,108 +403,108 @@ main:
         - npm test
 ```
 
-**特点：**
-- 每个流水线独立指定 Docker 镜像，天然云原生
-- 支持 `push` / `pull_request` 触发
-- 同一事件可并行多条流水线
-- `stages` 也支持 `- name: xxx` + `script:` 的展开形式，复杂场景见官方文档
+**特點：**
+- 每個流水線獨立指定 Docker 鏡像，天然雲原生
+- 支援 `push` / `pull_request` 觸發
+- 同一事件可並行多條流水線
+- `stages` 也支援 `- name: xxx` + `script:` 的展開形式，複雜場景見官方文件
 
-### GitHub Actions 国内替代方案对照
+### GitHub Actions 國內替代方案對照
 
-| GitHub Actions 功能 | Gitee Go | Coding CI | 极狐 GitLab CI | CNB |
+| GitHub Actions 功能 | Gitee Go | Coding CI | 極狐 GitLab CI | CNB |
 |---------------------|----------|-----------|----------------|-----|
-| 触发条件 | triggers | Jenkinsfile triggers | only/rules | push / pull_request |
-| 缓存依赖 | cache step | stash/unstash | cache | 见官方文档 |
-| 制品存储 | artifacts | 制品库 | artifacts | 见官方文档 |
-| 环境变量 | env | environment | variables | env |
-| 密钥管理 | 环境变量配置 | 凭据管理 | CI/CD Variables | Access Token |
-| 手动触发 | 手动运行 | 手动触发 | when: manual | 页面手动运行 |
+| 觸發條件 | triggers | Jenkinsfile triggers | only/rules | push / pull_request |
+| 快取相依性 | cache step | stash/unstash | cache | 見官方文件 |
+| 製品儲存 | artifacts | 製品庫 | artifacts | 見官方文件 |
+| 環境變數 | env | environment | variables | env |
+| 金鑰管理 | 環境變數設定 | 憑據管理 | CI/CD Variables | Access Token |
+| 手動觸發 | 手動執行 | 手動觸發 | when: manual | 頁面手動執行 |
 
-## PR/MR 描述模板
+## PR/MR 描述範本
 
-### 中文模板
+### 中文範本
 
-在仓库中创建 PR/MR 模板文件：
+在倉庫中建立 PR/MR 範本檔案：
 
 **Gitee：** `.gitee/PULL_REQUEST_TEMPLATE.md`
 
 **Coding / GitLab：** `.gitlab/merge_request_templates/default.md`
 
 ```markdown
-## 变更说明
+## 變更說明
 
-<!-- 简要描述这次改动做了什么，解决了什么问题 -->
+<!-- 簡要描述這次變動做了什麼，解決了什麼問題 -->
 
-## 变更类型
+## 變更類型
 
 - [ ] 新功能（feat）
-- [ ] Bug 修复（fix）
-- [ ] 重构（refactor）
-- [ ] 性能优化（perf）
-- [ ] 文档更新（docs）
+- [ ] Bug 修復（fix）
+- [ ] 重構（refactor）
+- [ ] 性能優化（perf）
+- [ ] 文件更新（docs）
 - [ ] 其他：
 
-## 关联信息
+## 關聯資訊
 
-- 需求/Bug 链接：
-- 设计文档：
+- 需求/Bug 連結：
+- 設計文件：
 
-## 改动范围
+## 變動範圍
 
-<!-- 列出主要改动的模块和文件 -->
+<!-- 列出主要變動的模組和檔案 -->
 
-## 测试情况
+## 測試情況
 
-- [ ] 单元测试通过
-- [ ] 手动测试通过
-- [ ] 相关模块回归测试通过
+- [ ] 單元測試通過
+- [ ] 手動測試通過
+- [ ] 相關模組回歸測試通過
 
-## 测试方法
+## 測試方法
 
-<!-- 描述如何验证这次改动 -->
+<!-- 描述如何驗證這次變動 -->
 
-## 影响范围
+## 影響範圍
 
-<!-- 这次改动可能影响哪些功能？是否需要通知其他团队？ -->
+<!-- 這次變動可能影響哪些功能？是否需要通知其他團隊？ -->
 
-## 部署注意事项
+## 部署注意事項
 
-- [ ] 需要执行数据库迁移
-- [ ] 需要更新配置文件
-- [ ] 需要更新环境变量
-- [ ] 无特殊注意事项
+- [ ] 需要執行資料庫遷移
+- [ ] 需要更新設定檔
+- [ ] 需要更新環境變數
+- [ ] 無特殊注意事項
 
-## 截图/录屏
+## 截圖/錄屏
 
-<!-- 如果涉及 UI 变更，贴截图或录屏 -->
+<!-- 如果涉及 UI 變更，貼截圖或錄屏 -->
 ```
 
-## 常用 Git 配置
+## 常用 Git 設定
 
-### 国内环境优化
+### 國內環境優化
 
 ```bash
-# 设置用户信息
-git config --global user.name "张三"
+# 設定使用者資訊
+git config --global user.name "張三"
 git config --global user.email "zhangsan@company.com"
 
-# commit message 编辑器设置为 VS Code
+# commit message 編輯器設定為 VS Code
 git config --global core.editor "code --wait"
 
-# 解决中文文件名显示为转义字符的问题
+# 解決中文檔名顯示為轉義字元的問題
 git config --global core.quotepath false
 
-# 设置默认分支名
+# 設定預設分支名
 git config --global init.defaultBranch main
 
-# 代理设置（如果需要同时使用 GitHub）
+# 代理設定（如果需要同時使用 GitHub）
 git config --global http.https://github.com.proxy socks5://127.0.0.1:7890
 
-# NPM 使用国内镜像
+# NPM 使用國內鏡像
 npm config set registry https://registry.npmmirror.com
 ```
 
-### .gitignore 国内项目常见配置
+### .gitignore 國內專案常見設定
 
 ```gitignore
 # IDE
@@ -512,36 +512,36 @@ npm config set registry https://registry.npmmirror.com
 .vscode/
 *.swp
 
-# 依赖
+# 相依性
 node_modules/
 vendor/
 
-# 构建产物
+# 建構產物
 dist/
 build/
 *.exe
 
-# 环境配置
+# 環境設定
 .env
 .env.local
 .env.*.local
 
-# 系统文件
+# 系統檔案
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# 国内平台特有
+# 國內平台特有
 .coding/
 ```
 
-## 检查清单
+## 檢查清單
 
-在推送代码前，确认：
+在推送程式碼前，確認：
 
-- [ ] 分支命名符合团队规范
-- [ ] commit message 格式正确，类型和范围准确
-- [ ] 关联了对应的需求/Bug 编号
-- [ ] PR/MR 描述填写完整
-- [ ] CI 流水线通过
-- [ ] 已请求相关同事 Review
+- [ ] 分支命名符合團隊規範
+- [ ] commit message 格式正確，類型和範圍準確
+- [ ] 關聯了對應的需求/Bug 編號
+- [ ] PR/MR 描述填寫完整
+- [ ] CI 流水線通過
+- [ ] 已請求相關同事 Review

@@ -2,7 +2,7 @@
 
 在 [Kiro](https://kiro.dev)（Amazon AI IDE）中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
 ```bash
 cd /your/project
@@ -63,7 +63,7 @@ npx superpowers-zh
 
 重新執行安裝命令即可更新到最新版本。
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- Kiro 文档：https://kiro.dev/docs/steering/
+- Kiro 文件：https://kiro.dev/docs/steering/

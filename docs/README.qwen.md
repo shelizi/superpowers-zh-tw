@@ -2,7 +2,7 @@
 
 在 [Qwen Code](https://tongyi.aliyun.com/qianwen) (通义灵码) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## 自動安裝
 
 ```bash
 cd /your/project
@@ -39,11 +39,11 @@ cp -r superpowers-zh/skills/* ~/.qwen/skills/
 在 Qwen Code 中可以透過以下方式呼叫 skills：
 
 ```
-请使用 brainstorming skill 来分析这个需求
+請使用 brainstorming skill 來分析這個需求
 ```
 
 ```
-按照 test-driven-development skill 的方法来实现这个功能
+按照 test-driven-development skill 的方法來實作這個功能
 ```
 
 ## 故障排查
@@ -54,8 +54,8 @@ cp -r superpowers-zh/skills/* ~/.qwen/skills/
 2. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
 3. 重新啟動 Qwen Code 或重新整理會話
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- 通义灵码文档：https://tongyi.aliyun.com/lingma
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- 通義靈碼文件：https://tongyi.aliyun.com/lingma

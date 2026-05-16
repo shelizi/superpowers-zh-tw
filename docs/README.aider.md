@@ -2,7 +2,7 @@
 
 在 [Aider](https://aider.chat) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## 自動安裝
 
 ```bash
 cd /your/project
@@ -23,7 +23,7 @@ cp -r superpowers-zh/skills /your/project/.aider/skills
 Aider 原生支援 `CONVENTIONS.md` 檔案。在其中引用 skills：
 
 ```markdown
-# 项目约定
+# 專案約定
 
 ## 工作方法论
 
@@ -54,8 +54,8 @@ read:
 2. 確保在 `CONVENTIONS.md` 或 `.aider.conf.yml` 中引用了 skills
 3. Aider 會自動讀取 `CONVENTIONS.md`，無需額外設定
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- Aider 文档：https://aider.chat/docs/
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- Aider 文件：https://aider.chat/docs/

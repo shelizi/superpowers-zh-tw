@@ -5,10 +5,10 @@ import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { homedir } from 'os';
 
-// 手动递归复制：跨 Node 版本和操作系统行为一致
-// 不使用 cpSync —— 在 Windows + npx 缓存（含 junction）+ Node 16.7-18 下不稳定
+// 手動遞迴複製：跨 Node 版本和作業系統行為一致
+// 不使用 cpSync —— 在 Windows + npx 快取（含 junction）+ Node 16.7-18 下不穩定
 function copyDirSync(src, dest) {
-  // 解析 junction/symlink，避免 Windows npx 缓存路径下 readdir 返回空
+  // 解析 junction/symlink，避免 Windows npx 快取路徑下 readdir 返回空
   let realSrc = src;
   try { realSrc = realpathSync(src); } catch {}
 
@@ -21,7 +21,7 @@ function copyDirSync(src, dest) {
     let stat;
     try { stat = lstatSync(srcPath); } catch { continue; }
     if (stat.isSymbolicLink()) {
-      // 取消引用后按实际类型处理
+      // 取消引用後按實際類型處理
       try {
         const real = realpathSync(srcPath);
         const realStat = lstatSync(real);
@@ -41,9 +41,9 @@ const PKG = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'u
 const SKILLS_SRC = resolve(__dirname, '..', 'skills');
 const PROJECT_DIR = process.cwd();
 
-// 历史遗留 agent 文件名 — 用于 --uninstall 清理已装用户机器上的残留。
-// 上游 v5.1.0 把 agents/code-reviewer.md 上升进 requesting-code-review skill，
-// agents/ 目录已删，但旧版本装过的用户机器上仍有残留文件需要清理。
+// 歷史遺留 agent 檔名 — 用於 --uninstall 清理已裝使用者機器上的殘留。
+// 上游 v5.1.0 把 agents/code-reviewer.md 上升進 requesting-code-review skill，
+// agents/ 目錄已刪，但舊版本裝過的使用者機器上仍有殘留檔案需要清理。
 const LEGACY_AGENT_FILENAMES = ['code-reviewer.md'];
 
 const TARGETS = [
@@ -92,8 +92,8 @@ function scanSkillEntries(skillsDir) {
   return entries;
 }
 
-// 段落哨兵：v1.2.1+ 安装时把追加内容包在两条 HTML 注释之间，
-// 让卸载可以精确切除，无需依赖标题层级猜测段尾。
+// 段落哨兵：v1.2.1+ 安裝時把追加內容包在兩條 HTML 註釋之間，
+// 讓解除安裝可以精確切除，無需依賴標題層級猜測段尾。
 const SENTINEL_BEGIN = '<!-- superpowers-zh:begin (do not edit between these markers) -->';
 const SENTINEL_END = '<!-- superpowers-zh:end -->';
 
@@ -114,26 +114,26 @@ alwaysApply: true
 
 # Superpowers-ZH 中文增强版
 
-你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+你已載入 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 可用 Skills
 
-Skills 位于 \`.trae/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.trae/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
-| Skill | 触发条件 |
+| Skill | 觸發條件 |
 |-------|---------|
 ${skillTable}
 
 ## 如何使用
 
-当任务匹配某个 skill 的触发条件时，读取对应的 \`.trae/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。
+當任務匹配某個 skill 的觸發條件時，讀取對應的 \`.trae/skills/<skill-name>/SKILL.md\` 並嚴格遵循其流程。
 `;
 
   const rulePath = resolve(rulesDir, 'superpowers-zh.md');
@@ -147,24 +147,24 @@ function generateAntigravityBootstrap(projectDir) {
 
   const content = `# Superpowers-ZH 中文增强版
 
-本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+本專案已安裝 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 可用 Skills
 
-Skills 位于 \`.antigravity/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.antigravity/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
 ${skillList}
 
 ## 如何使用
 
-当任务匹配某个 skill 时，读取对应的 \`.antigravity/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。
+當任務匹配某個 skill 時，讀取對應的 \`.antigravity/skills/<skill-name>/SKILL.md\` 並嚴格遵循其流程。
 `;
 
   // 写入 .antigravity/rules.md（不覆盖用户已有的 GEMINI.md / AGENTS.md）
@@ -179,27 +179,27 @@ function generateAiderBootstrap(projectDir) {
 
   const content = `# Superpowers-ZH 工作方法论
 
-本项目使用 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+本專案已安裝 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 可用 Skills
 
-Skills 位于 \`.aider/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.aider/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
 ${skillList}
 
 ## 如何使用
 
-当任务匹配某个 skill 时，读取对应的 \`.aider/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。
+當任務匹配某個 skill 時，讀取對應的 \`.aider/skills/<skill-name>/SKILL.md\` 並嚴格遵循其流程。
 `;
 
-  // 写入 CONVENTIONS.md（Aider 原生支持自动加载此文件）
+  // 寫入 CONVENTIONS.md（Aider 原生支援自動載入此檔案）
   // 如果已有 CONVENTIONS.md，追加而不覆盖
   const convPath = resolve(projectDir, 'CONVENTIONS.md');
   if (existsSync(convPath)) {
@@ -222,24 +222,24 @@ function generateGeminiBootstrap(projectDir) {
 
   const content = `# Superpowers-ZH 中文增强版
 
-本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+本專案已安裝 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 可用 Skills
 
-Skills 位于 \`.gemini/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.gemini/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
 ${skillList}
 
 ## 如何使用
 
-当任务匹配某个 skill 时，读取对应的 \`.gemini/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。
+當任務匹配某個 skill 時，讀取對應的 \`.gemini/skills/<skill-name>/SKILL.md\` 並嚴格遵循其流程。
 `;
 
   // 写入 GEMINI.md（如果已存在则追加）
@@ -264,18 +264,18 @@ function generateHermesBootstrap(projectDir) {
 
   const content = `# Superpowers-ZH 中文增强版
 
-本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+本專案已安裝 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 工具映射
 
-技能中引用的 Claude Code 工具名称对应 Hermes Agent 的等价工具：
+技能中引用的 Claude Code 工具名稱對應 Hermes Agent 的等價工具：
 - \`Read\` → \`read_file\`
 - \`Write\` → \`write_file\`
 - \`Edit\` → \`patch\`
@@ -289,13 +289,13 @@ function generateHermesBootstrap(projectDir) {
 
 ## 可用 Skills
 
-Skills 位于 \`.hermes/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.hermes/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
 ${skillList}
 
 ## 如何使用
 
-当任务匹配某个 skill 时，使用 \`skill_view\` 加载对应 skill 并严格遵循其流程。
+當任務匹配某個 skill 時，使用 \`skill_view\` 載入對應 skill 並嚴格遵循其流程。
 `;
 
   // 写入 HERMES.md（如果已存在则追加）
@@ -320,26 +320,26 @@ function generateClaudeCodeBootstrap(projectDir) {
 
   const content = `# Superpowers-ZH 中文增强版
 
-本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+本專案已安裝 superpowers-zh 技能框架（${skillEntries.length} 個 skills）。
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+1. **收到任務時，先檢查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要檢查
+2. **設計先於編碼** — 收到功能需求時，先用 brainstorming skill 做需求分析
+3. **測試先於實作** — 寫程式碼前先寫測試（TDD）
+4. **驗證先於完成** — 聲稱完成前必須執行驗證指令
 
 ## 可用 Skills
 
-Skills 位于 \`.claude/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+Skills 位於 \`.claude/skills/\` 目錄，每個 skill 有獨立的 \`SKILL.md\` 檔案。
 
 ${skillList}
 
 ## 如何使用
 
-当任务匹配某个 skill 时，使用 \`Skill\` 工具加载对应 skill 并严格遵循其流程。绝不要用 Read 工具读取 SKILL.md 文件。
+當任務匹配某個 skill 時，使用 \`Skill\` 工具載入對應 skill 並嚴格遵循其流程。絕不要用 Read 工具讀取 SKILL.md 檔案。
 
-如果你认为哪怕只有 1% 的可能性某个 skill 适用于你正在做的事情，你必须调用该 skill 检查。
+如果你認為哪怕只有 1% 的可能性某個 skill 適用於你正在做的事情，你必須呼叫該 skill 檢查。
 `;
 
   const mdPath = resolve(projectDir, 'CLAUDE.md');
@@ -357,7 +357,7 @@ ${skillList}
   }
 }
 
-// 工具名称别名映射（用户输入 -> TARGETS.name）
+// 工具名稱別名映射（使用者輸入 -> TARGETS.name）
 const TOOL_ALIASES = {
   'claude':       'Claude Code',
   'claude-code':  'Claude Code',
@@ -393,26 +393,26 @@ function showHelp() {
   superpowers-zh v${PKG.version} — AI 编程超能力中文版
 
   用法：
-    npx superpowers-zh                   自动检测工具并安装
-    npx superpowers-zh --tool cursor     指定工具安装（检测不到时使用）
-    npx superpowers-zh --uninstall       卸载当前目录下的 superpowers-zh
-    npx superpowers-zh --force           允许在用户主目录(~)安装（默认拒绝）
-    npx superpowers-zh --help            显示帮助
-    npx superpowers-zh --version         显示版本
+    npx superpowers-zh                   自動偵測工具並安裝
+    npx superpowers-zh --tool cursor     指定工具安裝（偵測不到時使用）
+    npx superpowers-zh --uninstall       解除安裝當前目錄下的 superpowers-zh
+    npx superpowers-zh --force           允許在使用者主目錄(~)安裝（預設拒絕）
+    npx superpowers-zh --help            顯示說明
+    npx superpowers-zh --version         顯示版本
 
-  支持的工具名：
+  支援的工具名稱：
     ${Object.keys(TOOL_ALIASES).join(', ')}
 
-  说明：
-    自动检测当前项目使用的 AI 编程工具，将 ${countDirs(SKILLS_SRC)} 个 skills 安装到对应目录。
-    如果自动检测不到，请用 --tool 指定你的工具，例如：
+  說明：
+    自動偵測當前專案使用的 AI 程式設計工具，將 ${countDirs(SKILLS_SRC)} 個 skills 安裝到對應目錄。
+    如果自動偵測不到，請用 --tool 指定你的工具，例如：
       npx superpowers-zh --tool cursor
       npx superpowers-zh --tool trae
 
-    误装到主目录可以这样清理：
+    誤裝到主目錄可以這樣清理：
       cd ~ && npx superpowers-zh --uninstall
 
-  项目：https://github.com/jnMetaCode/superpowers-zh
+  專案：https://github.com/jnMetaCode/superpowers-zh
 `);
 }
 
@@ -424,14 +424,14 @@ function installForTarget(target) {
   const totalAfter = countDirs(dest);
   if (srcCount > 0 && totalAfter === 0) {
     throw new Error(
-      `复制 skills 失败：源目录 ${SKILLS_SRC} 有 ${srcCount} 个 skill，但目标 ${dest} 为空。` +
-      `\n  这通常是 npx 缓存目录权限或路径问题。请尝试：\n` +
-      `    1. 清理缓存后重试: npm cache clean --force && npx superpowers-zh\n` +
-      `    2. 或全局安装: npm i -g superpowers-zh && superpowers-zh\n` +
-      `    3. 或手动克隆复制: 见 https://github.com/jnMetaCode/superpowers-zh#方式二手动安装`
+      `複製 skills 失敗：來源目錄 ${SKILLS_SRC} 有 ${srcCount} 個 skill，但目標 ${dest} 為空。` +
+      `\n  這通常是 npx 快取目錄權限或路徑問題。請嘗試：\n` +
+      `    1. 清理快取後重試: npm cache clean --force && npx superpowers-zh\n` +
+      `    2. 或全域安裝: npm i -g superpowers-zh && superpowers-zh\n` +
+      `    3. 或手動克隆複製: 見 https://github.com/jnMetaCode/superpowers-zh#方式二手動安裝`
     );
   }
-  console.log(`  ✅ ${target.name}: ${srcCount} 个 skills -> ${dest}`);
+  console.log(`  ✅ ${target.name}: ${srcCount} 個 skills -> ${dest}`);
 
   if (target.name === 'Trae') {
     generateTraeBootstrapRule(PROJECT_DIR);
@@ -466,7 +466,7 @@ function isHomeDir(p) {
   } catch { return resolve(p) === resolve(home); }
 }
 
-// 卸载支持：完整删除的 bootstrap 文件、需要清理段落的 bootstrap 文件
+// 解除安裝支援：完整刪除的 bootstrap 檔案、需要清理段落的 bootstrap 檔案
 const BOOTSTRAP_DELETE = [
   '.trae/rules/superpowers-zh.md',
   '.antigravity/rules.md',
@@ -482,8 +482,8 @@ const BOOTSTRAP_SECTION_MARKERS = [
   '# Superpowers-ZH 工作方法论',
 ];
 
-// v1.1.x 安装的旧 bootstrap 没有 sentinel，只能凭模板末尾固定句子识别段尾。
-// 这些短语必须出现在 superpowers 段最后一行，且足够独特不易在用户内容里重合。
+// v1.1.x 安裝的舊 bootstrap 沒有 sentinel，只能憑模板末尾固定句子識別段尾。
+// 這些短語必須出現在 superpowers 段最後一行，且足夠獨特不易在使用者內容裡重合。
 const FALLBACK_TAIL_HINTS = [
   '你必须调用该 skill 检查。',
   '严格遵循其流程。',
@@ -507,7 +507,7 @@ function cleanBootstrapSection(filePath) {
   if (!existsSync(filePath)) return false;
   const content = readFileSync(filePath, 'utf8');
 
-  // 1. 哨兵模式（v1.2.1+）— 精确切除
+  // 1. 哨兵模式（v1.2.1+）— 精確切除
   const sBegin = content.indexOf(SENTINEL_BEGIN);
   if (sBegin !== -1) {
     const sEnd = content.indexOf(SENTINEL_END, sBegin + SENTINEL_BEGIN.length);
@@ -517,7 +517,7 @@ function cleanBootstrapSection(filePath) {
     }
   }
 
-  // 2. 标题 marker（v1.1.x 安装的）— 找下一个 \n# 一级标题做段尾
+  // 2. 標題 marker（v1.1.x 安裝的）— 找下一個 \n# 一級標題做段尾
   let idx = -1;
   for (const marker of BOOTSTRAP_SECTION_MARKERS) {
     const i = content.indexOf(marker);
@@ -529,7 +529,7 @@ function cleanBootstrapSection(filePath) {
   const nextHeading = content.indexOf('\n# ', idx + 1);
   if (nextHeading !== -1) end = nextHeading + 1;
 
-  // 3. 一级标题找不到 — 用末尾固定短语做兜底
+  // 3. 一級標題找不到 — 用末尾固定短語做兜底
   if (end === -1) {
     for (const hint of FALLBACK_TAIL_HINTS) {
       const i = content.lastIndexOf(hint);
@@ -541,10 +541,10 @@ function cleanBootstrapSection(filePath) {
     }
   }
 
-  // 4. 都找不到 — 数据安全，跳过 + 警告
+  // 4. 都找不到 — 資料安全，跳過 + 警告
   if (end === -1) {
-    console.warn(`  ⚠️  ${filePath}: 无法可靠识别 superpowers-zh 段尾，已跳过以避免数据丢失。`);
-    console.warn(`     请手动编辑此文件并删除以 "${BOOTSTRAP_SECTION_MARKERS[0]}" 开头的整段。`);
+    console.warn(`  ⚠️  ${filePath}: 無法可靠識別 superpowers-zh 段尾，已跳過以避免資料遺失。`);
+    console.warn(`     請手動編輯此檔案並刪除以 "${BOOTSTRAP_SECTION_MARKERS[0]}" 開頭的整段。`);
     return false;
   }
 
@@ -562,7 +562,7 @@ function uninstallForTarget(target, srcSkillNames) {
       removed++;
     }
   }
-  // 如果目录已空（或仅剩 .DS_Store），顺手清掉，避免留下空骨架
+  // 如果目錄已空（或僅剩 .DS_Store），順手清掉，避免留下空骨架
   try {
     if (existsSync(dest)) {
       const left = readdirSync(dest).filter(n => n !== '.DS_Store');
@@ -573,11 +573,11 @@ function uninstallForTarget(target, srcSkillNames) {
 }
 
 function uninstall() {
-  console.log(`\n  superpowers-zh v${PKG.version} — 卸载\n`);
-  console.log(`  目标项目: ${PROJECT_DIR}\n`);
+  console.log(`\n  superpowers-zh v${PKG.version} — 解除安裝\n`);
+  console.log(`  目標專案: ${PROJECT_DIR}\n`);
 
   if (!existsSync(SKILLS_SRC)) {
-    console.error('  ❌ 错误：skills 源目录不存在，无法识别要卸载的 skill 名单。');
+    console.error('  ❌ 錯誤：skills 來源目錄不存在，無法識別要解除安裝的 skill 名單。');
     process.exit(1);
   }
 
@@ -591,13 +591,13 @@ function uninstall() {
   for (const target of TARGETS) {
     const removed = uninstallForTarget(target, srcSkillNames);
     if (removed > 0) {
-      console.log(`  ✅ ${target.name}: 移除 ${removed} 个 skills <- ${resolve(PROJECT_DIR, target.dir)}`);
+      console.log(`  ✅ ${target.name}: 移除 ${removed} 個 skills <- ${resolve(PROJECT_DIR, target.dir)}`);
       totalSkills += removed;
     }
   }
 
-  // 清理 .claude/agents 下旧版本装过的 legacy agent（v1.2.x 及之前会装 code-reviewer.md，
-  // v1.3.0 起跟随上游 v5.1.0 移除）。即使 agents/ 源目录已删，已装用户跑 --uninstall 仍应能清干净。
+  // 清理 .claude/agents 下舊版本裝過的 legacy agent（v1.2.x 及之前會裝 code-reviewer.md，
+  // v1.3.0 起跟隨上游 v5.1.0 移除）。即使 agents/ 來源目錄已刪，已裝使用者跑 --uninstall 仍應能清乾淨。
   const agentsDest = resolve(PROJECT_DIR, '.claude', 'agents');
   if (existsSync(agentsDest)) {
     let agentsRemoved = 0;
@@ -607,7 +607,7 @@ function uninstall() {
         agentsRemoved++;
       }
     }
-    if (agentsRemoved > 0) console.log(`  ✅ Claude Code agents: 移除 ${agentsRemoved} 个旧版残留 -> ${agentsDest}`);
+    if (agentsRemoved > 0) console.log(`  ✅ Claude Code agents: 移除 ${agentsRemoved} 個舊版殘留 -> ${agentsDest}`);
     try {
       const left = readdirSync(agentsDest).filter(n => n !== '.DS_Store');
       if (left.length === 0) rmSync(agentsDest, { recursive: true, force: true });
@@ -632,46 +632,46 @@ function uninstall() {
   }
 
   if (totalSkills === 0 && bootstrapsRemoved === 0) {
-    console.log('  ⚠️  未在当前目录找到 superpowers-zh 安装痕迹。');
+    console.log('  ⚠️  未在當前目錄找到 superpowers-zh 安裝痕跡。');
   } else {
-    console.log(`\n  卸载完成。共移除 ${totalSkills} 个 skill 目录、${bootstrapsRemoved} 个 bootstrap 文件。\n`);
+    console.log(`\n  解除安裝完成。共移除 ${totalSkills} 個 skill 目錄、${bootstrapsRemoved} 個 bootstrap 檔案。\n`);
   }
 }
 
 function install(forceToolName, force) {
  try {
-  console.log(`\n  superpowers-zh v${PKG.version} — AI 编程超能力中文版\n`);
+  console.log(`\n  superpowers-zh v${PKG.version} — AI 程式設計超能力中文版\n`);
 
   if (!existsSync(SKILLS_SRC)) {
-    console.error('  ❌ 错误：skills 源目录不存在，请重新安装 superpowers-zh。');
+    console.error('  ❌ 錯誤：skills 來源目錄不存在，請重新安裝 superpowers-zh。');
     process.exit(1);
   }
 
   if (!force && isHomeDir(PROJECT_DIR)) {
     console.error(
-`  ⚠️  当前目录是用户主目录: ${PROJECT_DIR}
+`  ⚠️  當前目錄是使用者主目錄: ${PROJECT_DIR}
 
-  superpowers-zh 应该装到具体项目目录，而不是 ~/。
-  在主目录安装会把 skills 和 bootstrap 文件（CLAUDE.md / HERMES.md 等）
-  写入你的 home，污染所有项目。
+  superpowers-zh 應該裝到具體專案目錄，而不是 ~/。
+  在主目錄安裝會把 skills 和 bootstrap 檔案（CLAUDE.md / HERMES.md 等）
+  寫入你的 home，污染所有專案。
 
-  请先 cd 到项目目录：
+  請先 cd 到專案目錄：
     cd /path/to/your/project
     npx superpowers-zh
 
-  如果你确实要在主目录安装（不推荐），加 --force：
+  如果你確實要在主目錄安裝（不推薦），加 --force：
     npx superpowers-zh --force
 
-  如果你已经在主目录误装过，可以用 --uninstall 清理：
+  如果你已經在主目錄誤裝過，可以用 --uninstall 清理：
     npx superpowers-zh --uninstall
 `);
     process.exit(1);
   }
 
-  console.log(`  源: ${countDirs(SKILLS_SRC)} 个 skills`);
-  console.log(`  目标项目: ${PROJECT_DIR}\n`);
+  console.log(`  源: ${countDirs(SKILLS_SRC)} 個 skills`);
+  console.log(`  目標專案: ${PROJECT_DIR}\n`);
 
-  // --tool 指定安装
+  // --tool 指定安裝
   if (forceToolName) {
     const target = TARGETS.find(t => t.name === forceToolName);
     if (!target) {
@@ -679,11 +679,11 @@ function install(forceToolName, force) {
       process.exit(1);
     }
     installForTarget(target);
-    console.log('\n  安装完成！重启你的 AI 编程工具即可生效。\n');
+    console.log('\n  安裝完成！重新啟動你的 AI 程式設計工具即可生效。\n');
     return;
   }
 
-  // 自动检测
+  // 自動偵測
   let installed = 0;
 
   for (const target of TARGETS) {
@@ -696,23 +696,23 @@ function install(forceToolName, force) {
   }
 
   if (installed === 0) {
-    console.log('  ⚠️  未检测到任何已知的 AI 编程工具。\n');
-    console.log('  如果你使用的是 Cursor、Trae 等工具，请用 --tool 指定：');
+    console.log('  ⚠️  未偵測到任何已知的 AI 程式設計工具。\n');
+    console.log('  如果你使用的是 Cursor、Trae 等工具，請用 --tool 指定：');
     console.log('    npx superpowers-zh --tool cursor');
     console.log('    npx superpowers-zh --tool trae\n');
-    console.log('  现在将默认安装到 .claude/skills/（兼容 Claude Code / OpenClaw）\n');
+    console.log('  現在將預設安裝到 .claude/skills/（相容 Claude Code / OpenClaw）\n');
 
     const dest = resolve(PROJECT_DIR, '.claude', 'skills');
     mkdirSync(dest, { recursive: true });
     copyDirSync(SKILLS_SRC, dest);
-    console.log(`  ✅ 默认安装: ${countDirs(dest)} 个 skills -> ${dest}`);
+    console.log(`  ✅ 預設安裝: ${countDirs(dest)} 個 skills -> ${dest}`);
 
     generateClaudeCodeBootstrap(PROJECT_DIR);
   }
 
-  console.log('\n  安装完成！重启你的 AI 编程工具即可生效。\n');
+  console.log('\n  安裝完成！重新啟動你的 AI 程式設計工具即可生效。\n');
  } catch (err) {
-    console.error(`  ❌ 安装失败：${err.message}`);
+    console.error(`  ❌ 安裝失敗：${err.message}`);
     process.exit(1);
  }
 }
@@ -734,19 +734,19 @@ if (helpIdx !== -1) {
 } else if (toolIdx !== -1) {
   const toolArg = args[toolIdx + 1];
   if (!toolArg) {
-    console.error('  ❌ --tool 需要指定工具名，例如: --tool cursor\n');
+    console.error('  ❌ --tool 需要指定工具名稱，例如: --tool cursor\n');
     showHelp();
     process.exit(1);
   }
   const toolName = TOOL_ALIASES[toolArg.toLowerCase()];
   if (!toolName) {
     console.error(`  ❌ 未知工具: ${toolArg}`);
-    console.error(`  支持的工具: ${Object.keys(TOOL_ALIASES).join(', ')}\n`);
+    console.error(`  支援的工具: ${Object.keys(TOOL_ALIASES).join(', ')}\n`);
     process.exit(1);
   }
   install(toolName, force);
 } else if (args.length > 0 && args[0].startsWith('-') && forceIdx === -1) {
-  console.warn(`  未知参数: ${args[0]}\n`);
+  console.warn(`  未知參數: ${args[0]}\n`);
   showHelp();
   process.exit(1);
 } else {

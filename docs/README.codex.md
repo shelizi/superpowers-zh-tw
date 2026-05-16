@@ -2,9 +2,9 @@
 
 在 Codex 中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
-告诉 Codex：
+告訴 Codex：
 
 ```
 Fetch and follow instructions from https://raw.githubusercontent.com/jnMetaCode/superpowers-zh/refs/heads/main/.codex/INSTALL.md
@@ -85,7 +85,7 @@ Remove-Item "$env:USERPROFILE\.agents\skills\superpowers"
 
 可選：刪除複製的儲存庫 `rm -rf ~/.codex/superpowers-zh`
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh

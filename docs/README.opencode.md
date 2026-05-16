@@ -45,7 +45,7 @@ mkdir -p ~/.config/opencode/skills/my-skill
 ```markdown
 ---
 name: my-skill
-description: 当 [条件] 时使用 - [功能描述]
+description: 當 [條件] 時使用 - [功能描述]
 ---
 
 # 我的 Skill
@@ -101,8 +101,8 @@ description: 当 [条件] 时使用 - [功能描述]
 2. 檢查外掛是否正確載入（見上）
 3. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- OpenCode 文档：https://opencode.ai/docs/
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- OpenCode 文件：https://opencode.ai/docs/

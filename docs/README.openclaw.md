@@ -2,7 +2,7 @@
 
 在 [OpenClaw](https://github.com/anthropics/openclaw) 中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
 ```bash
 cd /your/project
@@ -54,10 +54,10 @@ OpenClaw 與 Claude Code 使用相同的工具名稱，skills 無需額外適配
 
 | 工具 | OpenClaw | Claude Code |
 |------|----------|-------------|
-| 读文件 | `Read` | `Read` |
-| 写文件 | `Write` | `Write` |
-| 编辑 | `Edit` | `Edit` |
-| 终端 | `Bash` | `Bash` |
+| 讀檔案 | `Read` | `Read` |
+| 寫檔案 | `Write` | `Write` |
+| 編輯 | `Edit` | `Edit` |
+| 終端 | `Bash` | `Bash` |
 | Skills | `Skill` | `Skill` |
 
 ## 使用
@@ -99,7 +99,7 @@ cd /your/project
 npx superpowers-zh
 ```
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
 - QQ 群：833585047

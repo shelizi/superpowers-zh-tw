@@ -9,7 +9,7 @@ on:
 
 jobs:
   audit:
-    name: 上游对齐 + 交叉引用 + Installer 功能 全量审计
+    name: 上游對齊 + 交叉引用 + Installer 功能 全量審計
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
 
       - name: Add upstream remote
         run: |
-          git remote add upstream https://github.com/obra/superpowers.git
+          git remote add upstream https://github.com/shelizi/superpowers-zh-tw.git
           git fetch upstream main --depth=50
 
       - name: Run audit

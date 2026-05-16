@@ -2,7 +2,7 @@
 
 在 [Gemini CLI](https://github.com/google-gemini/gemini-cli) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## 自動安裝
 
 ```bash
 cd /your/project
@@ -33,9 +33,9 @@ cp superpowers-zh/gemini-extension.json ~/.gemini/extensions/superpowers-zh/
 ```markdown
 # 工作方法论
 
-请参考 .gemini/skills/ 目录中的 SKILL.md 文件。
-遇到新功能开发时，先使用 brainstorming skill。
-编写代码时，遵循 test-driven-development skill。
+請參考 .gemini/skills/ 目錄中的 SKILL.md 檔案。
+遇到新功能開發時，先使用 brainstorming skill。
+編寫程式碼時，遵循 test-driven-development skill。
 ```
 
 ## Skill 載入優先級
@@ -53,13 +53,13 @@ cp superpowers-zh/gemini-extension.json ~/.gemini/extensions/superpowers-zh/
 2. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
 3. 重新啟動 Gemini CLI
 
-### 扩展模式未加载
+### 擴充模式未載入
 
 1. 檢查 `gemini-extension.json` 是否正確放在擴充目錄中
 2. 確認擴充目錄結構：`~/.gemini/extensions/superpowers-zh/`
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- Gemini CLI 文档：https://github.com/google-gemini/gemini-cli
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- Gemini CLI 文件：https://github.com/google-gemini/gemini-cli

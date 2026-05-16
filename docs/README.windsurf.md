@@ -2,7 +2,7 @@
 
 在 [Windsurf](https://codeium.com/windsurf) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## 自動安裝
 
 ```bash
 cd /your/project
@@ -38,7 +38,7 @@ cp -r superpowers-zh/skills ~/.windsurf/skills
 也可以在 `.windsurfrules` 檔案中引用 skills 目錄：
 
 ```
-请参考 .windsurf/skills/ 目录中的 SKILL.md 文件作为工作方法论。
+請參考 .windsurf/skills/ 目錄中的 SKILL.md 檔案作為工作方法論。
 ```
 
 ## 故障排查
@@ -49,8 +49,8 @@ cp -r superpowers-zh/skills ~/.windsurf/skills
 2. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
 3. 重新啟動 Windsurf
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
-- 项目主页：https://github.com/jnMetaCode/superpowers-zh
-- Windsurf 文档：https://docs.codeium.com/windsurf
+- 專案主頁：https://github.com/jnMetaCode/superpowers-zh
+- Windsurf 文件：https://docs.codeium.com/windsurf

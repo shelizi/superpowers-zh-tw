@@ -35,14 +35,14 @@ bad()  { FAIL=$((FAIL+1)); FAILURES+=("$1"); echo "  ❌ $1"; }
 warn() { WARN=$((WARN+1)); WARNINGS+=("$1"); echo "  ⚠️  $1"; }
 hdr()  { echo ""; echo "=== $1 ==="; }
 
-# 确保有 upstream remote（CI 上需要 fetch）
+# 確保有 upstream remote（CI 上需要 fetch）
 ensure_upstream() {
   if [ "$NO_UPSTREAM" = "1" ]; then return 1; fi
   if ! git ls-remote --exit-code upstream HEAD >/dev/null 2>&1; then
     if git remote get-url upstream >/dev/null 2>&1; then
       git fetch upstream main --depth=50 --quiet 2>/dev/null || return 1
     else
-      git remote add upstream https://github.com/obra/superpowers.git 2>/dev/null
+      git remote add upstream https://github.com/shelizi/superpowers-zh-tw.git 2>/dev/null
       git fetch upstream main --depth=50 --quiet 2>/dev/null || return 1
     fi
   fi

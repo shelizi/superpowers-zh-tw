@@ -2,7 +2,7 @@
 
 🌐 **繁體中文** | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（159k+ ⭐）完整繁中化 + 4 個台灣原創 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 **17 款 AI 程式設計工具**真正會幹活。從腦力激盪到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實務驗證的工作方法論。
+> 🦸 **superpowers（159k+ ⭐）完整繁中化 + 4 個中國原創 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 **17 款 AI 程式設計工具**真正會幹活。從腦力激盪到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實務驗證的工作方法論。
 
 Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 16 AI coding tools, including full translations and Taiwan-specific development skills.
 
@@ -42,7 +42,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 
 ### 📊 專案規模
 
-| 📦 翻譯 Skills | 🇨🇳 台灣特色 Skills | 🤖 支援工具 |
+| 📦 翻譯 Skills | 🇨🇳 中國特色 Skills | 🤖 支援工具 |
 |:---:|:---:|:---:|
 | **14** | **6** | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code** |
 
@@ -52,14 +52,14 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 
 [superpowers](https://github.com/obra/superpowers) 是目前最熱門的 AI 程式設計 skills 框架（159k+ stars），為 AI 程式設計工具提供**系統化的工作方法論**。
 
-**superpowers-zh** 在完整翻譯的基礎上，新增了面向台灣開發者的特色 skills。
+**superpowers-zh** 在完整翻譯的基礎上，新增了面向中國開發者的特色 skills。
 
 ### 🆚 與英文上游的區別（老被問，一次說清）
 
 | 維度 | superpowers（英文上游） | superpowers-zh（中文增強版） |
 |------|----------------------|---------------------------|
 | ⭐ Star 數 | 159k+ | — |
-| 📦 Skills 總數 | 14 | **20**（14 翻譯 + 4 台灣原創 + 2 上游歷史保留）
+| 📦 Skills 總數 | 14 | **20**（14 翻譯 + 4 中國原創 + 2 上游歷史保留）
 | 🌐 語言 | 英文 | 中文（技術術語保留英文）
 | 🤖 **支援工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **17 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code（通義靈碼）/ OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider |
 | ⚡ **安裝方式** | 按工具分別裝（每款一條不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一條命令自動識別專案裡的工具並安裝**；識別不出可 `--tool <name>` 顯式指定
@@ -70,8 +70,8 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | 🇨🇳 中文文件規範 | 無 | 中文排版 + 中英混排規則 + 告別機翻味
 | ➕ MCP 伺服器建置 | 無 | 獨立 `mcp-builder` skill
 | ➕ 工作流執行器 | 無 | 獨立 `workflow-runner` skill（多角色 YAML 編排）
-| 🔄 版本跟進 | 獨立迭代 | **同步上游 + 台灣增量疊加**
-| 🤝 接受新 skill PR | 一般不接受（原文：*"we don't generally accept contributions of new skills"*） | 歡迎 PR（台灣開發者痛點優先）
+| 🔄 版本跟進 | 獨立迭代 | **同步上游 + 中國增量疊加**
+| 🤝 接受新 skill PR | 一般不接受（原文：*"we don't generally accept contributions of new skills"*） | 歡迎 PR（中國開發者痛點優先）
 | 💬 社群 | Discord | 微信公眾號「AI不止語」+ 微信群 + QQ 群
 | 📜 License | MIT | MIT |
 
@@ -120,7 +120,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | **撰寫 Skills** (writing-skills) | 建立新 skill 的方法論
 | **使用 Superpowers** (using-superpowers) | 元技能：如何呼叫和優先使用 skills
 
-### 🇨🇳 台灣特色 Skills（6 個）
+### 🇨🇳 中國特色 Skills（6 個）
 
 > ⚠️ **下表前 4 個 chinese-\* 為「手動呼叫」skill**——不會自動觸發，需在對話中顯式輸入 `/chinese-xxx` 才會載入。
 > 設計為參考資料而非工作流，避免污染上游 skill 的自動排程（如 `requesting-code-review`、`brainstorming` 等）。
@@ -241,7 +241,7 @@ npx superpowers-zh@latest --uninstall
 我們只接收符合 superpowers 定位的 skill——**AI 程式設計工作流方法論**。好的 skill 應該：
 
 - 教 AI 助手**怎麼幹活**，而不是某個框架/語言的教學
-- 解決上游英文版不覆蓋的**台灣開發者痛點**
+- 解決上游英文版不覆蓋的**中國開發者痛點**
 - 有明確的步驟、檢查清單、範例，AI 載入後能直接執行
 
 歡迎提 Issue 討論你的想法！
@@ -266,7 +266,7 @@ npx superpowers-zh@latest --uninstall
 | 專案 | 定位 | 一句話
 |------|------|-------|
 | **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本專案） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法論 | 20 個 skills 教 AI 怎麼幹活（TDD / 除錯 / 程式碼審查等）
-| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 211 個**即插即用** AI 專家，含 46 台灣原創（小紅書 / 抖音 / 飛書 / 釘釘）
+| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 211 個**即插即用** AI 專家，含 46 中國原創（小紅書 / 抖音 / 飛書 / 釘釘）
 | **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** | 🚀 編排引擎 | 一句話 → 211 專家協作，**幾分鐘出方案**（9 家 LLM / 6 免費）
 | **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 實務教學 | 66 個 Claude Code 技巧 + 9 款工具最佳實踐 + 設定範本
 | **[shellward](https://github.com/jnMetaCode/shellward)** | 🛡️ 安全中介軟體 | 8 層防禦 + DLP 資料流 + 注入偵測，**零相依性**（含 MCP Server）
@@ -279,7 +279,7 @@ npx superpowers-zh@latest --uninstall
 
 **現在：** 丟一句話進去 `"做一個電商退款流程"`，**產品 → 架構 → 安全 → 測試 → DBA 自動接力**，幾分鐘完整方案落地。
 
-- 🎭 **211+ 專家角色**（含 46 個台灣市場原創：小紅書 / 抖音 / 微信 / 飛書 / 釘釘）
+- 🎭 **211+ 專家角色**（含 46 個中國市場原創：小紅書 / 抖音 / 微信 / 飛書 / 釘釘）
 - 🧩 **零程式碼 YAML**，一行 prompt 就能跑
 - 💰 **9 家 LLM 可選**（DeepSeek / Claude / OpenAI / Ollama 等，**6 家免費）
 - 🔗 **與 superpowers-zh 互補**：本專案管"**怎麼做**"（方法論），orchestrator 管"**誰來做**"（角色協作）
@@ -291,6 +291,7 @@ npx superpowers-zh@latest --uninstall
 ## 致謝
 
 - 原始英文版：[obra/superpowers](https://github.com/obra/superpowers)（MIT 協議）
+- 原始中文版：[jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)
 - 感謝 [@obra](https://github.com/obra) 建立了這個優秀的專案
 
 ---

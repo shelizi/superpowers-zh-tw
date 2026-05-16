@@ -2,7 +2,7 @@
 
 在 [Google Antigravity](https://antigravity.google)（Google AI IDE）中使用 superpowers-zh 的完整指南。
 
-## 快速安装
+## 快速安裝
 
 ```bash
 cd /your/project
@@ -32,7 +32,7 @@ Antigravity 支援多種規則檔案格式：
 
 ### 推薦配置方式
 
-**方式一**：在项目根目录创建 `GEMINI.md`：
+**方式一**：在專案根目錄建立 `GEMINI.md`：
 
 ```markdown
 # GEMINI.md
@@ -87,7 +87,7 @@ cd /your/project
 npx superpowers-zh
 ```
 
-## 获取帮助
+## 獲取說明
 
 - 提交 Issue：https://github.com/jnMetaCode/superpowers-zh/issues
 - Antigravity 文件：https://antigravity.google/docs/rules-workflows
