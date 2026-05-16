@@ -1,45 +1,45 @@
-# 基于条件的等待
+# 基於條件的等待
 
 ## 概述
 
-不稳定的测试通常用硬编码延迟来猜测时序。这会造成竞态条件——在快速机器上通过，在高负载或 CI 环境下失败。
+不穩定的測試通常用硬編碼延遲來猜測時序。這會造成競態條件——在快速機器上通過，在高負載或 CI 環境下失敗。
 
-**核心原则：** 等待你真正关心的条件，而不是猜测它需要多长时间。
+**核心原則：** 等待你真正關心的條件，而不是猜測它需要多長時間。
 
-## 何时使用
+## 何時使用
 
 ```dot
 digraph when_to_use {
-    "测试使用了 setTimeout/sleep？" [shape=diamond];
-    "是在测试时序行为吗？" [shape=diamond];
-    "记录为什么需要超时" [shape=box];
-    "使用基于条件的等待" [shape=box];
+    "測試使用了 setTimeout/sleep？" [shape=diamond];
+    "是在測試時序行為嗎？" [shape=diamond];
+    "記錄為什麼需要超時" [shape=box];
+    "使用基於條件的等待" [shape=box];
 
-    "测试使用了 setTimeout/sleep？" -> "是在测试时序行为吗？" [label="是"];
-    "是在测试时序行为吗？" -> "记录为什么需要超时" [label="是"];
-    "是在测试时序行为吗？" -> "使用基于条件的等待" [label="否"];
+    "測試使用了 setTimeout/sleep？" -> "是在測試時序行為嗎？" [label="是"];
+    "是在測試時序行為嗎？" -> "記錄為什麼需要超時" [label="是"];
+    "是在測試時序行為嗎？" -> "使用基於條件的等待" [label="否"];
 }
 ```
 
-**适用场景：**
-- 测试中有硬编码延迟（`setTimeout`、`sleep`、`time.sleep()`）
-- 测试不稳定（时而通过，高负载下失败）
-- 并行运行时测试超时
-- 等待异步操作完成
+**適用場景：**
+- 測試中有硬編碼延遲（`setTimeout`、`sleep`、`time.sleep()`）
+- 測試不穩定（時而通過，高負載下失敗）
+- 並行執行時測試超時
+- 等待非同步操作完成
 
-**不适用场景：**
-- 测试实际的时序行为（防抖、节流间隔）
-- 如果使用硬编码超时，务必注释说明原因
+**不適用場景：**
+- 測試實際的時序行為（防抖、節流間隔）
+- 如果使用硬編碼超時，務必註解說明原因
 
 ## 核心模式
 
 ```typescript
-// ❌ 之前：猜测时序
+// ❌ 之前：猜測時序
 await new Promise(r => setTimeout(r, 50));
 const result = getResult();
 expect(result).toBeDefined();
 
-// ✅ 之后：等待条件满足
+// ✅ 之後：等待條件滿足
 await waitFor(() => getResult() !== undefined);
 const result = getResult();
 expect(result).toBeDefined();
@@ -47,17 +47,17 @@ expect(result).toBeDefined();
 
 ## 常用模式速查
 
-| 场景 | 模式 |
+| 場景 | 模式 |
 |------|------|
 | 等待事件 | `waitFor(() => events.find(e => e.type === 'DONE'))` |
-| 等待状态 | `waitFor(() => machine.state === 'ready')` |
-| 等待数量 | `waitFor(() => items.length >= 5)` |
-| 等待文件 | `waitFor(() => fs.existsSync(path))` |
-| 复合条件 | `waitFor(() => obj.ready && obj.value > 10)` |
+| 等待狀態 | `waitFor(() => machine.state === 'ready')` |
+| 等待數量 | `waitFor(() => items.length >= 5)` |
+| 等待檔案 | `waitFor(() => fs.existsSync(path))` |
+| 複合條件 | `waitFor(() => obj.ready && obj.value > 10)` |
 
-## 实现方式
+## 實作方式
 
-通用轮询函数：
+通用輪詢函式：
 ```typescript
 async function waitFor<T>(
   condition: () => T | undefined | null | false,
@@ -74,42 +74,42 @@ async function waitFor<T>(
       throw new Error(`Timeout waiting for ${description} after ${timeoutMs}ms`);
     }
 
-    await new Promise(r => setTimeout(r, 10)); // 每 10ms 轮询一次
+    await new Promise(r => setTimeout(r, 10)); // 每 10ms 輪詢一次
   }
 }
 ```
 
-参见本目录下的 `condition-based-waiting-example.ts`，其中包含完整实现和领域专用辅助函数（`waitForEvent`、`waitForEventCount`、`waitForEventMatch`），源自实际调试过程。
+參見本目錄下的 `condition-based-waiting-example.ts`，其中包含完整實作和領域專用輔助函式（`waitForEvent`、`waitForEventCount`、`waitForEventMatch`），源自實際除錯過程。
 
-## 常见错误
+## 常見錯誤
 
-**❌ 轮询太频繁：** `setTimeout(check, 1)` —— 浪费 CPU
-**✅ 修正：** 每 10ms 轮询一次
+**❌ 輪詢太頻繁：** `setTimeout(check, 1)` —— 浪費 CPU
+**✅ 修正：** 每 10ms 輪詢一次
 
-**❌ 没有超时：** 条件永远不满足时无限循环
-**✅ 修正：** 始终设置超时并提供清晰的错误信息
+**❌ 沒有超時：** 條件永遠不滿足時無限迴圈
+**✅ 修正：** 始終設定超時並提供清晰的錯誤資訊
 
-**❌ 数据过期：** 在循环外缓存状态
-**✅ 修正：** 在循环内调用 getter 获取最新数据
+**❌ 資料過期：** 在迴圈外快取狀態
+**✅ 修正：** 在迴圈內呼叫 getter 獲取最新資料
 
-## 何时硬编码超时是正确的
+## 何時硬編碼超時是正確的
 
 ```typescript
-// 工具每 100ms tick 一次——需要 2 次 tick 来验证部分输出
-await waitForEvent(manager, 'TOOL_STARTED'); // 首先：等待条件
-await new Promise(r => setTimeout(r, 200));   // 然后：等待有明确时序依据的行为
-// 200ms = 100ms 间隔的 2 次 tick——有文档说明且有充分理由
+// 工具每 100ms tick 一次——需要 2 次 tick 來驗證部分輸出
+await waitForEvent(manager, 'TOOL_STARTED'); // 首先：等待條件
+await new Promise(r => setTimeout(r, 200));   // 然後：等待有明確時序依據的行為
+// 200ms = 100ms 間隔的 2 次 tick——有文件說明且有充分理由
 ```
 
 **使用要求：**
-1. 首先等待触发条件
-2. 基于已知时序（而非猜测）
-3. 注释说明原因
+1. 首先等待觸發條件
+2. 基於已知時序（而非猜測）
+3. 註解說明原因
 
-## 实际效果
+## 實際效果
 
-来自调试实践（2025-10-03）：
-- 修复了 3 个文件中的 15 个不稳定测试
-- 通过率：60% → 100%
-- 执行时间：快了 40%
-- 再无竞态条件
+來自除錯實踐（2025-10-03）：
+- 修復了 3 個檔案中的 15 個不穩定測試
+- 通過率：60% → 100%
+- 執行時間：快了 40%
+- 再無競態條件

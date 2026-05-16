@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Trae 安装指南
+# Superpowers 中文版 — Trae 安裝指南
 
 在 [Trae](https://www.trae.ai)（字节跳动 AI IDE）中使用 superpowers-zh 的完整指南。
 
@@ -9,9 +9,9 @@ cd /your/project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `.trae/` 目录并将 skills 复制到 `.trae/rules/`。
+安裝腳本會自動檢測 `.trae/` 目錄並將 skills 複製到 `.trae/rules/`。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
@@ -21,33 +21,33 @@ cp -r superpowers-zh/skills/* /your/project/.trae/rules/
 
 ## 工作原理
 
-Trae 使用 `.rules` 机制管理 AI 行为：
+Trae 使用 `.rules` 機制管理 AI 行為：
 
-- **目录**：`.trae/rules/`
+- **目錄**：`.trae/rules/`
 - **格式**：Markdown + metadata（description、globs、alwaysApply、priority）
-- **规则类型**：
-  - **项目规则**（Project Rules）— 仅作用于当前项目
-  - **个人规则**（Personal Rules）— 用户级别，可被项目规则覆盖
-- **优先级**：1-4，数值越高优先级越高
+- **規則類型**：
+  - **專案規則**（Project Rules）— 僅作用於當前專案
+  - **個人規則**（Personal Rules）— 使用者級別，可被專案規則覆蓋
+- **優先級**：1-4，數值越高優先級越高
 
-### Skills 适配
+### Skills 適配
 
-superpowers-zh 的 SKILL.md 文件可以直接作为 Trae 的 rules 使用。Trae 会在初始化时加载 `.trae/rules/` 下的所有规则文件。
+superpowers-zh 的 SKILL.md 檔案可以直接作為 Trae 的 rules 使用。Trae 會在初始化時載入 `.trae/rules/` 下的所有規則檔案。
 
-### 推荐配置
+### 推薦配置
 
-安装完成后，在 Trae 的 Builder Mode 或 Chat 中提到 skill 名称即可激活：
+安裝完成後，在 Trae 的 Builder Mode 或 Chat 中提到 skill 名稱即可啟動：
 
 ```
-使用头脑风暴 skill 来分析这个需求
+使用腦力激盪 skill 來分析這個需求
 ```
 
-## 中文支持
+## 中文支援
 
-Trae 原生支持中文，与 superpowers-zh 完美配合：
-- 所有 skills 均为中文
-- 中文代码审查、中文 Git 工作流等国内特色 skills 开箱即用
-- 支持 MCP 协议扩展
+Trae 原生支援中文，與 superpowers-zh 完美配合：
+- 所有 skills 均為中文
+- 中文程式碼審查、中文 Git 工作流等國內特色 skills 開箱即用
+- 支援 MCP 協議擴充
 
 ## 更新
 
@@ -56,16 +56,16 @@ cd /your/project
 npx superpowers-zh
 ```
 
-## 卸载 / 误装清理
+## 解除安裝 / 誤裝清理
 
-如果不小心在主目录（`~`）误跑了 `npx superpowers-zh`，会把 skills 和 `.trae/rules/superpowers-zh.md` 写到你的 home。v1.2.1 起会主动拒绝，但老版本可能已经污染过。清理：
+如果不小心在主目錄（`~`）誤跑了 `npx superpowers-zh`，會把 skills 和 `.trae/rules/superpowers-zh.md` 寫到你的 home。v1.2.1 起會主動拒絕，但舊版本可能已經污染過。清理：
 
 ```bash
 cd ~                                    # 或具体的项目目录
 npx superpowers-zh@latest --uninstall
 ```
 
-会删除 `.trae/skills/` 下装过的 skill、`.trae/rules/superpowers-zh.md`，并清理 `CLAUDE.md` 等文件里的 superpowers-zh 段（保留你自己写的内容）。
+會刪除 `.trae/skills/` 下裝過的 skill、`.trae/rules/superpowers-zh.md`，並清理 `CLAUDE.md` 等檔案裡的 superpowers-zh 段（保留你自己寫的內容）。
 
 ## 获取帮助
 

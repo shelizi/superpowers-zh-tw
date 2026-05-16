@@ -1,33 +1,33 @@
-# superpowers-zh（AI 编程超能力 · 中文增强版）
+# superpowers-zh（AI 程式設計超能力 · 中文增強版）
 
-🌐 **简体中文** | [English (upstream)](https://github.com/obra/superpowers)
+🌐 **繁體中文** | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（159k+ ⭐）完整汉化 + 4 个中国原创 skills** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 **17 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
+> 🦸 **superpowers（159k+ ⭐）完整繁中化 + 4 個台灣原創 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI 等 **17 款 AI 程式設計工具**真正會幹活。從腦力激盪到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實務驗證的工作方法論。
 
-Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 16 AI coding tools, including full translations and China-specific development skills.
+Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 16 AI coding tools, including full translations and Taiwan-specific development skills.
 
 <!-- 效果对比 -->
 <table>
 <tr><td>
 
-**没装 superpowers-zh：**
+**未安裝 superpowers-zh：**
 ```
-你：给用户模块加个批量导出功能
-AI：好的，我来实现...（直接开始写代码）
+你：給使用者模組加個批次匯出功能
+AI：好的，我來實作...（直接開始寫程式碼）
     export async function exportUsers() { ... }
-你：等等，格式不对，没分页，大数据量会 OOM...
+你：等等，格式不對，沒分頁，大量資料會 OOM...
 ```
 
 </td><td>
 
-**装了 superpowers-zh：**
+**安裝了 superpowers-zh：**
 ```
-你：给用户模块加个批量导出功能
-AI：在开始实现之前，我需要了解几个关键问题：
-    1. 导出格式是 CSV 还是 Excel？
-    2. 预计数据量多大？需要异步处理吗？
-    3. 有权限要求吗？
-    → 给出 2-3 个方案，确认后再动手
+你：給使用者模組加個批次匯出功能
+AI：在開始實作之前，我需要了解幾個關鍵問題：
+    1. 匯出格式是 CSV 還是 Excel？
+    2. 預計資料量多大？需要非同步處理嗎？
+    3. 有權限要求嗎？
+    → 給出 2-3 個方案，確認後再動手
 ```
 
 </td></tr>
@@ -38,48 +38,48 @@ AI：在开始实现之前，我需要了解几个关键问题：
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
-> 📖 **配套阅读**：[《AI 编程实战 · 方法论三卷书》](https://book.aibuzhiyu.com/) — 10 个 AI 编程工具完整教程 + 真实踩坑 · superpowers 装好之后，配上方法论效率翻倍 · 在线书 + PDF · 永久免费
+> 📖 **配套閱讀**：[《AI 程式設計實戰 · 方法論三卷書》](https://book.aibuzhiyu.com/) — 10 個 AI 程式設計工具完整教學 + 真實踩坑 · superpowers 安裝好之後，配上方法論效率翻倍 · 線上書 + PDF · 永久免費
 
-### 📊 项目规模
+### 📊 專案規模
 
-| 📦 翻译 Skills | 🇨🇳 中国特色 Skills | 🤖 支持工具 |
+| 📦 翻譯 Skills | 🇨🇳 台灣特色 Skills | 🤖 支援工具 |
 |:---:|:---:|:---:|
 | **14** | **6** | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code** |
 
 ---
 
-## 这是什么？
+## 這是什麼？
 
-[superpowers](https://github.com/obra/superpowers) 是目前最火的 AI 编程 skills 框架（159k+ stars），为 AI 编程工具提供**系统化的工作方法论**。
+[superpowers](https://github.com/obra/superpowers) 是目前最熱門的 AI 程式設計 skills 框架（159k+ stars），為 AI 程式設計工具提供**系統化的工作方法論**。
 
-**superpowers-zh** 在完整翻译的基础上，新增了面向中国开发者的特色 skills。
+**superpowers-zh** 在完整翻譯的基礎上，新增了面向台灣開發者的特色 skills。
 
-### 🆚 与英文上游的区别（老被问，一次说清）
+### 🆚 與英文上游的區別（老被問，一次說清）
 
-| 维度 | superpowers（英文上游） | superpowers-zh（中文增强版） |
+| 維度 | superpowers（英文上游） | superpowers-zh（中文增強版） |
 |------|----------------------|---------------------------|
-| ⭐ Star 数 | 159k+ | — |
-| 📦 Skills 总数 | 14 | **20**（14 翻译 + 4 国产原创 + 2 上游历史保留） |
-| 🌐 语言 | 英文 | 中文（技术术语保留英文） |
-| 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **17 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code（通义灵码）/ OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider |
-| ⚡ **安装方式** | 按工具分别装（每款一条不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一条命令自动识别项目里的工具并安装**；识别不出可 `--tool <name>` 显式指定 |
-| 🇨🇳 Git 平台 | GitHub 为主 | GitHub + Gitee + Coding + 极狐 GitLab + **CNB（腾讯云原生构建）** |
-| 🇨🇳 CI/CD 示例 | GitHub Actions | GitHub Actions + Gitee Go + Coding CI + 极狐 CI + `.cnb.yml` |
-| 🇨🇳 代码审查风格 | 西方直接风格 | 适配国内团队沟通文化 |
-| 🇨🇳 Git 提交规范 | 无 | Conventional Commits 中文适配 |
-| 🇨🇳 中文文档规范 | 无 | 中文排版 + 中英混排规则 + 告别机翻味 |
-| ➕ MCP 服务器构建 | 无 | 独立 `mcp-builder` skill |
-| ➕ 工作流执行器 | 无 | 独立 `workflow-runner` skill（多角色 YAML 编排） |
-| 🔄 版本跟进 | 独立迭代 | **同步上游 + 国产增量叠加** |
-| 🤝 接受新 skill PR | 一般不接受（原文：*"we don't generally accept contributions of new skills"*） | 欢迎 PR（中国开发者痛点优先） |
-| 💬 社区 | Discord | 微信公众号「AI不止语」+ 微信群 + QQ 群 |
+| ⭐ Star 數 | 159k+ | — |
+| 📦 Skills 總數 | 14 | **20**（14 翻譯 + 4 台灣原創 + 2 上游歷史保留）
+| 🌐 語言 | 英文 | 中文（技術術語保留英文）
+| 🤖 **支援工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **17 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code（通義靈碼）/ OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider |
+| ⚡ **安裝方式** | 按工具分別裝（每款一條不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一條命令自動識別專案裡的工具並安裝**；識別不出可 `--tool <name>` 顯式指定
+| 🇨🇳 Git 平台 | GitHub 為主 | GitHub + Gitee + Coding + 極狐 GitLab + **CNB（騰訊雲原生建置）**
+| 🇨🇳 CI/CD 範例 | GitHub Actions | GitHub Actions + Gitee Go + Coding CI + 極狐 CI + `.cnb.yml`
+| 🇨🇳 程式碼審查風格 | 西方直接風格 | 適配國內團隊溝通文化
+| 🇨🇳 Git 提交規範 | 無 | Conventional Commits 中文適配
+| 🇨🇳 中文文件規範 | 無 | 中文排版 + 中英混排規則 + 告別機翻味
+| ➕ MCP 伺服器建置 | 無 | 獨立 `mcp-builder` skill
+| ➕ 工作流執行器 | 無 | 獨立 `workflow-runner` skill（多角色 YAML 編排）
+| 🔄 版本跟進 | 獨立迭代 | **同步上游 + 台灣增量疊加**
+| 🤝 接受新 skill PR | 一般不接受（原文：*"we don't generally accept contributions of new skills"*） | 歡迎 PR（台灣開發者痛點優先）
+| 💬 社群 | Discord | 微信公眾號「AI不止語」+ 微信群 + QQ 群
 | 📜 License | MIT | MIT |
 
-**一句话总结：** 英文上游 = 方法论内核；中文增强版 = 方法论内核 **+** 17 款工具一键适配 **+** 国内 Git/CI 生态 **+** 中文化表达习惯。
+**一句話總結：** 英文上游 = 方法論內核；中文增強版 = 方法論內核 **+** 17 款工具一鍵適配 **+** 國內 Git/CI 生態 **+** 中文化表達習慣。
 
-### 🤖 支持 17 款主流 AI 编程工具
+### 🤖 支援 17 款主流 AI 程式設計工具
 
-| 工具 | 类型 | 一键安装 | 手动安装 |
+| 工具 | 類型 | 一鍵安裝 | 手動安裝
 |------|------|:---:|:---:|
 | [Claude Code](https://claude.ai/code) | CLI | `npx superpowers-zh` | `.claude/skills/` |
 | [Copilot CLI](https://githubnext.com/projects/copilot-cli) | CLI | `npx superpowers-zh --tool copilot` | `.claude/skills/` |
@@ -99,69 +99,69 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | [Antigravity](https://github.com/anthropics/antigravity) | CLI | `npx superpowers-zh` | `.antigravity/skills/` |
 | [Claw Code](https://github.com/ultraworkers/claw-code) | CLI (Rust) | `npx superpowers-zh` | `.claw/skills/` |
 
-> 运行 `npx superpowers-zh` 会自动检测你项目中使用的工具，将 20 个 skills 安装到正确位置。
+> 執行 `npx superpowers-zh` 會自動檢測你專案中使用的工具，將 20 個 skills 安裝到正確位置。
 
-### 翻译的 Skills（14 个）
+### 翻譯的 Skills（14 個）
 
 | Skill | 用途 |
 |-------|------|
-| **头脑风暴** (brainstorming) | 需求分析 → 设计规格，不写代码先想清楚 |
-| **编写计划** (writing-plans) | 把规格拆成可执行的实施步骤 |
-| **执行计划** (executing-plans) | 按计划逐步实施，每步验证 |
-| **测试驱动开发** (test-driven-development) | 严格 TDD：先写测试，再写代码 |
-| **系统化调试** (systematic-debugging) | 四阶段调试法：定位→分析→假设→修复 |
-| **请求代码审查** (requesting-code-review) | 派遣审查 agent 检查代码质量 |
-| **接收代码审查** (receiving-code-review) | 技术严谨地处理审查反馈，拒绝敷衍 |
-| **完成前验证** (verification-before-completion) | 证据先行——声称完成前必须跑验证 |
-| **派遣并行 Agent** (dispatching-parallel-agents) | 多任务并发执行 |
-| **子 Agent 驱动开发** (subagent-driven-development) | 每个任务一个 agent，两轮审查 |
-| **Git Worktree 使用** (using-git-worktrees) | 隔离式特性开发 |
-| **完成开发分支** (finishing-a-development-branch) | 合并/PR/保留/丢弃四选一 |
-| **编写 Skills** (writing-skills) | 创建新 skill 的方法论 |
-| **使用 Superpowers** (using-superpowers) | 元技能：如何调用和优先使用 skills |
+| **腦力激盪** (brainstorming) | 需求分析 → 設計規格，不寫程式碼先想清楚
+| **撰寫計畫** (writing-plans) | 把規格拆成可執行的實施步驟
+| **執行計畫** (executing-plans) | 按計畫逐步實施，每步驗證
+| **測試驅動開發** (test-driven-development) | 嚴格 TDD：先寫測試，再寫程式碼
+| **系統化除錯** (systematic-debugging) | 四階段除錯法：定位→分析→假設→修復
+| **請求程式碼審查** (requesting-code-review) | 派遣審查 agent 檢查程式碼品質
+| **接收程式碼審查** (receiving-code-review) | 技術嚴謹地處理審查回饋，拒絕敷衍
+| **完成前驗證** (verification-before-completion) | 證據先行——聲稱完成前必須跑驗證
+| **派遣並行 Agent** (dispatching-parallel-agents) | 多任務並行執行
+| **子 Agent 驅動開發** (subagent-driven-development) | 每個任務一個 agent，兩輪審查
+| **Git Worktree 使用** (using-git-worktrees) | 隔離式功能開發
+| **完成開發分支** (finishing-a-development-branch) | 合併/PR/保留/丟棄四選一
+| **撰寫 Skills** (writing-skills) | 建立新 skill 的方法論
+| **使用 Superpowers** (using-superpowers) | 元技能：如何呼叫和優先使用 skills
 
-### 🇨🇳 中国特色 Skills（6 个）
+### 🇨🇳 台灣特色 Skills（6 個）
 
-> ⚠️ **下表前 4 个 chinese-\* 为「手动调用」skill**——不会自动触发，需在对话中显式输入 `/chinese-xxx` 才会加载。
-> 设计为参考资料而非工作流，避免污染上游 skill 的自动调度（如 `requesting-code-review`、`brainstorming` 等）。
+> ⚠️ **下表前 4 個 chinese-\* 為「手動呼叫」skill**——不會自動觸發，需在對話中顯式輸入 `/chinese-xxx` 才會載入。
+> 設計為參考資料而非工作流，避免污染上游 skill 的自動排程（如 `requesting-code-review`、`brainstorming` 等）。
 
-| Skill | 用途 | 调用方式 | 上游有吗？ |
+| Skill | 用途 | 呼叫方式 | 上游有嗎？
 |-------|------|---------|:---:|
-| **中文代码审查** (chinese-code-review) | 符合国内团队文化的代码审查规范 | `/chinese-code-review`（手动） | 无 |
-| **中文 Git 工作流** (chinese-git-workflow) | 适配 Gitee/Coding/极狐 GitLab/CNB | `/chinese-git-workflow`（手动） | 无 |
-| **中文技术文档** (chinese-documentation) | 中文排版规范、中英混排、告别机翻味 | `/chinese-documentation`（手动） | 无 |
-| **中文提交规范** (chinese-commit-conventions) | 适配国内团队的 commit message 规范 | `/chinese-commit-conventions`（手动） | 无 |
-| **MCP 服务器构建** (mcp-builder) | 构建生产级 MCP 工具，扩展 AI 能力边界 | 自动 | 无 |
-| **工作流执行器** (workflow-runner) | 在 AI 工具内运行多角色 YAML 工作流 | 自动 | 无 |
+| **中文程式碼審查** (chinese-code-review) | 符合國內團隊文化的程式碼審查規範 | `/chinese-code-review`（手動） | 無
+| **中文 Git 工作流** (chinese-git-workflow) | 適配 Gitee/Coding/極狐 GitLab/CNB | `/chinese-git-workflow`（手動） | 無
+| **中文技術文件** (chinese-documentation) | 中文排版規範、中英混排、告別機翻味 | `/chinese-documentation`（手動） | 無
+| **中文提交規範** (chinese-commit-conventions) | 適配國內團隊的 commit message 規範 | `/chinese-commit-conventions`（手動） | 無
+| **MCP 伺服器建置** (mcp-builder) | 建置生產級 MCP 工具，擴展 AI 能力邊界 | 自動 | 無
+| **工作流執行器** (workflow-runner) | 在 AI 工具內執行多角色 YAML 工作流 | 自動 | 無
 
 ---
 
-## 快速开始
+## 快速開始
 
-### 方式一：npm 安装（推荐）
+### 方式一：npm 安裝（推薦）
 
 ```bash
 cd /your/project
 npx superpowers-zh
 ```
 
-> ⚠️ **不要在主目录（`~`）下跑**。v1.2.1 起会拒绝并提示，老版本会把 skills 和 `CLAUDE.md` 等 bootstrap 文件写到你的 home 目录，污染所有项目。如已误装见下文「卸载 / 误装清理」。
+> ⚠️ **不要在主目錄（`~`）下跑**。v1.2.1 起會拒絕並提示，舊版本會把 skills 和 `CLAUDE.md` 等 bootstrap 檔案寫到你的 home 目錄，污染所有專案。如已誤裝見下文「解除安裝 / 誤裝清理」。
 
-### 方式二：手动安装（low-fidelity，仅作备选）
+### 方式二：手動安裝（low-fidelity，僅作備選）
 
-> ⚠️ **手动 `cp -r skills` 是低保版安装，不等同于完整 plugin。**
+> ⚠️ **手動 `cp -r skills` 是低保版安裝，不等同於完整 plugin。**
 >
-> superpowers-zh 是一个完整 plugin，包含：`skills/`（20 个能力）+ `hooks/`（SessionStart 钩子，让 skill 在合适时机自动触发）+ `CLAUDE.md` / `GEMINI.md` 等 bootstrap 引导文件 + 4 套 plugin manifest（Claude Code / Cursor / Codex / Marketplace）。
+> superpowers-zh 是一個完整 plugin，包含：`skills/`（20 個能力）+ `hooks/`（SessionStart 鉤子，讓 skill 在合適時機自動觸發）+ `CLAUDE.md` / `GEMINI.md` 等 bootstrap 引導檔案 + 4 套 plugin manifest（Claude Code / Cursor / Codex / Marketplace）。
 >
-> **下面的 `cp -r skills` 命令只复制 skills 目录**，不会自动配置 hooks、不会生成 bootstrap 引导。结果：skills 物理上存在，但 AI 不会在合适时机自动调用，需要你每次手动喊 "use brainstorming skill" 之类。
+> **下面的 `cp -r skills` 命令只複製 skills 目錄**，不會自動設定 hooks、不會產生 bootstrap 引導。結果：skills 實體上存在，但 AI 不會在合適時機自動呼叫，需要你每次手動喊 "use brainstorming skill" 之類。
 >
-> **强烈推荐用方式一 `npx superpowers-zh`** —— 它会一键处理 skills 复制 + bootstrap 生成 + hooks 配置 + 工具特定适配。仅在 npx 不可用（极端无网络环境）时才退到手动。
+> **強烈推薦用方式一 `npx superpowers-zh`** —— 它會一鍵處理 skills 複製 + bootstrap 產生 + hooks 設定 + 工具特定適配。僅在 npx 不可用（極端無網路環境）時才退到手動。
 
 ```bash
-# 克隆仓库
+# 複製儲存庫
 git clone https://github.com/jnMetaCode/superpowers-zh.git
 
-# 复制 skills 到你的项目（选择你使用的工具）
+# 複製 skills 到你的專案（選擇你使用的工具）
 cp -r superpowers-zh/skills /your/project/.claude/skills      # Claude Code / Copilot CLI
 cp -r superpowers-zh/skills /your/project/.hermes/skills      # Hermes Agent
 cp -r superpowers-zh/skills /your/project/.cursor/skills      # Cursor
@@ -180,131 +180,131 @@ cp -r superpowers-zh/skills /your/project/.qwen/skills       # Qwen Code
 cp -r superpowers-zh/skills /your/project/.claw/skills       # Claw Code（Rust 版）
 ```
 
-### 方式三：在配置文件中引用
+### 方式三：在設定檔中引用
 
-根据你使用的工具，在对应配置文件中引用 skills：
+根據你使用的工具，在對應設定檔中引用 skills：
 
-| 工具 | 配置文件 | 说明 |
+| 工具 | 設定檔 | 說明
 |------|---------|------|
-| Claude Code | `CLAUDE.md` | 项目根目录 |
-| Copilot CLI | `CLAUDE.md` | 与 Claude Code 共用插件格式 |
-| Hermes Agent | `HERMES.md` 或 `.hermes.md` | 项目根目录，安装时自动生成 |
-| Kiro | `.kiro/steering/*.md` | 支持 always/globs/手动三种模式 |
-| DeerFlow 2.0 | `skills/custom/*/SKILL.md` | 字节跳动开源 SuperAgent，自动发现自定义 skills |
-| Trae | `.trae/rules/project_rules.md` | 项目级规则 |
-| Antigravity | `GEMINI.md` 或 `AGENTS.md` | 项目根目录 |
-| VS Code | `.github/copilot-instructions.md` | Copilot 自定义指令 |
-| Cursor | `.cursor/rules/*.md` | 项目级规则目录 |
-| OpenClaw | `skills/*/SKILL.md` | 工作区级 skills 目录，自动发现 |
-| Windsurf | `.windsurf/skills/*/SKILL.md` | 项目级 skills 目录 |
-| Gemini CLI | `.gemini/skills/*/SKILL.md` | 项目级 skills 目录 |
-| Aider | `.aider/skills/*/SKILL.md` | 项目级 skills 目录 |
-| OpenCode | `.opencode/skills/*/SKILL.md` | 项目级 skills 目录 |
-| Hermes Agent | `.hermes/skills/*/SKILL.md` | 项目级 skills 目录 |
-| Qwen Code | `.qwen/skills/*/SKILL.md` | 项目级 skills 目录 |
-| Claw Code | `.claw/skills/*/SKILL.md` | Rust 版 CLI agent，兼容 Claude Code 的 SKILL.md 格式 |
+| Claude Code | `CLAUDE.md` | 專案根目錄
+| Copilot CLI | `CLAUDE.md` | 與 Claude Code 共用外掛格式
+| Hermes Agent | `HERMES.md` 或 `.hermes.md` | 專案根目錄，安裝時自動產生
+| Kiro | `.kiro/steering/*.md` | 支援 always/globs/手動三種模式
+| DeerFlow 2.0 | `skills/custom/*/SKILL.md` | 位元組跳動開源 SuperAgent，自動發現自訂 skills
+| Trae | `.trae/rules/project_rules.md` | 專案級規則
+| Antigravity | `GEMINI.md` 或 `AGENTS.md` | 專案根目錄
+| VS Code | `.github/copilot-instructions.md` | Copilot 自訂指令
+| Cursor | `.cursor/rules/*.md` | 專案級規則目錄
+| OpenClaw | `skills/*/SKILL.md` | 工作區級 skills 目錄，自動發現
+| Windsurf | `.windsurf/skills/*/SKILL.md` | 專案級 skills 目錄
+| Gemini CLI | `.gemini/skills/*/SKILL.md` | 專案級 skills 目錄
+| Aider | `.aider/skills/*/SKILL.md` | 專案級 skills 目錄
+| OpenCode | `.opencode/skills/*/SKILL.md` | 專案級 skills 目錄
+| Hermes Agent | `.hermes/skills/*/SKILL.md` | 專案級 skills 目錄
+| Qwen Code | `.qwen/skills/*/SKILL.md` | 專案級 skills 目錄
+| Claw Code | `.claw/skills/*/SKILL.md` | Rust 版 CLI agent，相容 Claude Code 的 SKILL.md 格式
 
-> **详细安装指南**：[Kiro](docs/README.kiro.md) · [DeerFlow](docs/README.deerflow.md) · [Trae](docs/README.trae.md) · [Antigravity](docs/README.antigravity.md) · [VS Code](docs/README.vscode.md) · [Codex](docs/README.codex.md) · [OpenCode](docs/README.opencode.md) · [OpenClaw](docs/README.openclaw.md) · [Windsurf](docs/README.windsurf.md) · [Gemini CLI](docs/README.gemini-cli.md) · [Aider](docs/README.aider.md) · [Qwen Code](docs/README.qwen.md) · [Hermes Agent](docs/README.hermes.md)
+> **詳細安裝指南**：[Kiro](docs/README.kiro.md) · [DeerFlow](docs/README.deerflow.md) · [Trae](docs/README.trae.md) · [Antigravity](docs/README.antigravity.md) · [VS Code](docs/README.vscode.md) · [Codex](docs/README.codex.md) · [OpenCode](docs/README.opencode.md) · [OpenClaw](docs/README.openclaw.md) · [Windsurf](docs/README.windsurf.md) · [Gemini CLI](docs/README.gemini-cli.md) · [Aider](docs/README.aider.md) · [Qwen Code](docs/README.qwen.md) · [Hermes Agent](docs/README.hermes.md)
 
-### 卸载 / 误装清理（v1.2.1+）
+### 解除安裝 / 誤裝清理（v1.2.1+）
 
 ```bash
-cd /your/project          # 或 cd ~ 如果误装到了主目录
+cd /your/project          # 或 cd ~ 如果誤裝到了主目錄
 npx superpowers-zh@latest --uninstall
 ```
 
-会做这些：
+會做這些：
 
-- 删除所有装过的 skill 目录（`.claude/skills/`、`.trae/skills/` 等）
-- 删除独立 bootstrap 文件（`.trae/rules/superpowers-zh.md`、`.antigravity/rules.md`）
-- 清理追加到 `CLAUDE.md` / `HERMES.md` / `GEMINI.md` / `CONVENTIONS.md` 里的 superpowers-zh 段，**保留你自己写的内容**
+- 刪除所有裝過的 skill 目錄（`.claude/skills/`、`.trae/skills/` 等）
+- 刪除獨立 bootstrap 檔案（`.trae/rules/superpowers-zh.md`、`.antigravity/rules.md`）
+- 清理追加到 `CLAUDE.md` / `HERMES.md` / `GEMINI.md` / `CONVENTIONS.md` 裡的 superpowers-zh 段，**保留你自己寫的內容**
 
-数据安全说明：v1.2.1 起，安装会把追加内容包在 `<!-- superpowers-zh:begin/end -->` 哨兵注释之间，卸载按哨兵精确切除。识别不可靠时跳过 + 警告，**绝不会误删用户内容**。
+資料安全說明：v1.2.1 起，安裝會把追加內容包在 `<!-- superpowers-zh:begin/end -->` 哨兵註解之間，解除安裝按哨兵精確切除。識別不可靠時跳過 + 警告，**絕不會誤刪使用者內容**。
 
-其他参数：
+其他參數：
 
-| 参数 | 用途 |
+| 參數 | 用途
 |---|---|
-| `--tool <name>` | 自动检测不到时显式指定（cursor / trae / hermes / 等） |
-| `--force` | 允许在主目录(~)安装（默认拒绝，**不建议**） |
-| `--uninstall` | 卸载当前目录下的 superpowers-zh |
-| `--help` / `--version` | 帮助 / 版本 |
+| `--tool <name>` | 自動檢測不到時顯式指定（cursor / trae / hermes / 等）
+| `--force` | 允許在主目錄(~)安裝（預設拒絕，**不建議**）
+| `--uninstall` | 解除安裝當前目錄下的 superpowers-zh
+| `--help` / `--version` | 說明 / 版本
 
 ---
 
-## 贡献
+## 貢獻
 
-欢迎参与！翻译改进、新增 skills、Bug 修复都可以。
+歡迎參與！翻譯改進、新增 skills、Bug 修復都可以。
 
-### 贡献方向
+### 貢獻方向
 
-我们只接收符合 superpowers 定位的 skill——**AI 编程工作流方法论**。好的 skill 应该：
+我們只接收符合 superpowers 定位的 skill——**AI 程式設計工作流方法論**。好的 skill 應該：
 
-- 教 AI 助手**怎么干活**，而不是某个框架/语言的教程
-- 解决上游英文版不覆盖的**中国开发者痛点**
-- 有明确的步骤、检查清单、示例，AI 加载后能直接执行
+- 教 AI 助手**怎麼幹活**，而不是某個框架/語言的教學
+- 解決上游英文版不覆蓋的**台灣開發者痛點**
+- 有明確的步驟、檢查清單、範例，AI 載入後能直接執行
 
-欢迎提 Issue 讨论你的想法！
+歡迎提 Issue 討論你的想法！
 
 ---
 
 ## 交流 · Community
 
-微信公众号 **「AI不止语」**（微信搜索 `AI_BuZhiYu`）— 技术问答 · 项目更新 · 实战文章
+微信公眾號 **「AI不止語」**（微信搜尋 `AI_BuZhiYu`）— 技術問答 · 專案更新 · 實務文章
 
-| 渠道 | 加入方式 |
+| 渠道 | 加入方式
 |------|---------|
-| QQ 2群 | [点击加入](https://qm.qq.com/q/EeNQA9xCxy)（群号 1071280067） |
-| 微信群 | 关注公众号后回复「群」获取入群方式 |
+| QQ 2群 | [點擊加入](https://qm.qq.com/q/EeNQA9xCxy)（群號 1071280067）
+| 微信群 | 關注公眾號後回覆「群」取得入群方式
 
 ---
 
-## 🌟 相关项目生态
+## 🌟 相關專案生態
 
-**五个项目组合使用，覆盖 AI 编程从"方法论 → 角色 → 协作 → 教程 → 安全"的完整链路。**
+**五個專案組合使用，覆蓋 AI 程式設計從"方法論 → 角色 → 協作 → 教學 → 安全"的完整鏈路。**
 
-| 项目 | 定位 | 一句话 |
+| 專案 | 定位 | 一句話
 |------|------|-------|
-| **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本项目） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法论 | 20 个 skills 教 AI 怎么干活（TDD / 调试 / 代码审查等） |
-| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 专家角色库 | 211 个**即插即用** AI 专家，含 46 中国原创（小红书 / 抖音 / 飞书 / 钉钉） |
-| **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** | 🚀 编排引擎 | 一句话 → 211 专家协作，**几分钟出方案**（9 家 LLM / 6 免费） |
-| **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 实战教程 | 66 个 Claude Code 技巧 + 9 款工具最佳实践 + 配置模板 |
-| **[shellward](https://github.com/jnMetaCode/shellward)** | 🛡️ 安全中间件 | 8 层防御 + DLP 数据流 + 注入检测，**零依赖**（含 MCP Server） |
+| **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本專案） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法論 | 20 個 skills 教 AI 怎麼幹活（TDD / 除錯 / 程式碼審查等）
+| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 211 個**即插即用** AI 專家，含 46 台灣原創（小紅書 / 抖音 / 飛書 / 釘釘）
+| **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** | 🚀 編排引擎 | 一句話 → 211 專家協作，**幾分鐘出方案**（9 家 LLM / 6 免費）
+| **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 實務教學 | 66 個 Claude Code 技巧 + 9 款工具最佳實踐 + 設定範本
+| **[shellward](https://github.com/jnMetaCode/shellward)** | 🛡️ 安全中介軟體 | 8 層防禦 + DLP 資料流 + 注入偵測，**零相依性**（含 MCP Server）
 
 ---
 
-### 🔥 重点推荐：[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator) — 一句话调度 211 个 AI 专家协作，几分钟交付完整方案
+### 🔥 重點推薦：[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator) — 一句話排程 211 個 AI 專家協作，幾分鐘交付完整方案
 
-以前写个方案：你当指挥官，把 AI 轮流扮演 5 个角色，复制粘贴 10 次，1 小时没了。
+以前寫個方案：你當指揮官，把 AI 輪流扮演 5 個角色，複製貼上 10 次，1 小時沒了。
 
-**现在：** 丢一句话进去 `"做一个电商退款流程"`，**产品 → 架构 → 安全 → 测试 → DBA 自动接力**，几分钟完整方案落地。
+**現在：** 丟一句話進去 `"做一個電商退款流程"`，**產品 → 架構 → 安全 → 測試 → DBA 自動接力**，幾分鐘完整方案落地。
 
-- 🎭 **211+ 专家角色**（含 46 个中国市场原创：小红书 / 抖音 / 微信 / 飞书 / 钉钉）
-- 🧩 **零代码 YAML**，一行 prompt 就能跑
-- 💰 **9 家 LLM 可选**（DeepSeek / Claude / OpenAI / Ollama 等，**6 家免费**）
-- 🔗 **与 superpowers-zh 互补**：本项目管"**怎么做**"（方法论），orchestrator 管"**谁来做**"（角色协作）
+- 🎭 **211+ 專家角色**（含 46 個台灣市場原創：小紅書 / 抖音 / 微信 / 飛書 / 釘釘）
+- 🧩 **零程式碼 YAML**，一行 prompt 就能跑
+- 💰 **9 家 LLM 可選**（DeepSeek / Claude / OpenAI / Ollama 等，**6 家免費）
+- 🔗 **與 superpowers-zh 互補**：本專案管"**怎麼做**"（方法論），orchestrator 管"**誰來做**"（角色協作）
 
-👉 **[立即体验 agency-orchestrator →](https://github.com/jnMetaCode/agency-orchestrator)**
-
----
-
-## 致谢
-
-- 原始英文版：[obra/superpowers](https://github.com/obra/superpowers)（MIT 协议）
-- 感谢 [@obra](https://github.com/obra) 创建了这个优秀的项目
+👉 **[立即體驗 agency-orchestrator →](https://github.com/jnMetaCode/agency-orchestrator)**
 
 ---
 
-## 许可证
+## 致謝
 
-MIT License — 自由使用，商业或个人均可。
+- 原始英文版：[obra/superpowers](https://github.com/obra/superpowers)（MIT 協議）
+- 感謝 [@obra](https://github.com/obra) 建立了這個優秀的專案
+
+---
+
+## 授權
+
+MIT License — 自由使用，商業或個人均可。
 
 ---
 
 <div align="center">
 
-**🦸 AI 编程超能力：让 Claude Code / Hermes Agent / Cursor / Claw Code 等 17 款工具真正会干活**
+**🦸 AI 程式設計超能力：讓 Claude Code / Hermes Agent / Cursor / Claw Code 等 17 款工具真正會幹活**
 
-[Star 本项目](https://github.com/jnMetaCode/superpowers-zh) · [提交 Issue](https://github.com/jnMetaCode/superpowers-zh/issues) · [贡献代码](https://github.com/jnMetaCode/superpowers-zh/pulls)
+[Star 本專案](https://github.com/jnMetaCode/superpowers-zh) · [提交 Issue](https://github.com/jnMetaCode/superpowers-zh/issues) · [貢獻程式碼](https://github.com/jnMetaCode/superpowers-zh/pulls)
 
 </div>

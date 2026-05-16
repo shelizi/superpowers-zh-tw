@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// 把 package.json 的 version 同步到所有 plugin manifest（含嵌套字段）。
-// 由 npm version 钩子触发，跑在 version commit 创建之前。
+// 把 package.json 的 version 同步到所有 plugin manifest（含巢狀欄位）。
+// 由 npm version 鉤子觸發，跑在 version commit 建立之前。
 //
-// 设计：用 regex 替换而不是 JSON.parse + stringify，目的是保留原文件格式
-// （缩进、行内/多行数组、空白等不被破坏）。每种 field 路径对应一个专用 regex。
+// 設計：用 regex 替換而不是 JSON.parse + stringify，目的是保留原檔案格式
+// （縮排、行內/多行陣列、空白等不被破壞）。每種 field 路徑對應一個專用 regex。
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -11,8 +11,8 @@ import { fileURLToPath } from 'url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
 
-// targets 字段对齐上游 .version-bump.json 格式（path + field 路径）。
-// 顶层用 "version"，嵌套用 dot-path（如 "plugins.0.version"）。
+// targets 欄位對齊上游 .version-bump.json 格式（path + field 路徑）。
+// 頂層用 "version"，巢狀用 dot-path（如 "plugins.0.version"）。
 const TARGETS = [
   { path: '.claude-plugin/plugin.json',      field: 'version' },
   { path: '.cursor-plugin/plugin.json',      field: 'version' },
@@ -26,7 +26,7 @@ function buildPattern(field) {
     return /("version"\s*:\s*")[^"]+(")/;
   }
   if (field === 'plugins.0.version') {
-    // 锚定到 "plugins": [ { ... 第一个对象内的 version 字段
+    // 錨定到 "plugins": [ { ... 第一個物件內的 version 欄位
     return /("plugins"\s*:\s*\[\s*\{[\s\S]*?"version"\s*:\s*")[^"]+(")/;
   }
   throw new Error(`Unsupported field path: ${field}`);
@@ -49,7 +49,7 @@ for (const { path: rel, field } of TARGETS) {
   const pattern = buildPattern(field);
   const updated = text.replace(pattern, `$1${pkg.version}$2`);
   if (updated === text) {
-    throw new Error(`未能在 ${rel} 中定位字段 ${field}`);
+    throw new Error(`未能在 ${rel} 中定位欄位 ${field}`);
   }
   writeFileSync(fullPath, updated, 'utf8');
   console.log(`  ${rel} (${field}): ${current} -> ${pkg.version}`);

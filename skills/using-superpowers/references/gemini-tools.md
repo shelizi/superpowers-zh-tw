@@ -1,33 +1,33 @@
 # Gemini CLI 工具映射
 
-Skills 使用 Claude Code 的工具名称。在 Gemini CLI 中遇到这些名称时，请使用对应的平台等价工具：
+Skills 使用 Claude Code 的工具名稱。在 Gemini CLI 中遇到這些名稱時，請使用對應的平台等價工具：
 
-| Skill 中的引用 | Gemini CLI 等价工具 |
+| Skill 中的引用 | Gemini CLI 等價工具 |
 |---------------|-------------------|
-| `Read`（读取文件） | `read_file` |
-| `Write`（创建文件） | `write_file` |
-| `Edit`（编辑文件） | `replace` |
-| `Bash`（执行命令） | `run_shell_command` |
-| `Grep`（搜索文件内容） | `grep_search` |
-| `Glob`（按名称搜索文件） | `glob` |
-| `TodoWrite`（任务跟踪） | `write_todos` |
-| `Skill` 工具（调用 skill） | `activate_skill` |
+| `Read`（讀取檔案） | `read_file` |
+| `Write`（建立檔案） | `write_file` |
+| `Edit`（編輯檔案） | `replace` |
+| `Bash`（執行指令） | `run_shell_command` |
+| `Grep`（搜尋檔案內容） | `grep_search` |
+| `Glob`（按名稱搜尋檔案） | `glob` |
+| `TodoWrite`（任務追蹤） | `write_todos` |
+| `Skill` 工具（呼叫 skill） | `activate_skill` |
 | `WebSearch` | `google_web_search` |
 | `WebFetch` | `web_fetch` |
-| `Task` 工具（派遣子 agent） | 无等价工具——Gemini CLI 不支持子 agent |
+| `Task` 工具（派遣子 agent） | 無等價工具——Gemini CLI 不支援子 agent |
 
-## 不支持子 Agent
+## 不支援子 Agent
 
-Gemini CLI 没有 Claude Code `Task` 工具的等价物。依赖子 agent 派遣的 skills（`subagent-driven-development`、`dispatching-parallel-agents`）将退化为通过 `executing-plans` 进行单会话执行。
+Gemini CLI 沒有 Claude Code `Task` 工具的等價物。相依子 agent 派遣的 skills（`subagent-driven-development`、`dispatching-parallel-agents`）將退化為透過 `executing-plans` 進行單會話執行。
 
-## Gemini CLI 额外工具
+## Gemini CLI 額外工具
 
-以下工具在 Gemini CLI 中可用，但 Claude Code 中没有对应工具：
+以下工具在 Gemini CLI 中可用，但 Claude Code 中沒有對應工具：
 
 | 工具 | 用途 |
 |------|------|
-| `list_directory` | 列出文件和子目录 |
-| `save_memory` | 将信息持久化到 GEMINI.md，跨会话保留 |
-| `ask_user` | 向用户请求结构化输入 |
-| `tracker_create_task` | 丰富的任务管理（创建、更新、列表、可视化） |
-| `enter_plan_mode` / `exit_plan_mode` | 切换到只读研究模式，在修改前先调研 |
+| `list_directory` | 列出檔案和子目錄 |
+| `save_memory` | 將資訊持久化到 GEMINI.md，跨會話保留 |
+| `ask_user` | 向使用者請求結構化輸入 |
+| `tracker_create_task` | 豐富的任務管理（建立、更新、列表、視覺化） |
+| `enter_plan_mode` / `exit_plan_mode` | 切換到唯讀研究模式，在修改前先調研 |

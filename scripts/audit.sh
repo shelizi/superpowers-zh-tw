@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# 质量审计脚本 —— 跑 4 类检查防漂移
+# 品質審計腳本 —— 跑 4 類檢查防漂移
 #
-# 1. 静态校验：JSON parse / SKILL.md frontmatter / symlink / hook 可执行性
-# 2. Installer 功能：17 款工具装 / 卸载 / 幂等
-# 3. 上游对齐：hooks 3 文件 + brainstorm scripts 3 文件 + 14 翻译 skill 结构层级
-# 4. 交叉引用：README → docs/ 链接 + skill 间引用 + bootstrap 注入路径
+# 1. 靜態校驗：JSON parse / SKILL.md frontmatter / symlink / hook 可執行性
+# 2. Installer 功能：17 款工具裝 / 解除安裝 / 幂等
+# 3. 上游對齊：hooks 3 檔案 + brainstorm scripts 3 檔案 + 14 翻譯 skill 結構層級
+# 4. 交叉引用：README → docs/ 連結 + skill 間引用 + bootstrap 注入路徑
 #
 # 用法：
-#   bash scripts/audit.sh                 # 跑全部，FAIL > 0 时 exit 1
-#   bash scripts/audit.sh --quick         # 跳过 installer 功能测试
-#   bash scripts/audit.sh --no-upstream   # 跳过上游对齐（CI 没 upstream remote 时）
+#   bash scripts/audit.sh                 # 跑全部，FAIL > 0 時 exit 1
+#   bash scripts/audit.sh --quick         # 跳過 installer 功能測試
+#   bash scripts/audit.sh --no-upstream   # 跳過上游對齊（CI 沒 upstream remote 時）
 #
-# CI 默认在 PR + push to main 跑，发现漂移立刻拦下。
+# CI 預設在 PR + push to main 跑，發現漂移立刻攔下。
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
@@ -85,14 +85,14 @@ while IFS= read -r l; do
   if [ -e "$l" ]; then ok; else bad "Broken symlink: $l"; fi
 done < <(find . -type l -not -path "./node_modules/*" -not -path "./.git/*")
 
-# 1d. Hook 脚本可执行权限
+# 1d. Hook 腳本可執行權限
 for f in hooks/session-start hooks/run-hook.cmd; do
   if [ -x "$f" ]; then ok; else bad "Not executable: $f"; fi
 done
 
 #==============================================================================
 if [ "$QUICK" != "1" ]; then
-hdr "Category 2: Installer 功能测试（17 款工具）"
+hdr "Category 2: Installer 功能測試（17 款工具）"
 #==============================================================================
 
 declare -a TOOLS=(claude cursor codex kiro deerflow trae antigravity vscode openclaw windsurf gemini aider opencode qwen hermes claw copilot)
@@ -102,7 +102,7 @@ for tool in "${TOOLS[@]}"; do
   pushd "$TMP" >/dev/null
 
   if ! node "$INSTALLER" --tool "$tool" >/dev/null 2>&1; then
-    bad "Installer: $tool 安装失败"
+    bad "Installer: $tool 安裝失敗"
     popd >/dev/null
     rm -rf "$TMP"
     continue
@@ -110,14 +110,14 @@ for tool in "${TOOLS[@]}"; do
 
   # 幂等：再装一遍不应炸
   if ! node "$INSTALLER" --tool "$tool" >/dev/null 2>&1; then
-    bad "Installer: $tool 二次安装失败（幂等性破坏）"
+    bad "Installer: $tool 二次安裝失敗（幂等性破壞）"
     popd >/dev/null
     rm -rf "$TMP"
     continue
   fi
 
   if ! node "$INSTALLER" --uninstall >/dev/null 2>&1; then
-    bad "Installer: $tool 卸载失败"
+    bad "Installer: $tool 解除安裝失敗"
   else
     ok
   fi
@@ -128,20 +128,20 @@ done
 
 else
 echo ""
-echo "[--quick 跳过 installer 功能测试]"
+echo "[--quick 跳過 installer 功能測試]"
 fi
 
 #==============================================================================
-hdr "Category 3: 上游对齐"
+hdr "Category 3: 上游對齊"
 #==============================================================================
 
 if ! ensure_upstream; then
-  warn "无法访问 upstream，跳过对齐检查（CI 上请确保有网络）"
+  warn "無法存取 upstream，跳過對齊檢查（CI 上請確保有網路）"
 else
   # 3a. Hooks 3 文件 + cursor manifest
   for f in hooks/session-start hooks/hooks.json hooks/run-hook.cmd hooks/hooks-cursor.json; do
     d=$(diff <(git show upstream/main:$f 2>/dev/null) "$f" 2>/dev/null | wc -l | tr -d ' ')
-    if [ "$d" = "0" ]; then ok; else bad "Hooks 漂移: $f ($d 行)"; fi
+    if [ "$d" = "0" ]; then ok; else    bad "Hooks 漂移: $f ($d 行)"; fi
   done
 
   # 3b. Brainstorm scripts 3 文件
@@ -149,10 +149,10 @@ else
            skills/brainstorming/scripts/start-server.sh \
            skills/brainstorming/scripts/stop-server.sh; do
     d=$(diff <(git show upstream/main:$f 2>/dev/null) "$f" 2>/dev/null | wc -l | tr -d ' ')
-    if [ "$d" = "0" ]; then ok; else bad "Brainstorm script 漂移: $(basename $f) ($d 行)"; fi
+    if [ "$d" = "0" ]; then ok; else    bad "Brainstorm script 漂移: $(basename $f) ($d 行)"; fi
   done
 
-  # 3c. 14 翻译 skill 结构层级（H1-H4 标题数）
+  # 3c. 14 翻譯 skill 結構層級（H1-H4 標題數）
   declare -a SKILLS=(brainstorming dispatching-parallel-agents executing-plans \
     finishing-a-development-branch receiving-code-review requesting-code-review \
     subagent-driven-development systematic-debugging test-driven-development \
@@ -168,11 +168,11 @@ else
     if [ "$abs" -le "3" ]; then
       ok
     else
-      warn "Skill 结构漂移: ${s} (上游 H=${up}, 我们 H=${our}) -- 可能 v5.1.0 没跟，或主动扩写"
+      warn "Skill 結構漂移: ${s} (上游 H=${up}, 我們 H=${our}) -- 可能 v5.1.0 沒跟，或主動擴寫"
     fi
   done
 
-  # 3d. requesting-code-review/code-reviewer.md 结构（v5.1.0 self-contained）
+  # 3d. requesting-code-review/code-reviewer.md 結構（v5.1.0 self-contained）
   up=$(git show upstream/main:skills/requesting-code-review/code-reviewer.md 2>/dev/null | grep -cE '^#{1,3} ' || echo 0)
   our=$(grep -cE '^#{1,3} ' skills/requesting-code-review/code-reviewer.md)
   diff=$((up - our))
@@ -180,7 +180,7 @@ else
   if [ "$abs" -le "2" ]; then
     ok
   else
-    bad "code-reviewer.md 结构漂移 (上游 v5.1.0 self-contained, H=${up}; 我们 H=${our})"
+    bad "code-reviewer.md 結構漂移 (上游 v5.1.0 self-contained, H=${up}; 我們 H=${our})"
   fi
 fi
 
@@ -188,17 +188,17 @@ fi
 hdr "Category 4: 交叉引用完整性"
 #==============================================================================
 
-# 4a. README → docs/ 链接
+# 4a. README → docs/ 連結
 BROKEN=0
 while IFS= read -r link; do
   link=${link#(}; link=${link%)}
   if [ -f "$link" ]; then ok; else
-    bad "README 链接断: $link"
+    bad "README 連結斷: $link"
     BROKEN=$((BROKEN+1))
   fi
 done < <(grep -oE '\(docs/README\.[a-z-]+\.md\)' README.md)
 
-# 4b. Skill 间引用（superpowers:xxx）
+# 4b. Skill 間引用（superpowers:xxx）
 while IFS= read -r line; do
   skill_file=$(echo "$line" | cut -d: -f1)
   refs=$(echo "$line" | grep -oE '\bsuperpowers:[a-z-]+\b' | sort -u)
@@ -206,20 +206,20 @@ while IFS= read -r line; do
     name=${ref#superpowers:}
     if [ -d "skills/$name" ]; then ok; else
       src=$(basename $(dirname "$skill_file"))
-      bad "Skill 引用断: $src 引用了不存在的 skills/$name"
+      bad "Skill 引用斷: $src 引用了不存在的 skills/$name"
     fi
   done
 done < <(grep -rln 'superpowers:' skills/*/SKILL.md 2>/dev/null | \
          xargs -I{} grep -H 'superpowers:' {} 2>/dev/null)
 
-# 4c. 装完后 .claude/skills/using-superpowers/SKILL.md 路径必须存在（hook 依赖）
+# 4c. 裝完後 .claude/skills/using-superpowers/SKILL.md 路徑必須存在（hook 相依性）
 TMP=$(mktemp -d)
 pushd "$TMP" >/dev/null
 if node "$INSTALLER" --tool claude >/dev/null 2>&1; then
   if [ -f "$TMP/.claude/skills/using-superpowers/SKILL.md" ]; then
     ok
   else
-    bad "装完后 .claude/skills/using-superpowers/SKILL.md 不存在（hook 会找不到）"
+    bad "裝完後 .claude/skills/using-superpowers/SKILL.md 不存在（hook 會找不到）"
   fi
 fi
 popd >/dev/null
@@ -228,7 +228,7 @@ rm -rf "$TMP"
 #==============================================================================
 echo ""
 echo "=========================================="
-echo "📊 审计结果"
+echo "📊 審計結果"
 echo "=========================================="
 echo "✅ PASS: $PASS"
 echo "⚠️  WARN: $WARN"
@@ -236,19 +236,19 @@ echo "❌ FAIL: $FAIL"
 
 if [ "$WARN" -gt 0 ]; then
   echo ""
-  echo "Warnings（不阻塞）："
+  echo "Warnings（不阻擋）："
   for w in "${WARNINGS[@]}"; do echo "  ⚠️  $w"; done
 fi
 
 if [ "$FAIL" -gt 0 ]; then
   echo ""
-  echo "Failures（必须修）："
+  echo "Failures（必須修）："
   for f in "${FAILURES[@]}"; do echo "  ❌ $f"; done
   echo ""
-  echo "❌ Audit 失败：$FAIL 个 P0 问题。看 README 「质量审计」段了解每项含义。"
+  echo "❌ Audit 失敗：$FAIL 個 P0 問題。看 README 「品質審計」段了解每項含義。"
   exit 1
 fi
 
 echo ""
-echo "✅ Audit 通过"
+echo "✅ Audit 通過"
 exit 0

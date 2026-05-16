@@ -1,4 +1,4 @@
-# Superpowers 中文版 — Kiro 安装指南
+# Superpowers 中文版 — Kiro 安裝指南
 
 在 [Kiro](https://kiro.dev)（Amazon AI IDE）中使用 superpowers-zh 的完整指南。
 
@@ -9,9 +9,9 @@ cd /your/project
 npx superpowers-zh
 ```
 
-安装脚本会自动检测 `.kiro/` 目录并将 skills 复制到 `.kiro/steering/`。
+安裝腳本會自動檢測 `.kiro/` 目錄並將 skills 複製到 `.kiro/steering/`。
 
-## 手动安装
+## 手動安裝
 
 ```bash
 git clone https://github.com/jnMetaCode/superpowers-zh.git
@@ -20,39 +20,39 @@ cp -r superpowers-zh/skills/* /your/project/.kiro/steering/
 
 ## 工作原理
 
-Kiro 使用 **Steering** 机制管理 AI 行为规则：
+Kiro 使用 **Steering** 機制管理 AI 行為規則：
 
-- **目录**：`.kiro/steering/`
+- **目錄**：`.kiro/steering/`
 - **格式**：Markdown + YAML frontmatter
-- **加载模式**：
-  - `alwaysApply: true` — 每次对话自动加载
-  - `globs: "*.ts"` — 匹配特定文件时加载
-  - 手动引用 — 在聊天中输入 `#steering-file-name`
+- **載入模式**：
+  - `alwaysApply: true` — 每次對話自動載入
+  - `globs: "*.ts"` — 匹配特定檔案時載入
+  - 手動引用 — 在聊天中輸入 `#steering-file-name`
 
-### Skills 与 Steering 的对应
+### Skills 與 Steering 的對應
 
-superpowers-zh 的 SKILL.md 文件格式与 Kiro Steering 文件兼容（都是 Markdown + YAML frontmatter）。安装后，Kiro 会自动识别并加载 skills。
+superpowers-zh 的 SKILL.md 檔案格式與 Kiro Steering 檔案相容（都是 Markdown + YAML frontmatter）。安裝後，Kiro 會自動識別並載入 skills。
 
-### 推荐配置
+### 推薦配置
 
-在 `.kiro/steering/` 中创建 `superpowers.md`：
+在 `.kiro/steering/` 中建立 `superpowers.md`：
 
 ```markdown
 ---
-description: 加载 superpowers skills 框架
+description: 載入 superpowers skills 框架
 alwaysApply: true
 ---
 
-使用 .kiro/steering/ 目录下的 superpowers skills 来指导工作流程。
-优先使用 brainstorming（头脑风暴）开始新任务。
+使用 .kiro/steering/ 目錄下的 superpowers skills 來指導工作流程。
+優先使用 brainstorming（腦力激盪）開始新任務。
 ```
 
 ## 使用
 
 在 Kiro 中，你可以：
-- 直接提到 skill 名称：「使用头脑风暴来分析这个需求」
-- 手动引用：在聊天中输入 `#brainstorming`
-- Skills 会根据任务类型自动激活
+- 直接提到 skill 名稱：「使用腦力激盪來分析這個需求」
+- 手動引用：在聊天中輸入 `#brainstorming`
+- Skills 會根據任務類型自動啟動
 
 ## 更新
 
@@ -61,7 +61,7 @@ cd /your/project
 npx superpowers-zh
 ```
 
-重新运行安装命令即可更新到最新版本。
+重新執行安裝命令即可更新到最新版本。
 
 ## 获取帮助
 

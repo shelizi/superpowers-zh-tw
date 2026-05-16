@@ -1,26 +1,26 @@
-# 纵深防御校验
+# 縱深防禦校驗
 
 ## 概述
 
-当你修复了一个由无效数据引起的 bug 时，在一个地方加校验似乎就够了。但这个单点检查可能会被不同的代码路径、重构或 mock 绕过。
+當你修復了一個由無效資料引起的 bug 時，在一個地方加校驗似乎就夠了。但這個單點檢查可能會被不同的程式碼路徑、重構或 mock 繞過。
 
-**核心原则：** 在数据经过的每一层都做校验。让这个 bug 在结构上不可能发生。
+**核心原則：** 在資料經過的每一層都做校驗。讓這個 bug 在結構上不可能發生。
 
-## 为什么需要多层校验
+## 為什麼需要多層校驗
 
-单层校验："我们修了这个 bug"
-多层校验："我们让这个 bug 不可能再发生"
+單層校驗：「我們修了這個 bug」
+多層校驗：「我們讓這個 bug 不可能再發生」
 
-不同层级能捕获不同问题：
-- 入口校验捕获大多数 bug
-- 业务逻辑校验捕获边界情况
-- 环境守卫防止特定上下文的危险操作
-- 调试日志在其他层级失效时提供帮助
+不同層級能捕獲不同問題：
+- 入口校驗捕獲大多數 bug
+- 業務邏輯校驗捕獲邊界情況
+- 環境守衛防止特定上下文的危險操作
+- 除錯日誌在其他層級失效時提供幫助
 
-## 四个层级
+## 四個層級
 
-### 第 1 层：入口校验
-**目的：** 在 API 边界拒绝明显无效的输入
+### 第 1 層：入口校驗
+**目的：** 在 API 邊界拒絕明顯無效的輸入
 
 ```typescript
 function createProject(name: string, workingDirectory: string) {
@@ -33,28 +33,28 @@ function createProject(name: string, workingDirectory: string) {
   if (!statSync(workingDirectory).isDirectory()) {
     throw new Error(`workingDirectory is not a directory: ${workingDirectory}`);
   }
-  // ... 继续处理
+  // ... 繼續處理
 }
 ```
 
-### 第 2 层：业务逻辑校验
-**目的：** 确保数据对当前操作是合理的
+### 第 2 層：業務邏輯校驗
+**目的：** 確保資料對當前操作是合理的
 
 ```typescript
 function initializeWorkspace(projectDir: string, sessionId: string) {
   if (!projectDir) {
     throw new Error('projectDir required for workspace initialization');
   }
-  // ... 继续处理
+  // ... 繼續處理
 }
 ```
 
-### 第 3 层：环境守卫
-**目的：** 防止在特定环境中执行危险操作
+### 第 3 層：環境守衛
+**目的：** 防止在特定環境中執行危險操作
 
 ```typescript
 async function gitInit(directory: string) {
-  // 在测试中，拒绝在临时目录之外执行 git init
+  // 在測試中，拒絕在臨時目錄之外執行 git init
   if (process.env.NODE_ENV === 'test') {
     const normalized = normalize(resolve(directory));
     const tmpDir = normalize(resolve(tmpdir()));
@@ -65,12 +65,12 @@ async function gitInit(directory: string) {
       );
     }
   }
-  // ... 继续处理
+  // ... 繼續處理
 }
 ```
 
-### 第 4 层：调试埋点
-**目的：** 记录上下文信息以便事后分析
+### 第 4 層：除錯埋點
+**目的：** 記錄上下文資訊以便事後分析
 
 ```typescript
 async function gitInit(directory: string) {
@@ -80,43 +80,43 @@ async function gitInit(directory: string) {
     cwd: process.cwd(),
     stack,
   });
-  // ... 继续处理
+  // ... 繼續處理
 }
 ```
 
-## 应用模式
+## 應用模式
 
-当你发现一个 bug 时：
+當你發現一個 bug 時：
 
-1. **追踪数据流** —— 错误值从哪里产生的？在哪里被使用？
-2. **标注所有检查点** —— 列出数据经过的每一个节点
-3. **在每一层添加校验** —— 入口、业务逻辑、环境、调试
-4. **测试每一层** —— 尝试绕过第 1 层，验证第 2 层能否捕获
+1. **追蹤資料流** —— 錯誤值從哪裡產生的？在哪裡被使用？
+2. **標註所有檢查點** —— 列出資料經過的每一個節點
+3. **在每一層新增校驗** —— 入口、業務邏輯、環境、除錯
+4. **測試每一層** —— 嘗試繞過第 1 層，驗證第 2 層能否捕獲
 
-## 实际案例
+## 實際案例
 
-Bug：空的 `projectDir` 导致 `git init` 在源代码目录执行
+Bug：空的 `projectDir` 導致 `git init` 在原始碼目錄執行
 
-**数据流：**
-1. 测试准备 → 空字符串
+**資料流：**
+1. 測試準備 → 空字串
 2. `Project.create(name, '')`
 3. `WorkspaceManager.createWorkspace('')`
-4. `git init` 在 `process.cwd()` 中执行
+4. `git init` 在 `process.cwd()` 中執行
 
-**添加的四层防御：**
-- 第 1 层：`Project.create()` 校验非空/存在/可写
-- 第 2 层：`WorkspaceManager` 校验 projectDir 非空
-- 第 3 层：`WorktreeManager` 在测试中拒绝在 tmpdir 之外执行 git init
-- 第 4 层：git init 前记录堆栈跟踪
+**新增的四層防禦：**
+- 第 1 層：`Project.create()` 校驗非空/存在/可寫
+- 第 2 層：`WorkspaceManager` 校驗 projectDir 非空
+- 第 3 層：`WorktreeManager` 在測試中拒絕在 tmpdir 之外執行 git init
+- 第 4 層：git init 前記錄堆疊追蹤
 
-**结果：** 全部 1847 个测试通过，bug 不可能再复现
+**結果：** 全部 1847 個測試通過，bug 不可能再復現
 
-## 关键洞察
+## 關鍵洞察
 
-四个层级缺一不可。在测试过程中，每一层都捕获了其他层遗漏的 bug：
-- 不同的代码路径绕过了入口校验
-- mock 绕过了业务逻辑检查
-- 不同平台的边界情况需要环境守卫
-- 调试日志发现了结构性误用
+四個層級缺一不可。在測試過程中，每一層都捕獲了其他層遺漏的 bug：
+- 不同的程式碼路徑繞過了入口校驗
+- mock 繞過了業務邏輯檢查
+- 不同平台的邊界情況需要環境守衛
+- 除錯日誌發現了結構性誤用
 
-**不要止步于一个校验点。** 在每一层都添加检查。
+**不要止步於一個校驗點。** 在每一層都新增檢查。

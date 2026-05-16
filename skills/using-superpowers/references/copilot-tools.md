@@ -1,52 +1,52 @@
 # Copilot CLI 工具映射
 
-技能使用 Claude Code 的工具名称。当你在技能中遇到这些工具时，使用你平台的等价工具：
+技能使用 Claude Code 的工具名稱。當你在技能中遇到這些工具時，使用你平台的等價工具：
 
-| 技能中引用的工具 | Copilot CLI 等价工具 |
+| 技能中引用的工具 | Copilot CLI 等價工具 |
 |-----------------|----------------------|
-| `Read`（读取文件） | `view` |
-| `Write`（创建文件） | `create` |
-| `Edit`（编辑文件） | `edit` |
-| `Bash`（运行命令） | `bash` |
-| `Grep`（搜索文件内容） | `grep` |
-| `Glob`（按名称搜索文件） | `glob` |
-| `Skill` 工具（调用技能） | `skill` |
+| `Read`（讀取檔案） | `view` |
+| `Write`（建立檔案） | `create` |
+| `Edit`（編輯檔案） | `edit` |
+| `Bash`（執行指令） | `bash` |
+| `Grep`（搜尋檔案內容） | `grep` |
+| `Glob`（按名稱搜尋檔案） | `glob` |
+| `Skill` 工具（呼叫技能） | `skill` |
 | `WebFetch` | `web_fetch` |
-| `Task` 工具（分派子智能体） | `task`（参见[智能体类型](#智能体类型)） |
-| 多个 `Task` 调用（并行） | 多个 `task` 调用 |
-| Task 状态/输出 | `read_agent`、`list_agents` |
-| `TodoWrite`（任务跟踪） | `sql` 配合内置 `todos` 表 |
-| `WebSearch` | 无等价工具 — 使用 `web_fetch` 配合搜索引擎 URL |
-| `EnterPlanMode` / `ExitPlanMode` | 无等价工具 — 留在主会话中 |
+| `Task` 工具（分派子智能體） | `task`（參見[智能體類型](#智能體類型)） |
+| 多個 `Task` 呼叫（並行） | 多個 `task` 呼叫 |
+| Task 狀態/輸出 | `read_agent`、`list_agents` |
+| `TodoWrite`（任務追蹤） | `sql` 配合內建 `todos` 表 |
+| `WebSearch` | 無等價工具 — 使用 `web_fetch` 配合搜尋引擎 URL |
+| `EnterPlanMode` / `ExitPlanMode` | 無等價工具 — 留在主會話中 |
 
-## 智能体类型
+## 智能體類型
 
-Copilot CLI 的 `task` 工具接受 `agent_type` 参数：
+Copilot CLI 的 `task` 工具接受 `agent_type` 參數：
 
-| Claude Code 智能体 | Copilot CLI 等价 |
+| Claude Code 智能體 | Copilot CLI 等價 |
 |-------------------|----------------------|
 | `general-purpose` | `"general-purpose"` |
 | `Explore` | `"explore"` |
-| 命名的插件智能体（如 `superpowers:code-reviewer`） | 从已安装的插件中自动发现 |
+| 命名的插件智能體（如 `superpowers:code-reviewer`） | 從已安裝的插件中自動發現 |
 
-## 异步 Shell 会话
+## 異步 Shell 會話
 
-Copilot CLI 支持持久化的异步 shell 会话，这在 Claude Code 中没有直接等价物：
-
-| 工具 | 用途 |
-|------|---------|
-| `bash` 配合 `async: true` | 在后台启动长时间运行的命令 |
-| `write_bash` | 向运行中的异步会话发送输入 |
-| `read_bash` | 读取异步会话的输出 |
-| `stop_bash` | 终止异步会话 |
-| `list_bash` | 列出所有活跃的 shell 会话 |
-
-## 额外的 Copilot CLI 工具
+Copilot CLI 支援持久化的異步 shell 會話，這在 Claude Code 中沒有直接等價物：
 
 | 工具 | 用途 |
 |------|---------|
-| `store_memory` | 持久化代码库相关事实供未来会话使用 |
-| `report_intent` | 更新 UI 状态行显示当前意图 |
-| `sql` | 查询会话的 SQLite 数据库（待办、元数据） |
-| `fetch_copilot_cli_documentation` | 查阅 Copilot CLI 文档 |
-| GitHub MCP 工具（`github-mcp-server-*`） | 原生 GitHub API 访问（issue、PR、代码搜索） |
+| `bash` 配合 `async: true` | 在後台啟動長時間執行的指令 |
+| `write_bash` | 向執行中的異步會話發送輸入 |
+| `read_bash` | 讀取異步會話的輸出 |
+| `stop_bash` | 終止異步會話 |
+| `list_bash` | 列出所有活躍的 shell 會話 |
+
+## 額外的 Copilot CLI 工具
+
+| 工具 | 用途 |
+|------|---------|
+| `store_memory` | 持久化程式碼庫相關事實供未來會話使用 |
+| `report_intent` | 更新 UI 狀態行顯示當前意圖 |
+| `sql` | 查詢會話的 SQLite 資料庫（待辦、元資料） |
+| `fetch_copilot_cli_documentation` | 查閱 Copilot CLI 文件 |
+| GitHub MCP 工具（`github-mcp-server-*`） | 原生 GitHub API 存取（issue、PR、程式碼搜尋） |

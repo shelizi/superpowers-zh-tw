@@ -1,38 +1,38 @@
 ---
 name: mcp-builder
-description: MCP 服务器构建方法论 — 系统化构建生产级 MCP 工具，让 AI 助手连接外部能力
+description: MCP 伺服器建構方法論 — 系統化建構生產級 MCP 工具，讓 AI 助手連接外部能力
 ---
 
-# MCP 服务器构建
+# MCP 伺服器建構
 
-系统化设计、实现、测试和部署 Model Context Protocol 服务器的方法论。
+系統化設計、實作、測試和部署 Model Context Protocol 伺服器的方法論。
 
-## 1. 协议核心概念
+## 1. 協議核心概念
 
-MCP 定义三种原语：
+MCP 定義三種原語：
 
-- **Tools（工具）**：AI 助手主动调用的函数，有副作用。如搜索、创建、删除操作。
-- **Resources（资源）**：AI 助手只读访问的数据源，用 URI 标识。如 `users://{id}/profile`。
-- **Prompts（提示词模板）**：预定义交互模板，引导用户触发工作流。
+- **Tools（工具）**：AI 助手主動呼叫的函數，有副作用。如搜尋、建立、刪除操作。
+- **Resources（資源）**：AI 助手唯讀存取的資料來源，用 URI 識別。如 `users://{id}/profile`。
+- **Prompts（提示詞模板）**：預先定義互動模板，引導使用者觸發工作流。
 
-**选择原则：** 执行操作 → Tool | 读取数据 → Resource | 引导交互 → Prompt
+**選擇原則：** 執行操作 → Tool | 讀取資料 → Resource | 引導互動 → Prompt
 
-## 2. 项目结构规范
+## 2. 專案結構規範
 
 ### TypeScript
 ```
 my-mcp-server/
 ├── src/
-│   ├── index.ts          # 入口，注册 tools/resources
+│   ├── index.ts          # 入口，註冊 tools/resources
 │   ├── tools/             # 按功能拆分
 │   ├── resources/
-│   └── lib/               # 客户端封装、校验逻辑
+│   └── lib/               # 用戶端封裝、校驗邏輯
 ├── tests/
 ├── package.json
 └── tsconfig.json
 ```
 
-关键依赖：`@modelcontextprotocol/sdk` + `zod`
+關鍵相依性：`@modelcontextprotocol/sdk` + `zod`
 
 ### Python
 ```
@@ -45,43 +45,43 @@ my-mcp-server/
 └── pyproject.toml
 ```
 
-关键依赖：`mcp` + `pydantic`
+關鍵相依性：`mcp` + `pydantic`
 
-## 3. Tool 设计原则
+## 3. Tool 設計原則
 
 ### 命名
-- `snake_case` 格式，动词开头：`search_users`、`create_issue`、`delete_file`
-- 名称自解释，AI 助手靠名称选工具，模糊命名导致误调用
+- `snake_case` 格式，動詞開頭：`search_users`、`create_issue`、`delete_file`
+- 名稱自解釋，AI 助手靠名稱選工具，模糊命名導致誤呼叫
 
-### 参数
-- 每个参数有类型约束和 `.describe()` 描述
-- 可选参数给默认值，减少 AI 决策负担
-- 用枚举代替布尔开关
+### 參數
+- 每個參數有類型約束和 `.describe()` 描述
+- 可選參數給預設值，減少 AI 決策負擔
+- 用列舉代替布林開關
 
 ```typescript
 server.tool("search_issues", {
-  query: z.string().describe("搜索关键词"),
-  status: z.enum(["open", "closed", "all"]).default("open").describe("状态筛选"),
+  query: z.string().describe("搜尋關鍵詞"),
+  status: z.enum(["open", "closed", "all"]).default("open").describe("狀態篩選"),
   limit: z.number().min(1).max(100).default(20).describe("返回上限"),
 }, async ({ query, status, limit }) => { /* ... */ });
 ```
 
 ### 描述
-说明**用途 + 返回内容 + 限制**，这是 AI 选择工具的关键依据：
+說明**用途 + 返回內容 + 限制**，這是 AI 選擇工具的關鍵依據：
 
 ```typescript
 server.tool("search_users",
-  "根据姓名或邮箱搜索用户。返回 ID、姓名、邮箱列表。模糊匹配，最多 50 条。",
+  "根據姓名或信箱搜尋使用者。返回 ID、姓名、信箱列表。模糊匹配，最多 50 筆。",
   schema, handler);
 ```
 
-### 输出
-- 结构化数据 → JSON，人类可读内容 → Markdown
-- 始终用 `content: [{ type: "text", text: "..." }]` 格式返回
+### 輸出
+- 結構化資料 → JSON，人類可讀內容 → Markdown
+- 始終用 `content: [{ type: "text", text: "..." }]` 格式返回
 
-## 4. 输入验证和错误处理
+## 4. 輸入驗證和錯誤處理
 
-用 Zod/Pydantic 做 Schema 级校验，业务级校验放 handler 开头：
+用 Zod/Pydantic 做 Schema 級校驗，業務級校驗放 handler 開頭：
 
 ```typescript
 server.tool("get_user", { id: z.string() }, async ({ id }) => {
@@ -89,58 +89,58 @@ server.tool("get_user", { id: z.string() }, async ({ id }) => {
     const user = await db.getUser(id);
     if (!user) {
       return {
-        content: [{ type: "text", text: `用户 ${id} 不存在，请检查 ID。` }],
+        content: [{ type: "text", text: `使用者 ${id} 不存在，請檢查 ID。` }],
         isError: true,
       };
     }
     return { content: [{ type: "text", text: JSON.stringify(user, null, 2) }] };
   } catch (err) {
     return {
-      content: [{ type: "text", text: `查询失败：${err.message}` }],
+      content: [{ type: "text", text: `查詢失敗：${err.message}` }],
       isError: true,
     };
   }
 });
 ```
 
-**错误处理四原则：**
-1. 永远不让服务器崩溃 — try/catch 包裹所有外部调用
-2. 返回可操作的错误信息 — 告诉 AI 问题是什么、能做什么
-3. 使用 `isError: true` — 让 AI 知道调用失败
-4. 区分错误类型 — 参数错误、权限不足、资源不存在、服务不可用
+**錯誤處理四原則：**
+1. 永遠不讓伺服器當機 — try/catch 包裹所有外部呼叫
+2. 返回可操作的錯誤訊息 — 告訴 AI 問題是什麼、能做什麼
+3. 使用 `isError: true` — 讓 AI 知道呼叫失敗
+4. 區分錯誤類型 — 參數錯誤、權限不足、資源不存在、服務不可用
 
-## 5. 资源管理和生命周期
+## 5. 資源管理和生命週期
 
 ```typescript
-// 资源注册
+// 資源註冊
 server.resource("user-profile", "users://{userId}/profile", async (uri) => {
   const profile = await db.getProfile(extractId(uri));
   return { contents: [{ uri: uri.href, mimeType: "application/json", text: JSON.stringify(profile) }] };
 });
 
-// 生命周期：先初始化 → 再 connect → 监听关闭信号
+// 生命週期：先初始化 → 再 connect → 監聽關閉訊號
 const db = await Database.connect(config.dbUrl);
 await server.connect(new StdioServerTransport());
 process.on("SIGINT", async () => { await db.disconnect(); await server.close(); process.exit(0); });
 ```
 
-关键点：使用连接池、所有外部调用设超时、优雅关闭清理资源。
+關鍵點：使用連線池、所有外部呼叫設逾時、優雅關閉清理資源。
 
-## 6. 测试策略
+## 6. 測試策略
 
-### 单元测试 — 业务逻辑与 MCP 注册分离
+### 單元測試 — 業務邏輯與 MCP 註冊分離
 ```typescript
-// tools/search.ts 导出纯函数
+// tools/search.ts 匯出純函數
 export async function searchUsers(query: string, limit: number) { /* ... */ }
 
-// search.test.ts 独立测试
+// search.test.ts 獨立測試
 test("返回匹配结果", async () => {
   const results = await searchUsers("alice", 10);
   expect(results[0].name).toContain("Alice");
 });
 ```
 
-### 集成测试 — 用 SDK Client 做端到端验证
+### 整合測試 — 用 SDK Client 做端到端驗證
 ```typescript
 const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
 await server.connect(serverTransport);
@@ -150,52 +150,52 @@ const result = await client.callTool("search_users", { query: "test" });
 expect(result.isError).toBeFalsy();
 ```
 
-### MCP Inspector — 交互式调试
+### MCP Inspector — 互動式除錯
 ```bash
 npx @modelcontextprotocol/inspector node dist/index.js
 ```
 
-在浏览器中查看所有 tools/resources，手动调用并查看结果。
+在瀏覽器中查看所有 tools/resources，手動呼叫並查看結果。
 
-**测试要点：** 每个 Tool 覆盖正常 + 异常路径、边界值、外部服务失败模拟。
+**測試要點：** 每個 Tool 覆蓋正常 + 異常路徑、邊界值、外部服務失敗模擬。
 
-## 7. 安全考虑
+## 7. 安全考慮
 
-**权限控制：**
-- 最小权限原则，读写 Tool 分离
-- 危险操作要求确认参数（如 `confirm: true`）
+**權限控制：**
+- 最小權限原則，讀寫 Tool 分離
+- 危險操作要求確認參數（如 `confirm: true`）
 
-**输入安全：**
-- SQL 注入 → 参数化查询，绝不拼接
-- 路径遍历 → 校验路径，禁止 `../`
+**輸入安全：**
+- SQL 注入 → 參數化查詢，絕不拼接
+- 路徑遍歷 → 校驗路徑，禁止 `../`
 - 命令注入 → 用 `execFile` 而非 `exec`
 
-**敏感数据：**
-- 密钥通过环境变量传入，不硬编码
-- 日志不打印完整敏感信息
-- 返回数据做脱敏处理
+**敏感資料：**
+- 金鑰透過環境變數傳入，不硬編碼
+- 日誌不列印完整敏感資訊
+- 返回資料做脫敏處理
 
-**沙箱：** 文件操作限制目录、网络请求限制白名单、设置资源配额。
+**沙盒：** 檔案操作限制目錄、網路請求限制白名單、設定資源配額。
 
-## 8. 部署和分发
+## 8. 部署和發布
 
-### npm 发布
+### npm 發布
 ```json
 { "bin": { "mcp-server-myservice": "dist/index.js" }, "files": ["dist"] }
 ```
 
-用户配置：
+使用者配置：
 ```json
 { "mcpServers": { "myservice": { "command": "npx", "args": ["@yourorg/mcp-server-myservice"], "env": { "API_KEY": "xxx" } } } }
 ```
 
-### pip 发布
+### pip 發布
 ```toml
 [project.scripts]
 mcp-server-myservice = "my_mcp_server.server:main"
 ```
 
-### Docker — 适用于复杂依赖或隔离场景
+### Docker — 適用於複雜相依性或隔離場景
 ```dockerfile
 FROM node:20-slim
 WORKDIR /app
@@ -204,52 +204,52 @@ COPY dist ./dist
 ENTRYPOINT ["node", "dist/index.js"]
 ```
 
-## 9. 调试技巧
+## 9. 除錯技巧
 
-**关键：MCP 用 stdio 通信，不能用 `console.log`，会破坏协议流。**
+**關鍵：MCP 用 stdio 通訊，不能用 `console.log`，會破壞協議流。**
 
 ```typescript
-// 错误
+// 錯誤
 console.log("debug");
-// 正确
+// 正確
 console.error("[DEBUG]", info);
 // 更好
-server.sendLoggingMessage({ level: "info", data: "处理中" });
+server.sendLoggingMessage({ level: "info", data: "處理中" });
 ```
 
-**常见问题：**
+**常見問題：**
 
-| 症状 | 原因 | 解决 |
+| 症狀 | 原因 | 解決 |
 |------|------|------|
-| 启动无响应 | transport 未连接 | 检查 `server.connect()` |
-| Tool 不出现 | 注册在 connect 之后 | 先注册再 connect |
-| AI 不调用 Tool | 描述不清晰 | 改善名称和描述 |
-| 参数总错 | Schema 不明确 | 添加 `.describe()` |
-| 调用超时 | 外部服务慢 | 加超时和缓存 |
+| 啟動無回應 | transport 未連接 | 檢查 `server.connect()` |
+| Tool 不出現 | 註冊在 connect 之後 | 先註冊再 connect |
+| AI 不呼叫 Tool | 描述不清晰 | 改善名稱和描述 |
+| 參數總錯 | Schema 不明確 | 新增 `.describe()` |
+| 呼叫逾時 | 外部服務慢 | 加逾時和快取 |
 
-**调试流程：** Inspector 验证基本功能 → 手动调用确认输入输出 → 连接真实 AI 客户端观察调用模式 → 根据实际行为调整设计。
+**除錯流程：** Inspector 驗證基本功能 → 手動呼叫確認輸入輸出 → 連接真實 AI 用戶端觀察呼叫模式 → 根據實際行為調整設計。
 
-## 10. 构建检查清单
+## 10. 建構檢查清單
 
-### 设计
-- [ ] 明确 Tools vs Resources vs Prompts 分工
-- [ ] Tool 命名 `动词_名词`，描述说明用途和返回内容
-- [ ] 参数简洁，可选参数有合理默认值
+### 設計
+- [ ] 明確 Tools vs Resources vs Prompts 分工
+- [ ] Tool 命名 `動詞_名詞`，描述說明用途和返回內容
+- [ ] 參數簡潔，可選參數有合理預設值
 
-### 实现
-- [ ] 输入用 Zod/Pydantic 校验
-- [ ] 外部调用有 try/catch 和超时
-- [ ] 错误返回 `isError: true` 并附可操作信息
-- [ ] 不用 `console.log`（用 stderr 或 SDK 日志）
-- [ ] 敏感数据走环境变量
+### 實作
+- [ ] 輸入用 Zod/Pydantic 校驗
+- [ ] 外部呼叫有 try/catch 和逾時
+- [ ] 錯誤返回 `isError: true` 並附可操作資訊
+- [ ] 不用 `console.log`（用 stderr 或 SDK 日誌）
+- [ ] 敏感資料走環境變數
 
-### 测试
-- [ ] 核心逻辑有单元测试
-- [ ] 有集成测试验证 MCP 协议交互
-- [ ] 用 MCP Inspector 手动验证过
-- [ ] 用真实 AI 客户端测试过
+### 測試
+- [ ] 核心邏輯有單元測試
+- [ ] 有整合測試驗證 MCP 協議互動
+- [ ] 用 MCP Inspector 手動驗證過
+- [ ] 用真實 AI 用戶端測試過
 
 ### 部署
-- [ ] README 含安装和配置说明
-- [ ] 提供客户端配置 JSON 示例
-- [ ] 遵循 semver，无硬编码密钥
+- [ ] README 含安裝和設定說明
+- [ ] 提供用戶端設定 JSON 範例
+- [ ] 遵循 semver，無硬編碼金鑰

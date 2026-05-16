@@ -1,25 +1,25 @@
 # Codex 工具映射
 
-Skills 使用 Claude Code 的工具名称。在 Codex 中遇到这些名称时，请使用对应的平台等价工具：
+Skills 使用 Claude Code 的工具名稱。在 Codex 中遇到這些名稱時，請使用對應的平台等價工具：
 
-| Skill 中的引用 | Codex 等价工具 |
+| Skill 中的引用 | Codex 等價工具 |
 |---------------|---------------|
 | `Task` 工具（派遣子 agent） | `spawn_agent` |
-| 多个 `Task` 调用（并行） | 多个 `spawn_agent` 调用 |
-| Task 返回结果 | `wait` |
-| Task 自动完成 | `close_agent` 释放槽位 |
-| `TodoWrite`（任务跟踪） | `update_plan` |
-| `Skill` 工具（调用 skill） | Skills 原生加载——直接按说明操作 |
-| `Read`、`Write`、`Edit`（文件） | 使用原生文件工具 |
-| `Bash`（执行命令） | 使用原生 shell 工具 |
+| 多個 `Task` 呼叫（並行） | 多個 `spawn_agent` 呼叫 |
+| Task 返回結果 | `wait` |
+| Task 自動完成 | `close_agent` 釋放槽位 |
+| `TodoWrite`（任務追蹤） | `update_plan` |
+| `Skill` 工具（呼叫 skill） | Skills 原生載入——直接按說明操作 |
+| `Read`、`Write`、`Edit`（檔案） | 使用原生檔案工具 |
+| `Bash`（執行指令） | 使用原生 shell 工具 |
 
-## 子 Agent 派遣需要多 Agent 支持
+## 子 Agent 派遣需要多 Agent 支援
 
-在 Codex 配置文件（`~/.codex/config.toml`）中添加：
+在 Codex 設定檔（`~/.codex/config.toml`）中新增：
 
 ```toml
 [features]
 multi_agent = true
 ```
 
-启用后可使用 `spawn_agent`、`wait` 和 `close_agent`，支持 `dispatching-parallel-agents` 和 `subagent-driven-development` 等 skills。
+啟用後可使用 `spawn_agent`、`wait` 和 `close_agent`，支援 `dispatching-parallel-agents` 和 `subagent-driven-development` 等 skills。

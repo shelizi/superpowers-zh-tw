@@ -1,10 +1,10 @@
-# Superpowers 中文版 — OpenCode 安装指南
+# Superpowers 中文版 — OpenCode 安裝指南
 
 在 [OpenCode.ai](https://opencode.ai) 中使用 superpowers-zh 的完整指南。
 
-## 安装
+## 安裝
 
-在 `opencode.json`（全局或项目级）的 `plugin` 数组中添加：
+在 `opencode.json`（全域或專案級）的 `plugin` 陣列中新增：
 
 ```json
 {
@@ -12,13 +12,13 @@
 }
 ```
 
-重启 OpenCode。插件通过 Bun 自动安装并注册所有 skills。
+重新啟動 OpenCode。外掛透過 Bun 自動安裝並註冊所有 skills。
 
-验证方式：问 "告诉我你有哪些 superpowers"
+驗證方式：問 "告訴我你有哪些 superpowers"
 
 ## 使用
 
-### 查找 Skills
+### 尋找 Skills
 
 使用 OpenCode 原生的 `skill` 工具列出所有可用 skills：
 
@@ -26,21 +26,21 @@
 use skill tool to list skills
 ```
 
-### 加载 Skill
+### 載入 Skill
 
 ```
 use skill tool to load superpowers/brainstorming
 ```
 
-### 个人 Skills
+### 個人 Skills
 
-在 `~/.config/opencode/skills/` 中创建你自己的 skills：
+在 `~/.config/opencode/skills/` 中建立你自己的 skills：
 
 ```bash
 mkdir -p ~/.config/opencode/skills/my-skill
 ```
 
-创建 `~/.config/opencode/skills/my-skill/SKILL.md`：
+建立 `~/.config/opencode/skills/my-skill/SKILL.md`：
 
 ```markdown
 ---
@@ -50,20 +50,20 @@ description: 当 [条件] 时使用 - [功能描述]
 
 # 我的 Skill
 
-[你的 skill 内容]
+[你的 skill 內容]
 ```
 
-### 项目 Skills
+### 專案 Skills
 
-在项目的 `.opencode/skills/` 目录中创建项目级 skills。
+在專案的 `.opencode/skills/` 目錄中建立專案級 skills。
 
-**Skill 优先级：** 项目 skills > 个人 skills > Superpowers skills
+**Skill 優先級：** 專案 skills > 個人 skills > Superpowers skills
 
 ## 更新
 
-重启 OpenCode 时自动更新。插件每次启动都从 git 仓库重新安装。
+重新啟動 OpenCode 時自動更新。外掛每次啟動都從 git 儲存庫重新安裝。
 
-锁定特定版本：
+鎖定特定版本：
 
 ```json
 {
@@ -73,33 +73,33 @@ description: 当 [条件] 时使用 - [功能描述]
 
 ## 工作原理
 
-插件做两件事：
+外掛做兩件事：
 
-1. **注入引导上下文** — 通过 `experimental.chat.system.transform` hook，为每次对话添加 superpowers 意识
-2. **注册 skills 目录** — 通过 `config` hook，让 OpenCode 发现所有 skills，无需符号链接或手动配置
+1. **注入引導上下文** — 透過 `experimental.chat.system.transform` hook，為每次對話新增 superpowers 意識
+2. **註冊 skills 目錄** — 透過 `config` hook，讓 OpenCode 發現所有 skills，無需符號連結或手動設定
 
 ### 工具映射
 
-为 Claude Code 编写的 skills 自动适配 OpenCode：
+為 Claude Code 編寫的 skills 自動適配 OpenCode：
 
 - `TodoWrite` → `todowrite`
-- `Task`（子代理）→ OpenCode 的 `@mention` 系统
+- `Task`（子代理）→ OpenCode 的 `@mention` 系統
 - `Skill` 工具 → OpenCode 原生 `skill` 工具
-- 文件操作 → OpenCode 原生工具
+- 檔案操作 → OpenCode 原生工具
 
 ## 故障排查
 
-### 插件未加载
+### 外掛未載入
 
-1. 检查 OpenCode 日志：`opencode run --print-logs "hello" 2>&1 | grep -i superpowers`
-2. 确认 `opencode.json` 中的插件配置正确
-3. 确保运行的是最新版本的 OpenCode
+1. 檢查 OpenCode 日誌：`opencode run --print-logs "hello" 2>&1 | grep -i superpowers`
+2. 確認 `opencode.json` 中的外掛設定正確
+3. 確保執行的是最新版本的 OpenCode
 
 ### Skills 未找到
 
 1. 使用 `skill` 工具列出可用 skills
-2. 检查插件是否正确加载（见上）
-3. 每个 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 文件
+2. 檢查外掛是否正確載入（見上）
+3. 每個 skill 需要包含有效 YAML frontmatter 的 `SKILL.md` 檔案
 
 ## 获取帮助
 
