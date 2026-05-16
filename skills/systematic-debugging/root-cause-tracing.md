@@ -1,74 +1,74 @@
-# 根因追踪
+# 根因追蹤
 
 ## 概述
 
-Bug 通常表现在调用栈深处（在错误目录执行 git init、在错误位置创建文件、用错误路径打开数据库）。你的本能是在错误出现的地方修复，但那只是治标。
+Bug 通常表現在呼叫棧深處（在錯誤目錄執行 git init、在錯誤位置建立檔案、用錯誤路徑開啟資料庫）。你的本能是在錯誤出現的地方修復，但那只是治標。
 
-**核心原则：** 沿着调用链反向追踪，直到找到最初的触发点，然后在源头修复。
+**核心原則：** 沿著呼叫鏈反向追蹤，直到找到最初的觸發點，然後在來源修復。
 
-## 何时使用
+## 何時使用
 
 ```dot
 digraph when_to_use {
-    "Bug 出现在调用栈深处？" [shape=diamond];
-    "能反向追踪吗？" [shape=diamond];
-    "在症状处修复" [shape=box];
-    "追踪到最初的触发点" [shape=box];
-    "更好的做法：同时添加纵深防御" [shape=box];
+    "Bug 出現在呼叫棧深處？" [shape=diamond];
+    "能反向追蹤嗎？" [shape=diamond];
+    "在症狀處修復" [shape=box];
+    "追蹤到最初的觸發點" [shape=box];
+    "更好的做法：同時新增縱深防禦" [shape=box];
 
-    "Bug 出现在调用栈深处？" -> "能反向追踪吗？" [label="是"];
-    "能反向追踪吗？" -> "追踪到最初的触发点" [label="是"];
-    "能反向追踪吗？" -> "在症状处修复" [label="否——死胡同"];
-    "追踪到最初的触发点" -> "更好的做法：同时添加纵深防御";
+    "Bug 出現在呼叫棧深處？" -> "能反向追蹤嗎？" [label="是"];
+    "能反向追蹤嗎？" -> "追蹤到最初的觸發點" [label="是"];
+    "能反向追蹤嗎？" -> "在症狀處修復" [label="否——死胡同"];
+    "追蹤到最初的觸發點" -> "更好的做法：同時新增縱深防禦";
 }
 ```
 
-**适用场景：**
-- 错误发生在执行深处（不在入口点）
-- 堆栈跟踪显示很长的调用链
-- 不清楚无效数据从哪里来
-- 需要找到是哪个测试/代码触发了问题
+**適用場景：**
+- 錯誤發生在執行深處（不在入口點）
+- 堆疊追蹤顯示很長的呼叫鏈
+- 不清楚無效資料從哪裡來
+- 需要找到是哪個測試/程式碼觸發了問題
 
-## 追踪流程
+## 追蹤流程
 
-### 1. 观察症状
+### 1. 觀察症狀
 ```
 Error: git init failed in /Users/jesse/project/packages/core
 ```
 
 ### 2. 找到直接原因
-**哪段代码直接导致了这个错误？**
+**哪段程式碼直接導致了這個錯誤？**
 ```typescript
 await execFileAsync('git', ['init'], { cwd: projectDir });
 ```
 
-### 3. 问：谁调用了它？
+### 3. 問：誰呼叫了它？
 ```typescript
 WorktreeManager.createSessionWorktree(projectDir, sessionId)
-  → 被 Session.initializeWorkspace() 调用
-  → 被 Session.create() 调用
-  → 被测试中的 Project.create() 调用
+  → 被 Session.initializeWorkspace() 呼叫
+  → 被 Session.create() 呼叫
+  → 被測試中的 Project.create() 呼叫
 ```
 
-### 4. 继续向上追踪
-**传入了什么值？**
-- `projectDir = ''`（空字符串！）
-- 空字符串作为 `cwd` 会解析为 `process.cwd()`
-- 那就是源代码目录！
+### 4. 繼續向上追蹤
+**傳入了什麼值？**
+- `projectDir = ''`（空字串！）
+- 空字串作為 `cwd` 會解析為 `process.cwd()`
+- 那就是原始碼目錄！
 
-### 5. 找到最初的触发点
-**空字符串从哪里来的？**
+### 5. 找到最初的觸發點
+**空字串從哪裡來的？**
 ```typescript
 const context = setupCoreTest(); // 返回 { tempDir: '' }
-Project.create('name', context.tempDir); // 在 beforeEach 之前就访问了！
+Project.create('name', context.tempDir); // 在 beforeEach 之前就存取了！
 ```
 
-## 添加堆栈跟踪
+## 新增堆疊追蹤
 
-当无法手动追踪时，添加诊断埋点：
+當無法手動追蹤時，新增診斷埋點：
 
 ```typescript
-// 在有问题的操作之前
+// 在有問題的操作之前
 async function gitInit(directory: string) {
   const stack = new Error().stack;
   console.error('DEBUG git init:', {
@@ -82,88 +82,88 @@ async function gitInit(directory: string) {
 }
 ```
 
-**重要：** 在测试中使用 `console.error()`（而非 logger——可能不会显示）
+**重要：** 在測試中使用 `console.error()`（而非 logger——可能不會顯示）
 
-**运行并捕获：**
+**執行並捕獲：**
 ```bash
 npm test 2>&1 | grep 'DEBUG git init'
 ```
 
-**分析堆栈跟踪：**
-- 找测试文件名
-- 找触发调用的行号
-- 识别模式（同一个测试？同一个参数？）
+**分析堆疊追蹤：**
+- 找測試檔名
+- 找觸發呼叫的行號
+- 識別模式（同一個測試？同一個參數？）
 
-## 找出导致污染的测试
+## 找出導致污染的測試
 
-如果某些现象在测试期间出现，但你不知道是哪个测试造成的：
+如果某些現象在測試期間出現，但你不知道是哪個測試造成的：
 
-使用本目录下的二分查找脚本 `find-polluter.sh`：
+使用本目錄下的二分查找腳本 `find-polluter.sh`：
 
 ```bash
 ./find-polluter.sh '.git' 'src/**/*.test.ts'
 ```
 
-逐个运行测试，在第一个"污染者"处停止。详见脚本中的使用说明。
+逐個執行測試，在第一個「污染者」處停止。詳見腳本中的使用說明。
 
-## 真实案例：空的 projectDir
+## 真實案例：空的 projectDir
 
-**症状：** `.git` 被创建在 `packages/core/`（源代码目录）中
+**症狀：** `.git` 被建立在 `packages/core/`（原始碼目錄）中
 
-**追踪链：**
-1. `git init` 在 `process.cwd()` 中执行 ← cwd 参数为空
-2. WorktreeManager 被传入空的 projectDir
-3. Session.create() 传递了空字符串
-4. 测试在 beforeEach 之前访问了 `context.tempDir`
+**追蹤鏈：**
+1. `git init` 在 `process.cwd()` 中執行 ← cwd 參數為空
+2. WorktreeManager 被傳入空的 projectDir
+3. Session.create() 傳遞了空字串
+4. 測試在 beforeEach 之前存取了 `context.tempDir`
 5. setupCoreTest() 初始返回 `{ tempDir: '' }`
 
-**根本原因：** 顶层变量初始化时访问了空值
+**根本原因：** 頂層變數初始化時存取了空值
 
-**修复：** 将 tempDir 改为 getter，在 beforeEach 之前访问时抛出异常
+**修復：** 將 tempDir 改為 getter，在 beforeEach 之前存取時拋出異常
 
-**同时添加了纵深防御：**
-- 第 1 层：Project.create() 校验目录
-- 第 2 层：WorkspaceManager 校验非空
-- 第 3 层：NODE_ENV 守卫拒绝在 tmpdir 之外执行 git init
-- 第 4 层：git init 前记录堆栈跟踪
+**同時新增了縱深防禦：**
+- 第 1 層：Project.create() 校驗目錄
+- 第 2 層：WorkspaceManager 校驗非空
+- 第 3 層：NODE_ENV 守衛拒絕在 tmpdir 之外執行 git init
+- 第 4 層：git init 前記錄堆疊追蹤
 
-## 关键原则
+## 關鍵原則
 
 ```dot
 digraph principle {
     "找到了直接原因" [shape=ellipse];
-    "能向上追踪一层吗？" [shape=diamond];
-    "反向追踪" [shape=box];
-    "这就是源头吗？" [shape=diamond];
-    "在源头修复" [shape=box];
-    "在每一层添加校验" [shape=box];
-    "Bug 不可能再发生" [shape=doublecircle];
-    "绝不只修症状" [shape=octagon, style=filled, fillcolor=red, fontcolor=white];
+    "能向上追蹤一層嗎？" [shape=diamond];
+    "反向追蹤" [shape=box];
+    "這就是來源嗎？" [shape=diamond];
+    "在來源修復" [shape=box];
+    "在每一層新增校驗" [shape=box];
+    "Bug 不可能再發生" [shape=doublecircle];
+    "絕不只修症狀" [shape=octagon, style=filled, fillcolor=red, fontcolor=white];
 
-    "找到了直接原因" -> "能向上追踪一层吗？";
-    "能向上追踪一层吗？" -> "反向追踪" [label="是"];
-    "能向上追踪一层吗？" -> "绝不只修症状" [label="否"];
-    "反向追踪" -> "这就是源头吗？";
-    "这就是源头吗？" -> "反向追踪" [label="否——继续追踪"];
-    "这就是源头吗？" -> "在源头修复" [label="是"];
-    "在源头修复" -> "在每一层添加校验";
-    "在每一层添加校验" -> "Bug 不可能再发生";
+    "找到了直接原因" -> "能向上追蹤一層嗎？";
+    "能向上追蹤一層嗎？" -> "反向追蹤" [label="是"];
+    "能向上追蹤一層嗎？" -> "絕不只修症狀" [label="否"];
+    "反向追蹤" -> "這就是來源嗎？";
+    "這就是來源嗎？" -> "反向追蹤" [label="否——繼續追蹤"];
+    "這就是來源嗎？" -> "在來源修復" [label="是"];
+    "在來源修復" -> "在每一層新增校驗";
+    "在每一層新增校驗" -> "Bug 不可能再發生";
 }
 ```
 
-**绝不只在错误出现的地方修复。** 反向追踪，找到最初的触发点。
+**絕不只在錯誤出現的地方修復。** 反向追蹤，找到最初的觸發點。
 
-## 堆栈跟踪技巧
+## 堆疊追蹤技巧
 
-**在测试中：** 使用 `console.error()` 而非 logger——logger 可能被抑制
-**操作之前：** 在危险操作之前记录日志，而不是在失败之后
-**包含上下文：** 目录、cwd、环境变量、时间戳
-**捕获堆栈：** `new Error().stack` 能显示完整的调用链
+**在測試中：** 使用 `console.error()` 而非 logger——logger 可能被抑制
+**操作之前：** 在危險操作之前記錄日誌，而不是在失敗之後
+**包含上下文：** 目錄、cwd、環境變數、時間戳
+**捕獲堆疊：** `new Error().stack` 能顯示完整的呼叫鏈
 
-## 实际效果
+## 實際效果
 
-来自调试实践（2025-10-03）：
-- 通过 5 层追踪找到了根本原因
-- 在源头修复（getter 校验）
-- 添加了 4 层纵深防御
-- 1847 个测试通过，零污染
+來自除錯實踐（2025-10-03）：
+- 透過 5 層追蹤找到了根本原因
+- 在來源修復（getter 校驗）
+- 新增了 4 層縱深防禦
+- 1847 個測試通過，零污染
